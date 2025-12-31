@@ -9,7 +9,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
     super({
       adapter: PrismaService.createAdapter(),
-      log: ['warn', 'error'],
+      log: ['warn'], //['warn','error'] ==> dev
     });
   }
 
@@ -25,7 +25,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     if (!DATABASE_HOST || !DATABASE_PORT || !DATABASE_NAME || !DATABASE_USER) {
       throw new Error('Database environment variables are missing');
     }
-
     return new PrismaMariaDb({
       host: DATABASE_HOST,
       port: Number(DATABASE_PORT),
@@ -36,15 +35,16 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     });
   }
 
+  // test connection
   async onModuleInit() {
     try {
       await this.$connect();
       await this.$queryRaw`SELECT 1`;
       this.logger.log('Database connection verified');
-    } catch (error) {
+    } catch {
       this.logger.error(
         'Database connection failed. Application will exit.',
-        error instanceof Error ? error.stack : undefined,
+        // error instanceof Error ? error.stack : undefined,
       );
       process.exit(1);
     }
