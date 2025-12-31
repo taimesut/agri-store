@@ -5,7 +5,12 @@ import { AdminModule } from './modules/admin/admin.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AdminModule, ConfigModule.forRoot()],
+  imports: [
+    AdminModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

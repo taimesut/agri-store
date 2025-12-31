@@ -1,12 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-export const api = axios.create({
+export const instanceAxios = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 // // Thêm token nếu có
@@ -18,12 +19,12 @@ export const api = axios.create({
 //   return config;
 // });
 
-api.interceptors.response.use(
-  response => response,
-  error => {
-    console.error('API Error:', error.message);
+instanceAxios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error("API Error:", error.message);
     return Promise.reject(error);
   }
 );
 
-export default api;
+export default instanceAxios;

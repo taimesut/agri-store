@@ -5,14 +5,13 @@ import {
   Logger,
   Delete,
   Param,
-  ParseIntPipe,
   Put,
   Get,
 } from '@nestjs/common';
-import { UsersService } from '../../../commons/services/users.service';
-import { CreateUser } from '../../../commons/dtos/create-user.dto';
-import { BaseResponse } from 'src/commons/responses/base.response';
-import { UpdateUser } from 'src/commons/dtos/update-user.dto';
+import { UsersService } from '../../commons/services/users.service';
+import { BaseResponse } from 'src/responses/base.response';
+import { CreateUserReqDTO, UpdateUserReqDTO } from 'src/dtos/user-req.dto';
+import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
 
 @Controller('users')
 export class AdminUsersController {
@@ -20,30 +19,33 @@ export class AdminUsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('/:id')
-  async get(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.getById(id);
+  async get(@Param('id', CustomParseIntPipe) id: number) {
+    return new BaseResponse('user', await this.usersService.getById(id));
+  }
+
+  @Get()
+  async gets() {
+    return new BaseResponse('users', await this.usersService.gets());
   }
 
   @Post()
-  async create(@Body() payload: CreateUser) {
-    // this.logger.log(payload);
-    await this.usersService.create(payload);
-    return new BaseResponse(null, 'Create user success', 200);
+  async create(@Body() payload: CreateUserReqDTO) {
+    return new BaseResponse('user', await this.usersService.create(payload));
   }
 
   @Put('/:id')
   async update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateUser,
+    @Param('id', CustomParseIntPipe) id: number,
+    @Body() payload: UpdateUserReqDTO,
   ) {
-    this.logger.log(payload);
-    await this.usersService.updateById(id, payload);
-    return new BaseResponse(null, 'Update user success', 200);
+    return new BaseResponse(
+      'user',
+      await this.usersService.updateById(id, payload),
+    );
   }
 
   @Delete('/:id')
-  async delete(@Param('id', ParseIntPipe) id: number) {
-    // this.logger.log(id);
-    return this.usersService.deleteById(id);
+  async delete(@Param('id', CustomParseIntPipe) id: number) {
+    return new BaseResponse('user', await this.usersService.deleteById(id));
   }
 }
