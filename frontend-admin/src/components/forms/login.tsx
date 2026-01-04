@@ -1,7 +1,10 @@
 import { useForm } from "react-hook-form";
 import type { LoginRequest } from "../../utils/types";
-import { LoginApi } from "../../apis/auth.api";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { AuthApi } from "../../apis/auth.api";
+import { useCurrentUserStore } from "../../stores/useCurrentUserStore";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm(): React.ReactElement {
   const {
@@ -9,13 +12,23 @@ export default function LoginForm(): React.ReactElement {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginRequest>();
+  const navigate = useNavigate();
+
+  const { fetchCurrentUser } = useCurrentUserStore();
 
   const onSubmit = async (payload: LoginRequest) => {
-    LoginApi(payload)
-      .then(() => toast.success("Đăng nhập thành công"))
-      .catch((error) => {
+    try {
+      await AuthApi.Login(payload);
+      await fetchCurrentUser();
+      toast.success("Đăng nhập thành công");
+      navigate("/dashboard");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
         toast.error(error?.response?.data?.message);
-      });
+      } else {
+        console.log("Unexpected error", error);
+      }
+    }
   };
 
   return (

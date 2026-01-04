@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
-import { LoginReqDTO } from 'src/dtos/login-req.dto';
+import { LoginReqDTO } from 'src/modules/commons/dtos/login-req.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { AuthService } from 'src/modules/commons/services/auth.service';
 import { BaseResponse } from 'src/responses/base.response';

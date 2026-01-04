@@ -1,11 +1,11 @@
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { LoginReqDTO } from 'src/dtos/login-req.dto';
+import { LoginReqDTO } from 'src/modules/commons/dtos/login-req.dto';
 import { PrismaService } from './prisma.serivce';
 import { CustomHttpException } from 'src/exceptions/custom-http.exception';
 import { ServerErrorException } from 'src/exceptions/server-error.exception';
 import { comparePassword } from 'src/utils/password';
 import { JwtService } from '@nestjs/jwt';
-import { RES_CODE } from 'src/utils/contants';
+import { RES_CODE, RES_MESSAGE } from 'src/utils/contants';
 import { Response } from 'express';
 
 @Injectable()
@@ -16,26 +16,35 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async login(payload: LoginReqDTO, res: Response): Promise<string> {
+  private async getUserByEmail(email: string) {
     try {
-      const { email, password } = payload;
-      const user = await this.prisma.user.findUnique({
+      return await this.prisma.user.findUnique({
         where: {
           email,
         },
       });
+    } catch (error) {
+      this.logger.error(error);
+      return null;
+    }
+  }
+
+  async login(payload: LoginReqDTO, res: Response): Promise<string> {
+    try {
+      const { email, password } = payload;
+      const user = await this.getUserByEmail(email);
       if (!user) {
         throw new CustomHttpException(
-          'Email or password invalid',
-          RES_CODE.LOGIN_FAILED,
+          RES_MESSAGE.AUTH_SERVICE.ACCOUNT_DOES_NOT_EXISTS,
+          RES_CODE.AUTH_SERIVCE.LOGIN_FAILED,
           HttpStatus.BAD_REQUEST,
         );
       }
       const isMatch = await comparePassword(password, user.password);
       if (!isMatch) {
         throw new CustomHttpException(
-          'Email or password invalid',
-          RES_CODE.LOGIN_FAILED,
+          RES_MESSAGE.AUTH_SERVICE.ACCOUNT_OR_PASSWORD_INVALID,
+          RES_CODE.AUTH_SERIVCE.LOGIN_FAILED,
           HttpStatus.BAD_REQUEST,
         );
       }
@@ -61,14 +70,10 @@ export class AuthService {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày
       });
 
-      return 'Login success';
+      return RES_MESSAGE.AUTH_SERVICE.LOGIN_SUCCESS;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new CustomHttpException(
-          error.message,
-          RES_CODE.LOGIN_FAILED,
-          HttpStatus.BAD_REQUEST,
-        );
+      if (error instanceof CustomHttpException) {
+        throw error;
       }
       throw new ServerErrorException();
     }
@@ -77,6 +82,6 @@ export class AuthService {
   logout(res: Response): string {
     res.clearCookie('jwt_access_token');
     res.clearCookie('jwt_refresh_token');
-    return 'Logged out';
+    return RES_MESSAGE.AUTH_SERVICE.LOGOUT_SUCCESS;
   }
 }

@@ -8,15 +8,18 @@ import {
   Put,
   Get,
 } from '@nestjs/common';
-import { UsersService } from '../../commons/services/users.service';
+import { UserService } from '../../commons/services/user.service';
 import { BaseResponse } from 'src/responses/base.response';
-import { CreateUserReqDTO, UpdateUserReqDTO } from 'src/dtos/user-req.dto';
 import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
+import {
+  CreateUserReqDTO,
+  UpdateUserReqDTO,
+} from 'src/modules/commons/dtos/user-req.dto';
 
 @Controller('users')
 export class AdminUsersController {
   private readonly logger = new Logger(AdminUsersController.name);
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UserService) {}
 
   @Get('/:id')
   async get(@Param('id', CustomParseIntPipe) id: number) {

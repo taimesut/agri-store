@@ -1,20 +1,15 @@
-import {
-  HttpStatus,
-  Injectable,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/modules/commons/services/prisma.serivce';
 import { hashPassword } from 'src/utils/password';
-import { UserResDTO } from '../../../dtos/user-res.dto';
-import { CreateUserReqDTO, UpdateUserReqDTO } from '../../../dtos/user-req.dto';
+import { UserResDTO } from '../dtos/user-res.dto';
+import { CreateUserReqDTO, UpdateUserReqDTO } from '../dtos/user-req.dto';
 import { CustomHttpException } from 'src/exceptions/custom-http.exception';
 import { ServerErrorException } from 'src/exceptions/server-error.exception';
-import { RES_CODE } from 'src/utils/contants';
+import { RES_CODE, RES_MESSAGE } from 'src/utils/contants';
 
 @Injectable()
-export class UsersService {
-  private readonly logger = new Logger(UsersService.name);
+export class UserService {
+  private readonly logger = new Logger(UserService.name);
   constructor(private prisma: PrismaService) {}
 
   async getById(id: number): Promise<UserResDTO | null> {
@@ -26,12 +21,8 @@ export class UsersService {
         },
       });
     } catch (error) {
-      if (error instanceof Error) {
-        throw new CustomHttpException(
-          error.message,
-          RES_CODE.GET_USER_FAILED,
-          HttpStatus.BAD_REQUEST,
-        );
+      if (error instanceof CustomHttpException) {
+        throw error;
       }
       throw new ServerErrorException();
     }
@@ -39,14 +30,14 @@ export class UsersService {
 
   async gets() {
     try {
-      return this.prisma.user.findMany({});
+      return this.prisma.user.findMany({
+        omit: {
+          password: true,
+        },
+      });
     } catch (error) {
-      if (error instanceof Error) {
-        throw new CustomHttpException(
-          error.message,
-          RES_CODE.GET_USERS_FAILED,
-          HttpStatus.BAD_REQUEST,
-        );
+      if (error instanceof CustomHttpException) {
+        throw error;
       }
       throw new ServerErrorException();
     }
@@ -61,8 +52,8 @@ export class UsersService {
       });
       if (user) {
         throw new CustomHttpException(
-          'Email is existing',
-          RES_CODE.CREATE_USER_FAILED,
+          RES_MESSAGE.USERS_SERVICE.EMAIL_IS_EXISTING,
+          RES_CODE.USER_SERVICE.CREATE_USER_FAILED,
           HttpStatus.BAD_REQUEST,
         );
       }
@@ -73,12 +64,8 @@ export class UsersService {
         omit: { password: true },
       });
     } catch (error) {
-      if (error instanceof Error) {
-        throw new CustomHttpException(
-          error.message,
-          RES_CODE.CREATE_USER_FAILED,
-          HttpStatus.BAD_REQUEST,
-        );
+      if (error instanceof CustomHttpException) {
+        throw error;
       }
       throw new ServerErrorException();
     }
@@ -93,8 +80,8 @@ export class UsersService {
       });
       if (!user) {
         throw new CustomHttpException(
-          `User with id ${id} not found`,
-          RES_CODE.UPDATE_USER_FAILED,
+          RES_MESSAGE.USERS_SERVICE.USER_NOT_FOUND_WITH_ID(id),
+          RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,
           HttpStatus.BAD_REQUEST,
         );
       }
@@ -104,12 +91,8 @@ export class UsersService {
         omit: { password: true },
       });
     } catch (error) {
-      if (error instanceof Error) {
-        throw new CustomHttpException(
-          error.message,
-          RES_CODE.UPDATE_USER_FAILED,
-          HttpStatus.BAD_REQUEST,
-        );
+      if (error instanceof CustomHttpException) {
+        throw error;
       }
       throw new ServerErrorException();
     }
@@ -123,7 +106,11 @@ export class UsersService {
       });
 
       if (!user) {
-        throw new NotFoundException(`User with id ${id} not found`);
+        throw new CustomHttpException(
+          RES_MESSAGE.USERS_SERVICE.USER_NOT_FOUND_WITH_ID(id),
+          RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,
+          HttpStatus.BAD_REQUEST,
+        );
       }
 
       return this.prisma.user.delete({
@@ -133,12 +120,8 @@ export class UsersService {
         },
       });
     } catch (error) {
-      if (error instanceof Error) {
-        throw new CustomHttpException(
-          error.message,
-          RES_CODE.CREATE_USER_FAILED,
-          HttpStatus.BAD_REQUEST,
-        );
+      if (error instanceof CustomHttpException) {
+        throw error;
       }
       throw new ServerErrorException();
     }
