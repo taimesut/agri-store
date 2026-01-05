@@ -31,7 +31,7 @@ model Category {
   products    Product[]
 
   parentId Int?
-  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
   children Category[] @relation("CategoryHierarchy")
 }
 
@@ -44,10 +44,19 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
   tags Tag[]
+
+  images ImageProduct[]
+}
+
+model ImageProduct {
+  id Int @id @default(autoincrement())
+
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int?
 }
 
 model Tag {

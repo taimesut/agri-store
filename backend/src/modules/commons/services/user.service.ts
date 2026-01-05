@@ -80,7 +80,7 @@ export class UserService {
       });
       if (!user) {
         throw new CustomHttpException(
-          RES_MESSAGE.USERS_SERVICE.USER_NOT_FOUND_WITH_ID(id),
+          RES_MESSAGE.USERS_SERVICE.NOT_FOUND_WITH_ID(id),
           RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,
           HttpStatus.BAD_REQUEST,
         );
@@ -107,7 +107,7 @@ export class UserService {
 
       if (!user) {
         throw new CustomHttpException(
-          RES_MESSAGE.USERS_SERVICE.USER_NOT_FOUND_WITH_ID(id),
+          RES_MESSAGE.USERS_SERVICE.NOT_FOUND_WITH_ID(id),
           RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,
           HttpStatus.BAD_REQUEST,
         );

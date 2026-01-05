@@ -1,5 +1,17 @@
-import { Body, Controller, Get, Logger, Param, Post } from '@nestjs/common';
-import { CreateCategoryReqDTO } from 'src/modules/commons/dtos/category-req.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Logger,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import {
+  CreateCategoryReqDTO,
+  UpdateCategoryReqDTO,
+} from 'src/modules/commons/dtos/category-req.dto';
 import { CategoryService } from 'src/modules/commons/services/category.service';
 import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
 import { BaseResponse } from 'src/responses/base.response';
@@ -20,5 +32,29 @@ export class AdminCategoryController {
   @Get('/:id')
   async get(@Param('id', CustomParseIntPipe) id: number) {
     return new BaseResponse('category', await this.categoryService.getById(id));
+  }
+
+  @Get()
+  async gets() {
+    return new BaseResponse('categories', await this.categoryService.gets());
+  }
+
+  @Put('/:id')
+  async update(
+    @Param('id', CustomParseIntPipe) id: number,
+    @Body() payload: UpdateCategoryReqDTO,
+  ) {
+    return new BaseResponse(
+      'category',
+      await this.categoryService.updateById(id, payload),
+    );
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id', CustomParseIntPipe) id: number) {
+    return new BaseResponse(
+      'category',
+      await this.categoryService.deleteById(id),
+    );
   }
 }

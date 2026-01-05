@@ -36,12 +36,13 @@ export const RES_MESSAGE = {
     LOGOUT_SUCCESS: 'Đăng xuất thành công',
   },
   USERS_SERVICE: {
-    USER_NOT_FOUND_WITH_ID: (id) => `User with id:: ${id} not found`,
+    NOT_FOUND_WITH_ID: (id) => `User with id:: ${id} not found`,
     EMAIL_IS_EXISTING: 'Email đã được đăng kí',
   },
   CATEGORIES_SERVICE: {
-    CATEGORY_NOT_FOUND_WITH_ID: (id) => `Category with id:: ${id} not found`,
-    CATEGORY_NOT_FOUND_WITH_NAME: (name) =>
-      `Category with name:: ${name} not found`,
+    NOT_FOUND_WITH_ID: (id) => `Category with id:: ${id} not found`,
+    NOT_FOUND_WITH_PARENT_ID: (id) =>
+      `Category with parentId:: ${id} not found`,
+    NOT_FOUND_WITH_NAME: (name) => `Category with name:: ${name} not found`,
   },
 };
