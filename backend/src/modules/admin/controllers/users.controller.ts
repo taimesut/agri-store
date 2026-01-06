@@ -12,9 +12,9 @@ import { UserService } from '../../commons/services/user.service';
 import { BaseResponse } from 'src/responses/base.response';
 import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
 import {
-  CreateUserReqDTO,
-  UpdateUserReqDTO,
-} from 'src/modules/commons/dtos/user-req.dto';
+  CreateUserDTO,
+  UpdateUserDTO,
+} from 'src/modules/commons/dtos/user.dto';
 
 @Controller('users')
 export class AdminUsersController {
@@ -32,14 +32,14 @@ export class AdminUsersController {
   }
 
   @Post()
-  async create(@Body() payload: CreateUserReqDTO) {
+  async create(@Body() payload: CreateUserDTO) {
     return new BaseResponse('user', await this.usersService.create(payload));
   }
 
   @Put('/:id')
   async update(
     @Param('id', CustomParseIntPipe) id: number,
-    @Body() payload: UpdateUserReqDTO,
+    @Body() payload: UpdateUserDTO,
   ) {
     return new BaseResponse(
       'user',

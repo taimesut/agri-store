@@ -103,6 +103,7 @@ export const ProductScalarFieldEnum = {
   description: 'description',
   price: 'price',
   sku: 'sku',
+  handle: 'handle',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   categoryId: 'categoryId'
@@ -113,6 +114,7 @@ export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeo
 
 export const ImageProductScalarFieldEnum = {
   id: 'id',
+  url: 'url',
   productId: 'productId'
 } as const
 
@@ -122,7 +124,6 @@ export type ImageProductScalarFieldEnum = (typeof ImageProductScalarFieldEnum)[k
 export const TagScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -167,15 +168,22 @@ export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevance
 export const ProductOrderByRelevanceFieldEnum = {
   name: 'name',
   description: 'description',
-  sku: 'sku'
+  sku: 'sku',
+  handle: 'handle'
 } as const
 
 export type ProductOrderByRelevanceFieldEnum = (typeof ProductOrderByRelevanceFieldEnum)[keyof typeof ProductOrderByRelevanceFieldEnum]
 
 
+export const ImageProductOrderByRelevanceFieldEnum = {
+  url: 'url'
+} as const
+
+export type ImageProductOrderByRelevanceFieldEnum = (typeof ImageProductOrderByRelevanceFieldEnum)[keyof typeof ImageProductOrderByRelevanceFieldEnum]
+
+
 export const TagOrderByRelevanceFieldEnum = {
-  name: 'name',
-  description: 'description'
+  name: 'name'
 } as const
 
 export type TagOrderByRelevanceFieldEnum = (typeof TagOrderByRelevanceFieldEnum)[keyof typeof TagOrderByRelevanceFieldEnum]

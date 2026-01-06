@@ -1,6 +1,0 @@
-export class UserResDTO {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-}

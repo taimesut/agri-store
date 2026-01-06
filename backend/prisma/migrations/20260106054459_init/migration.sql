@@ -30,17 +30,20 @@ CREATE TABLE `Product` (
     `description` VARCHAR(191) NOT NULL DEFAULT '',
     `price` DOUBLE NOT NULL,
     `sku` VARCHAR(191) NOT NULL,
+    `handle` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `categoryId` INTEGER NULL,
 
     UNIQUE INDEX `Product_sku_key`(`sku`),
+    UNIQUE INDEX `Product_handle_key`(`handle`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `ImageProduct` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `url` VARCHAR(191) NOT NULL,
     `productId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
@@ -50,10 +53,10 @@ CREATE TABLE `ImageProduct` (
 CREATE TABLE `Tag` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NOT NULL DEFAULT '',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    UNIQUE INDEX `Tag_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

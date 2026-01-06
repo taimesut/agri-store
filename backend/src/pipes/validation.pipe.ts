@@ -1,5 +1,7 @@
-import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { ValidationError } from 'class-validator';
+import { CustomBadRequestException } from 'src/exceptions/custom-bad-request.exception';
+import { RES_CODE } from 'src/utils/contants';
 
 export class AppValidationPipe extends ValidationPipe {
   constructor() {
@@ -12,10 +14,10 @@ export class AppValidationPipe extends ValidationPipe {
           Object.values(error.constraints ?? {}),
         );
 
-        return new BadRequestException({
-          message: messages,
-          code: 'VALIDATION_FAILED',
-        });
+        throw new CustomBadRequestException(
+          messages[0],
+          RES_CODE.VALIDATION_FAILED,
+        );
       },
     });
   }

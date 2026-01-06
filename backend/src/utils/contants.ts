@@ -2,6 +2,7 @@ export const RES_CODE = {
   INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
   UNAUTHORIZED: 'UNAUTHORIZED',
   NOT_FOUND: 'NOT_FOUND',
+  VALIDATION_FAILED: 'VALIDATION_FAILED',
 
   AUTH_SERIVCE: {
     LOGIN_FAILED: 'LOGIN_FAILED',
@@ -21,11 +22,13 @@ export const RES_CODE = {
     CREATE_CATEGORY_FAILED: 'CREATE_CATEGORY_FAILED',
     UPDATE_CATEGORY_FAILED: 'UPDATE_CATEGORY_FAILED',
     DELETE_CATEGORY_FAILED: 'DELETE_CATEGORY_FAILED',
+    VALIDATE_NON_CATEGORY_CYCLE: 'VALIDATE_NON_CATEGORY_CYCLE',
   },
 };
 
 export const RES_MESSAGE = {
   INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  CUSTOM_PARSE_INT_PIPE_ERROR: 'Validation failed (numeric string is expected)',
 
   AUTH_SERVICE: {
     ACCOUNT_OR_PASSWORD_INVALID: 'Tài khoản hoặc mật khẩu không hợp lệ',
@@ -44,5 +47,7 @@ export const RES_MESSAGE = {
     NOT_FOUND_WITH_PARENT_ID: (id) =>
       `Category with parentId:: ${id} not found`,
     NOT_FOUND_WITH_NAME: (name) => `Category with name:: ${name} not found`,
+    PARENT_OF_ITSELF: 'Category cannot be parent of itself',
+    HIEARARCHY_CYCLE: 'Category hierarchy cycle detected',
   },
 };

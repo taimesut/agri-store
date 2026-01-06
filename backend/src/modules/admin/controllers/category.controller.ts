@@ -9,9 +9,10 @@ import {
   Put,
 } from '@nestjs/common';
 import {
-  CreateCategoryReqDTO,
-  UpdateCategoryReqDTO,
-} from 'src/modules/commons/dtos/category-req.dto';
+  CreateCategoryDTO,
+  UpdateCategoryDTO,
+} from 'src/modules/commons/dtos/category.dto';
+
 import { CategoryService } from 'src/modules/commons/services/category.service';
 import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
 import { BaseResponse } from 'src/responses/base.response';
@@ -22,7 +23,7 @@ export class AdminCategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post()
-  async create(@Body() payload: CreateCategoryReqDTO) {
+  async create(@Body() payload: CreateCategoryDTO) {
     return new BaseResponse(
       'category',
       await this.categoryService.create(payload),
@@ -42,7 +43,7 @@ export class AdminCategoryController {
   @Put('/:id')
   async update(
     @Param('id', CustomParseIntPipe) id: number,
-    @Body() payload: UpdateCategoryReqDTO,
+    @Body() payload: UpdateCategoryDTO,
   ) {
     return new BaseResponse(
       'category',

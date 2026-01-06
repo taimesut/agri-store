@@ -3,11 +3,11 @@ import { AppModule } from './app.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { AppValidationPipe } from './pipes/validation.pipe';
 import cookieParser from 'cookie-parser';
-import { NotFoundExceptionFilter } from './filters/not-found.filter';
+import { ErrorExceptionFilter } from './filters/error-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalFilters(new NotFoundExceptionFilter());
+  app.useGlobalFilters(new ErrorExceptionFilter());
   app.use(new LoggerMiddleware().use);
   app.enableCors({
     origin: 'http://localhost:5173',
