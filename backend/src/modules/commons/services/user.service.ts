@@ -3,37 +3,38 @@ import { PrismaService } from 'src/modules/commons/services/prisma.serivce';
 import { hashPassword } from 'src/utils/password';
 import { CustomHttpException } from 'src/exceptions/custom-http.exception';
 import { RES_CODE, RES_MESSAGE } from 'src/utils/contants';
-import { CreateUserDTO, UpdateUserDTO, UserDTO } from '../dtos/user.dto';
+import { ICreateUserDTO, IUpdateUserDTO, IUserDTO } from '../dtos/user.dto';
+import { ICRUD } from 'src/utils/interfaces';
 
 @Injectable()
-export class UserService {
+export class UserService implements ICRUD<
+  IUserDTO,
+  ICreateUserDTO,
+  IUpdateUserDTO
+> {
   private readonly logger = new Logger(UserService.name);
   constructor(private prisma: PrismaService) {}
 
-  async getById(id: number): Promise<UserDTO | null> {
-    return await this.prisma.user.findUnique({
-      where: { id },
-      omit: {
-        password: true,
-      },
-    });
-  }
-
-  async gets() {
-    return this.prisma.user.findMany({
-      omit: {
-        password: true,
-      },
-    });
-  }
-
-  async create(payload: CreateUserDTO): Promise<UserDTO> {
+  private async hasEmail(email: string): Promise<boolean> {
     const user = await this.prisma.user.findUnique({
-      where: {
-        email: payload.email,
-      },
+      where: { email },
+      select: { id: true },
     });
-    if (user) {
+
+    return user !== null;
+  }
+
+  private async hasId(id: number): Promise<boolean> {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+
+    return user !== null;
+  }
+
+  async create(payload: ICreateUserDTO): Promise<IUserDTO> {
+    if (await this.hasEmail(payload.email)) {
       throw new CustomHttpException(
         RES_MESSAGE.USERS_SERVICE.EMAIL_IS_EXISTING,
         RES_CODE.USER_SERVICE.CREATE_USER_FAILED,
@@ -48,19 +49,32 @@ export class UserService {
     });
   }
 
-  async updateById(id: number, payload: UpdateUserDTO): Promise<UserDTO> {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        id,
+  async findAll(): Promise<IUserDTO[]> {
+    return await this.prisma.user.findMany({
+      omit: {
+        password: true,
       },
     });
-    if (!user) {
+  }
+
+  async findOne(id: number): Promise<IUserDTO | null> {
+    return await this.prisma.user.findUnique({
+      where: { id },
+      omit: {
+        password: true,
+      },
+    });
+  }
+
+  async update(id: number, payload: IUpdateUserDTO): Promise<IUserDTO> {
+    if (!(await this.hasId(id))) {
       throw new CustomHttpException(
         RES_MESSAGE.USERS_SERVICE.NOT_FOUND_WITH_ID(id),
         RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
+
     return this.prisma.user.update({
       where: { id },
       data: payload,
@@ -68,13 +82,8 @@ export class UserService {
     });
   }
 
-  async deleteById(id: number): Promise<UserDTO> {
-    const user = await this.prisma.user.findUnique({
-      where: { id },
-      omit: { password: true },
-    });
-
-    if (!user) {
+  async delete(id: number): Promise<IUserDTO> {
+    if (!(await this.hasId(id))) {
       throw new CustomHttpException(
         RES_MESSAGE.USERS_SERVICE.NOT_FOUND_WITH_ID(id),
         RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,

@@ -4,42 +4,54 @@ import { CustomHttpException } from 'src/exceptions/custom-http.exception';
 import { RES_CODE, RES_MESSAGE } from 'src/utils/contants';
 
 import {
-  CategoryDTO,
-  CreateCategoryDTO,
-  UpdateCategoryDTO,
+  ICategoryDTO,
+  ICreateCategoryDTO,
+  IUpdateCategoryDTO,
 } from '../dtos/category.dto';
 import { CustomBadRequestException } from 'src/exceptions/custom-bad-request.exception';
+import { ICRUD } from 'src/utils/interfaces';
 
 @Injectable()
-export class CategoryService {
+export class CategoryService implements ICRUD<
+  ICategoryDTO,
+  ICreateCategoryDTO,
+  IUpdateCategoryDTO
+> {
   private readonly logger = new Logger(CategoryService.name);
   constructor(private prisma: PrismaService) {}
 
-  async create(payload: CreateCategoryDTO): Promise<CategoryDTO> {
-    if (payload.parentId) {
-      const categoryParent = await this.prisma.category.findUnique({
-        where: {
-          id: payload.parentId,
-        },
-      });
-      if (!categoryParent) {
-        throw new CustomHttpException(
-          RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_PARENT_ID(
-            payload.parentId,
-          ),
-          RES_CODE.CATEGORY_SERVICE.CREATE_CATEGORY_FAILED,
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-    }
+  private async hasName(name: string): Promise<boolean> {
     const category = await this.prisma.category.findUnique({
-      where: {
-        name: payload.name,
-      },
+      where: { name },
+      select: { id: true },
     });
-    if (category) {
+
+    return category !== null;
+  }
+
+  private async hasId(id: number): Promise<boolean> {
+    const category = await this.prisma.category.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+
+    return category !== null;
+  }
+
+  async create(payload: ICreateCategoryDTO): Promise<ICategoryDTO> {
+    if (payload.parentId && !(await this.hasId(payload.parentId))) {
       throw new CustomHttpException(
-        RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_NAME(payload.name),
+        RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_PARENT_ID(
+          payload.parentId,
+        ),
+        RES_CODE.CATEGORY_SERVICE.CREATE_CATEGORY_FAILED,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (await this.hasName(payload.name)) {
+      throw new CustomHttpException(
+        RES_MESSAGE.CATEGORIES_SERVICE.NAME_IS_EXISTING(payload.name),
         RES_CODE.CATEGORY_SERVICE.CREATE_CATEGORY_FAILED,
         HttpStatus.BAD_REQUEST,
       );
@@ -49,15 +61,16 @@ export class CategoryService {
     });
   }
 
-  async getById(id: number): Promise<CategoryDTO | null> {
+  async findOne(id: number): Promise<ICategoryDTO | null> {
     return await this.prisma.category.findUnique({
       where: { id },
     });
   }
 
-  async gets() {
-    return this.prisma.category.findMany({});
+  async findAll() {
+    return await this.prisma.category.findMany({});
   }
+
   async validateNonCategoryCycle(
     categoryId: number,
     parentId: number | undefined,
@@ -91,34 +104,22 @@ export class CategoryService {
     }
   }
 
-  async updateById(id: number, payload: UpdateCategoryDTO) {
-    const category = await this.prisma.category.findUnique({
-      where: {
-        id,
-      },
-    });
-    if (!category) {
+  async update(id: number, payload: IUpdateCategoryDTO) {
+    if (!(await this.hasId(id))) {
       throw new CustomHttpException(
         RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_ID(id),
         RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
-    if (payload.parentId) {
-      const categoryParent = await this.prisma.category.findUnique({
-        where: {
-          id: payload.parentId,
-        },
-      });
-      if (!categoryParent) {
-        throw new CustomHttpException(
-          RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_PARENT_ID(
-            payload.parentId,
-          ),
-          RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,
-          HttpStatus.BAD_REQUEST,
-        );
-      }
+    if (payload.parentId && !(await this.hasId(payload.parentId))) {
+      throw new CustomHttpException(
+        RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_PARENT_ID(
+          payload.parentId,
+        ),
+        RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     await this.validateNonCategoryCycle(id, payload.parentId);
@@ -128,12 +129,8 @@ export class CategoryService {
     });
   }
 
-  async deleteById(id: number) {
-    const category = await this.prisma.category.findUnique({
-      where: { id },
-    });
-
-    if (!category) {
+  async delete(id: number) {
+    if (!(await this.hasId(id))) {
       throw new CustomHttpException(
         RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_ID(id),
         RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,

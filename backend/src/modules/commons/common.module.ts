@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './services/auth.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CategoryService } from './services/category.service';
+import { ProductService } from './services/product.service';
 
 @Module({
   imports: [
@@ -20,7 +21,19 @@ import { CategoryService } from './services/category.service';
       }),
     }),
   ],
-  providers: [UserService, PrismaService, AuthService, CategoryService],
-  exports: [UserService, PrismaService, AuthService, CategoryService],
+  providers: [
+    UserService,
+    PrismaService,
+    AuthService,
+    CategoryService,
+    ProductService,
+  ],
+  exports: [
+    UserService,
+    PrismaService,
+    AuthService,
+    CategoryService,
+    ProductService,
+  ],
 })
 export class CommonModule {}

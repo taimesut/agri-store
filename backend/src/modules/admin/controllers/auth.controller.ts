@@ -10,10 +10,10 @@ import {
 import type { Request, Response } from 'express';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
-import { LoginDTO } from 'src/modules/commons/dtos/auth.dto';
+import { ILoginDTO } from 'src/modules/commons/dtos/auth.dto';
 import { AuthService } from 'src/modules/commons/services/auth.service';
 import { BaseResponse } from 'src/responses/base.response';
-import type { JwtPayload } from 'src/utils/interfaces';
+import type { IJwtPayload } from 'src/utils/interfaces';
 
 @Controller('/auth')
 export class AdminAuthController {
@@ -23,7 +23,7 @@ export class AdminAuthController {
   @Post('/login')
   @HttpCode(200)
   async login(
-    @Body() payload: LoginDTO,
+    @Body() payload: ILoginDTO,
     @Res({ passthrough: true }) res: Response,
   ) {
     return await this.authService.login(payload, res);
@@ -31,7 +31,7 @@ export class AdminAuthController {
 
   @UseGuards(AuthGuard)
   @Post('/me')
-  me(@CurrentUser() user: JwtPayload) {
+  me(@CurrentUser() user: IJwtPayload) {
     return new BaseResponse('user', user);
   }
 

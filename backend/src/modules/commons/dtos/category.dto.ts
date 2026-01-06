@@ -1,13 +1,13 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class CategoryDTO {
+export class ICategoryDTO {
   name: string;
   id: number;
   description: string;
   parentId: number | null;
 }
 
-export class CreateCategoryDTO {
+export class ICreateCategoryDTO {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -21,7 +21,7 @@ export class CreateCategoryDTO {
   parentId?: number;
 }
 
-export class UpdateCategoryDTO {
+export class IUpdateCategoryDTO {
   @IsString()
   @IsOptional()
   @IsNotEmpty()

@@ -9,8 +9,8 @@ import {
   Put,
 } from '@nestjs/common';
 import {
-  CreateCategoryDTO,
-  UpdateCategoryDTO,
+  ICreateCategoryDTO,
+  IUpdateCategoryDTO,
 } from 'src/modules/commons/dtos/category.dto';
 
 import { CategoryService } from 'src/modules/commons/services/category.service';
@@ -23,7 +23,7 @@ export class AdminCategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post()
-  async create(@Body() payload: CreateCategoryDTO) {
+  async create(@Body() payload: ICreateCategoryDTO) {
     return new BaseResponse(
       'category',
       await this.categoryService.create(payload),
@@ -31,31 +31,28 @@ export class AdminCategoryController {
   }
 
   @Get('/:id')
-  async get(@Param('id', CustomParseIntPipe) id: number) {
-    return new BaseResponse('category', await this.categoryService.getById(id));
+  async findOne(@Param('id', CustomParseIntPipe) id: number) {
+    return new BaseResponse('category', await this.categoryService.findOne(id));
   }
 
   @Get()
-  async gets() {
-    return new BaseResponse('categories', await this.categoryService.gets());
+  async findAll() {
+    return new BaseResponse('categories', await this.categoryService.findAll());
   }
 
   @Put('/:id')
   async update(
     @Param('id', CustomParseIntPipe) id: number,
-    @Body() payload: UpdateCategoryDTO,
+    @Body() payload: IUpdateCategoryDTO,
   ) {
     return new BaseResponse(
       'category',
-      await this.categoryService.updateById(id, payload),
+      await this.categoryService.update(id, payload),
     );
   }
 
   @Delete('/:id')
   async delete(@Param('id', CustomParseIntPipe) id: number) {
-    return new BaseResponse(
-      'category',
-      await this.categoryService.deleteById(id),
-    );
+    return new BaseResponse('category', await this.categoryService.delete(id));
   }
 }

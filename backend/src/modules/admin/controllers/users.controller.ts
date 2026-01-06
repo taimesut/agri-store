@@ -12,8 +12,8 @@ import { UserService } from '../../commons/services/user.service';
 import { BaseResponse } from 'src/responses/base.response';
 import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
 import {
-  CreateUserDTO,
-  UpdateUserDTO,
+  ICreateUserDTO,
+  IUpdateUserDTO,
 } from 'src/modules/commons/dtos/user.dto';
 
 @Controller('users')
@@ -22,33 +22,33 @@ export class AdminUsersController {
   constructor(private readonly usersService: UserService) {}
 
   @Get('/:id')
-  async get(@Param('id', CustomParseIntPipe) id: number) {
-    return new BaseResponse('user', await this.usersService.getById(id));
+  async findOne(@Param('id', CustomParseIntPipe) id: number) {
+    return new BaseResponse('user', await this.usersService.findOne(id));
   }
 
   @Get()
-  async gets() {
-    return new BaseResponse('users', await this.usersService.gets());
+  async findAll() {
+    return new BaseResponse('users', await this.usersService.findAll());
   }
 
   @Post()
-  async create(@Body() payload: CreateUserDTO) {
+  async create(@Body() payload: ICreateUserDTO) {
     return new BaseResponse('user', await this.usersService.create(payload));
   }
 
   @Put('/:id')
   async update(
     @Param('id', CustomParseIntPipe) id: number,
-    @Body() payload: UpdateUserDTO,
+    @Body() payload: IUpdateUserDTO,
   ) {
     return new BaseResponse(
       'user',
-      await this.usersService.updateById(id, payload),
+      await this.usersService.update(id, payload),
     );
   }
 
   @Delete('/:id')
   async delete(@Param('id', CustomParseIntPipe) id: number) {
-    return new BaseResponse('user', await this.usersService.deleteById(id));
+    return new BaseResponse('user', await this.usersService.delete(id));
   }
 }

@@ -1,11 +1,24 @@
 export const RES_CODE = {
   INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  PRISMA_ERROR: 'PRISMA_ERROR',
   UNAUTHORIZED: 'UNAUTHORIZED',
   NOT_FOUND: 'NOT_FOUND',
   VALIDATION_FAILED: 'VALIDATION_FAILED',
 
+  PRISMA_SERVICE: {
+    DUPLICATE_VALUE: 'DUPLICATE_VALUE',
+  },
+
   AUTH_SERIVCE: {
     LOGIN_FAILED: 'LOGIN_FAILED',
+  },
+
+  PRODUCT_SERVICE: {
+    GET_PRODUCT_FAILED: 'GET_PRODUCT_FAILED',
+    GET_PRODUCTS_FAILED: 'GET_PRODUCTS_FAILED',
+    CREATE_PRODUCT_FAILED: 'CREATE_PRODUCT_FAILED',
+    UPDATE_PRODUCT_FAILED: 'UPDATE_PRODUCT_FAILED',
+    DELETE_PRODUCT_FAILED: 'DELETE_PRODUCT_FAILED',
   },
 
   USER_SERVICE: {
@@ -28,7 +41,13 @@ export const RES_CODE = {
 
 export const RES_MESSAGE = {
   INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  PRISMA_ERROR: 'PRISMA_ERROR',
+
   CUSTOM_PARSE_INT_PIPE_ERROR: 'Validation failed (numeric string is expected)',
+
+  PRISMA_SERVICE: {
+    DUPLICATE_VALUE: (field) => `Duplicate value for: ${field}`,
+  },
 
   AUTH_SERVICE: {
     ACCOUNT_OR_PASSWORD_INVALID: 'Tài khoản hoặc mật khẩu không hợp lệ',
@@ -46,7 +65,7 @@ export const RES_MESSAGE = {
     NOT_FOUND_WITH_ID: (id) => `Category with id:: ${id} not found`,
     NOT_FOUND_WITH_PARENT_ID: (id) =>
       `Category with parentId:: ${id} not found`,
-    NOT_FOUND_WITH_NAME: (name) => `Category with name:: ${name} not found`,
+    NAME_IS_EXISTING: (name) => `Category with name:: ${name} đã tồn tại`,
     PARENT_OF_ITSELF: 'Category cannot be parent of itself',
     HIEARARCHY_CYCLE: 'Category hierarchy cycle detected',
   },
