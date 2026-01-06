@@ -1,6 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from 'generated/prisma/client';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
+import { PrismaClient } from 'prisma/generated/client';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
