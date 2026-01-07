@@ -34,6 +34,7 @@ export class UserService implements ICRUD<
   }
 
   async create(payload: ICreateUserDTO): Promise<IUserDTO> {
+    // check email exist
     if (await this.hasEmail(payload.email)) {
       throw new CustomHttpException(
         RES_MESSAGE.USERS_SERVICE.EMAIL_IS_EXISTING,
@@ -67,6 +68,7 @@ export class UserService implements ICRUD<
   }
 
   async update(id: number, payload: IUpdateUserDTO): Promise<IUserDTO> {
+    // check userId exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
         RES_MESSAGE.USERS_SERVICE.NOT_FOUND_WITH_ID(id),
@@ -83,6 +85,7 @@ export class UserService implements ICRUD<
   }
 
   async delete(id: number): Promise<IUserDTO> {
+    // check userId exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
         RES_MESSAGE.USERS_SERVICE.NOT_FOUND_WITH_ID(id),

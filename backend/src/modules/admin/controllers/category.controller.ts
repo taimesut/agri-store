@@ -7,7 +7,9 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from 'src/guards/auth.guard';
 import {
   ICreateCategoryDTO,
   IUpdateCategoryDTO,
@@ -18,6 +20,7 @@ import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
 import { BaseResponse } from 'src/responses/base.response';
 
 @Controller('/categories')
+@UseGuards(AuthGuard)
 export class AdminCategoryController {
   private readonly logger = new Logger(AdminCategoryController.name);
   constructor(private readonly categoryService: CategoryService) {}

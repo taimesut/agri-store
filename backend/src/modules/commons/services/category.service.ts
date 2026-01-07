@@ -39,6 +39,7 @@ export class CategoryService implements ICRUD<
   }
 
   async create(payload: ICreateCategoryDTO): Promise<ICategoryDTO> {
+    // check parentId exist
     if (payload.parentId && !(await this.hasId(payload.parentId))) {
       throw new CustomHttpException(
         RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_PARENT_ID(
@@ -48,7 +49,7 @@ export class CategoryService implements ICRUD<
         HttpStatus.BAD_REQUEST,
       );
     }
-
+    // check name exist
     if (await this.hasName(payload.name)) {
       throw new CustomHttpException(
         RES_MESSAGE.CATEGORIES_SERVICE.NAME_IS_EXISTING(payload.name),
@@ -105,6 +106,7 @@ export class CategoryService implements ICRUD<
   }
 
   async update(id: number, payload: IUpdateCategoryDTO) {
+    // check id exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
         RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_ID(id),
@@ -112,6 +114,7 @@ export class CategoryService implements ICRUD<
         HttpStatus.BAD_REQUEST,
       );
     }
+    // check parentId exist
     if (payload.parentId && !(await this.hasId(payload.parentId))) {
       throw new CustomHttpException(
         RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_PARENT_ID(
@@ -121,7 +124,7 @@ export class CategoryService implements ICRUD<
         HttpStatus.BAD_REQUEST,
       );
     }
-
+    // validate parentId
     await this.validateNonCategoryCycle(id, payload.parentId);
     return await this.prisma.category.update({
       where: { id },
@@ -130,6 +133,7 @@ export class CategoryService implements ICRUD<
   }
 
   async delete(id: number) {
+    // check id exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
         RES_MESSAGE.CATEGORIES_SERVICE.NOT_FOUND_WITH_ID(id),

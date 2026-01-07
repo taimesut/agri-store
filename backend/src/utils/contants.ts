@@ -69,4 +69,12 @@ export const RES_MESSAGE = {
     PARENT_OF_ITSELF: 'Category cannot be parent of itself',
     HIEARARCHY_CYCLE: 'Category hierarchy cycle detected',
   },
+  PRODUCT_SERVICE: {
+    HANDLE_IS_EXISTING: (handle) =>
+      `Product with handle:: ${handle} đã tồn tại`,
+    SKU_IS_EXISTING: (sku) => `Product with sku:: ${sku} đã tồn tại`,
+    NOT_FOUND_CATEGORY_ID: (id) =>
+      `Product with categoryId:: ${id} không tồn tại`,
+    NOT_FOUND_WITH_ID: (id) => `Not found with id: ${id}`,
+  },
 };

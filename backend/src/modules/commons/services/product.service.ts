@@ -8,6 +8,7 @@ import {
 } from '../dtos/product.dto';
 import { toSlug } from 'src/utils/string';
 import { CustomHttpException } from 'src/exceptions/custom-http.exception';
+import { RES_CODE, RES_MESSAGE } from 'src/utils/contants';
 
 @Injectable()
 export class ProductService implements ICRUD<
@@ -55,46 +56,105 @@ export class ProductService implements ICRUD<
   }
 
   private resolveHandle(name: string, handle?: string): string {
-    if (handle !== undefined && handle !== '' && handle !== null) return handle;
+    if (handle !== undefined && handle !== '' && handle !== null)
+      return toSlug(handle);
     return toSlug(name);
   }
 
   async create(payload: ICreateProductDTO): Promise<IProductDTO> {
     const resolvedHandle = this.resolveHandle(payload.name, payload.handle);
-    this.logger.log(resolvedHandle);
 
     // check handle unique
     if (await this.hasHandle(resolvedHandle)) {
-      throw new CustomHttpException('', '', HttpStatus.BAD_REQUEST);
+      throw new CustomHttpException(
+        RES_MESSAGE.PRODUCT_SERVICE.HANDLE_IS_EXISTING(resolvedHandle),
+        RES_CODE.PRODUCT_SERVICE.CREATE_PRODUCT_FAILED,
+        HttpStatus.BAD_REQUEST,
+      );
     }
     // check sku unique
     if (payload.sku && (await this.hasSku(payload.sku))) {
-      throw new CustomHttpException('', '', HttpStatus.BAD_REQUEST);
+      throw new CustomHttpException(
+        RES_MESSAGE.PRODUCT_SERVICE.SKU_IS_EXISTING(payload.sku),
+        RES_CODE.PRODUCT_SERVICE.CREATE_PRODUCT_FAILED,
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     // check categoryId exist
     if (payload.categoryId && !(await this.hasCategoryId(payload.categoryId))) {
-      throw new CustomHttpException('', '', HttpStatus.BAD_REQUEST);
+      throw new CustomHttpException(
+        RES_MESSAGE.PRODUCT_SERVICE.NOT_FOUND_CATEGORY_ID(payload.categoryId),
+        RES_CODE.PRODUCT_SERVICE.CREATE_PRODUCT_FAILED,
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    const { handle, ...rest } = payload;
 
     return await this.prisma.product.create({
       data: {
-        ...rest,
+        ...payload,
         handle: resolvedHandle,
       },
     });
   }
-  findAll(): Promise<IProductDTO[]> {
-    throw new Error('Method not implemented.');
+  async findAll(): Promise<IProductDTO[]> {
+    return await this.prisma.product.findMany();
   }
-  findOne(id: number): Promise<IProductDTO | null> {
-    throw new Error('Method not implemented.');
+  async findOne(id: number): Promise<IProductDTO | null> {
+    return await this.prisma.product.findUnique({ where: { id } });
   }
-  update(id: number, dto: IUpdateProductDTO): Promise<IProductDTO> {
-    throw new Error('Method not implemented.');
+  async update(id: number, payload: IUpdateProductDTO): Promise<IProductDTO> {
+    // check id exist
+    if (!(await this.hasId(id))) {
+      throw new CustomHttpException(
+        RES_MESSAGE.PRODUCT_SERVICE.NOT_FOUND_WITH_ID(id),
+        RES_CODE.PRODUCT_SERVICE.UPDATE_PRODUCT_FAILED,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    // check categoryId exist
+    if (payload.categoryId && !(await this.hasCategoryId(payload.categoryId))) {
+      throw new CustomHttpException(
+        RES_MESSAGE.PRODUCT_SERVICE.NOT_FOUND_CATEGORY_ID(id),
+        RES_CODE.PRODUCT_SERVICE.UPDATE_PRODUCT_FAILED,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    // check sku unique
+    if (payload.sku && (await this.hasSku(payload.sku))) {
+      throw new CustomHttpException(
+        RES_MESSAGE.PRODUCT_SERVICE.SKU_IS_EXISTING(payload.sku),
+        RES_CODE.PRODUCT_SERVICE.UPDATE_PRODUCT_FAILED,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    // check handle unique
+    if (payload.handle) {
+      const resolvedHandle = toSlug(payload.handle);
+      if (await this.hasHandle(resolvedHandle)) {
+        throw new CustomHttpException(
+          RES_MESSAGE.PRODUCT_SERVICE.HANDLE_IS_EXISTING(resolvedHandle),
+          RES_CODE.PRODUCT_SERVICE.UPDATE_PRODUCT_FAILED,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      payload.handle = resolvedHandle;
+    }
+    return await this.prisma.product.update({
+      where: { id },
+      data: { ...payload },
+    });
   }
-  delete(id: number): Promise<IProductDTO> {
-    throw new Error('Method not implemented.');
+  async delete(id: number): Promise<IProductDTO> {
+    // check id exist
+    if (!(await this.hasId(id))) {
+      throw new CustomHttpException(
+        RES_MESSAGE.PRODUCT_SERVICE.NOT_FOUND_WITH_ID(id),
+        RES_CODE.PRODUCT_SERVICE.DELETE_PRODUCT_FAILED,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return await this.prisma.product.delete({ where: { id } });
   }
 }
