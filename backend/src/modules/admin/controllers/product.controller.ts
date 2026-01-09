@@ -11,6 +11,8 @@ export class AdminProductController implements IControllerCrud<
   CreateProductDTO,
   UpdateProductDTO
 > {
+  private readonly logger = new Logger(AdminProductController.name);
+
   @Get('/:id')
   findOne(id: string): Promise<any> {
     throw new Error('Method not implemented.');
@@ -25,12 +27,12 @@ export class AdminProductController implements IControllerCrud<
     return payload;
   }
   @Post('/:id')
-  update(id: string, payload: UpdateProductDTO): Promise<any> {
-    throw new Error('Method not implemented.');
+  async update(id: string, @Body() payload: UpdateProductDTO): Promise<any> {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    return payload;
   }
   @Delete('/:id')
   delete(id: string): Promise<any> {
     throw new Error('Method not implemented.');
   }
-  private readonly logger = new Logger(AdminProductController.name);
 }

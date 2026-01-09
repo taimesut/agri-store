@@ -15,6 +15,7 @@ export class ErrorExceptionFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
+    this.logger.error(exception);
 
     // lỗi custom
     if (exception instanceof CustomHttpException) {

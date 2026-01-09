@@ -7,11 +7,11 @@
 //   exp?: number;
 // }
 
-export interface IServiceCrud<T, CreateDTO, UpdateDTO> {
-  create(payload: CreateDTO): Promise<T>;
+export interface IServiceCrud<T, CreateTDTO, UpdateTDTO> {
+  create(payload: CreateTDTO): Promise<T>;
   findAll(): Promise<T[]>;
   findOne(id: number): Promise<T | null>;
-  update(id: number, dto: UpdateDTO): Promise<T>;
+  update(id: number, dto: UpdateTDTO): Promise<T>;
   delete(id: number): Promise<T>;
 }
 
