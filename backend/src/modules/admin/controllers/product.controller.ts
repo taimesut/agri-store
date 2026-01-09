@@ -8,6 +8,9 @@ import {
   Put,
   Get,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  UploadedFiles,
 } from '@nestjs/common';
 import { BaseResponse } from 'src/responses/base.response';
 import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
@@ -18,6 +21,7 @@ import {
   IUpdateProductDTO,
 } from 'src/modules/commons/dtos/product.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')
 @UseGuards(AuthGuard)
@@ -57,5 +61,22 @@ export class AdminProductsController {
   @Delete('/:id')
   async delete(@Param('id', CustomParseIntPipe) id: number) {
     return new BaseResponse('product', await this.productService.delete(id));
+  }
+
+  @Post('/uploads/:id')
+  @UseInterceptors(FileInterceptor('file'))
+  upload(
+    @Param('id', CustomParseIntPipe) id: number,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return file;
+  }
+  @Post('/uploadss/:id')
+  @UseInterceptors(FilesInterceptor('files'))
+  uploads(
+    @Param('id', CustomParseIntPipe) id: number,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    return files;
   }
 }

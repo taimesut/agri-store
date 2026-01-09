@@ -157,4 +157,16 @@ export class ProductService implements ICRUD<
 
     return await this.prisma.product.delete({ where: { id } });
   }
+
+  async upload(id: number): Promise<IProductDTO> {
+    if (!(await this.hasId(id))) {
+      throw new CustomHttpException(
+        RES_MESSAGE.PRODUCT_SERVICE.NOT_FOUND_WITH_ID(id),
+        RES_CODE.PRODUCT_SERVICE.DELETE_PRODUCT_FAILED,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return await this.prisma.product.delete({ where: { id } });
+  }
 }
