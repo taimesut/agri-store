@@ -3,14 +3,14 @@ import { PrismaService } from 'src/modules/commons/services/prisma.serivce';
 import { hashPassword } from 'src/utils/password';
 import { CustomHttpException } from 'src/exceptions/custom-http.exception';
 import { RES_CODE, RES_MESSAGE } from 'src/utils/contants';
-import { ICreateUserDTO, IUpdateUserDTO, IUserDTO } from '../dtos/user.dto';
-import { ICRUD } from 'src/utils/interfaces';
+import { CreateUserDTO, UpdateUserDTO, UserDTO } from '../dtos/user.dto';
+import { IServiceCrud } from 'src/utils/interfaces';
 
 @Injectable()
-export class UserService implements ICRUD<
-  IUserDTO,
-  ICreateUserDTO,
-  IUpdateUserDTO
+export class UserService implements IServiceCrud<
+  UserDTO,
+  CreateUserDTO,
+  UpdateUserDTO
 > {
   private readonly logger = new Logger(UserService.name);
   constructor(private prisma: PrismaService) {}
@@ -33,7 +33,7 @@ export class UserService implements ICRUD<
     return user !== null;
   }
 
-  async create(payload: ICreateUserDTO): Promise<IUserDTO> {
+  async create(payload: CreateUserDTO): Promise<UserDTO> {
     // check email exist
     if (await this.hasEmail(payload.email)) {
       throw new CustomHttpException(
@@ -50,7 +50,7 @@ export class UserService implements ICRUD<
     });
   }
 
-  async findAll(): Promise<IUserDTO[]> {
+  async findAll(): Promise<UserDTO[]> {
     return await this.prisma.user.findMany({
       omit: {
         password: true,
@@ -58,7 +58,7 @@ export class UserService implements ICRUD<
     });
   }
 
-  async findOne(id: number): Promise<IUserDTO | null> {
+  async findOne(id: number): Promise<UserDTO | null> {
     return await this.prisma.user.findUnique({
       where: { id },
       omit: {
@@ -67,7 +67,7 @@ export class UserService implements ICRUD<
     });
   }
 
-  async update(id: number, payload: IUpdateUserDTO): Promise<IUserDTO> {
+  async update(id: number, payload: UpdateUserDTO): Promise<UserDTO> {
     // check userId exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
@@ -84,7 +84,7 @@ export class UserService implements ICRUD<
     });
   }
 
-  async delete(id: number): Promise<IUserDTO> {
+  async delete(id: number): Promise<UserDTO> {
     // check userId exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(

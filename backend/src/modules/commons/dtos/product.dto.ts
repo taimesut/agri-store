@@ -1,55 +1,83 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ProductVariantDTO } from './product-variant.dto';
+import { ProductImageDTO } from './product-image.dto';
+import { ProductTagLinkDTO } from './product-tag-link.dto';
+import {
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
 
-export class IProductDTO {
-  name: string;
-  id: number;
-  description: string;
-  price: number;
-  sku: string | null;
-  handle: string | null;
-  categoryId: number | null;
+enum ProductStatus {
+  DRAFT,
+  PUBLISHED,
 }
 
-export class ICreateProductDTO {
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-  @IsOptional()
+export class ProductOptionDTO {
+  title: string;
+  values: string[];
+}
+
+export class ProductDTO {
+  title: string;
+
+  handle: string;
+
   description?: string;
-  @IsNumber()
-  price: number;
-  @IsOptional()
-  @IsNotEmpty()
-  sku?: string;
-  @IsOptional()
-  @IsNotEmpty()
-  handle?: string;
-  @IsOptional()
-  @IsNumber()
-  categoryId?: number;
+
+  status: ProductStatus;
+
+  variants: ProductVariantDTO[];
+
+  images: ProductImageDTO[];
+
+  options: ProductOptionDTO[];
+
+  tags: ProductTagLinkDTO[];
+
+  categories: string[];
 }
 
-export class IUpdateProductDTO {
-  @IsOptional()
+export class CreateProductDTO {
   @IsString()
   @IsNotEmpty()
-  name?: string;
+  title: string;
+
+  @IsString()
+  handle: string;
+
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   description?: string;
-  @IsOptional()
-  @IsNumber()
-  price?: number;
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  sku?: string;
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  handle?: string;
-  @IsOptional()
-  @IsNumber()
-  categoryId?: number;
+
+  @IsEnum(ProductStatus)
+  status: ProductStatus;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ProductVariantDTO)
+  variants: ProductVariantDTO[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ProductImageDTO)
+  images: ProductImageDTO[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ProductOptionDTO)
+  options: ProductOptionDTO[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ProductTagLinkDTO)
+  tags: ProductTagLinkDTO[];
+
+  @IsArray()
+  categories: string[];
 }
+
+export class UpdateProductDTO {}

@@ -1,82 +1,36 @@
+import { Body, Controller, Delete, Get, Logger, Post } from '@nestjs/common';
 import {
-  Controller,
-  Post,
-  Body,
-  Logger,
-  Delete,
-  Param,
-  Put,
-  Get,
-  UseGuards,
-  UseInterceptors,
-  UploadedFile,
-  UploadedFiles,
-} from '@nestjs/common';
-import { BaseResponse } from 'src/responses/base.response';
-import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
-
-import { ProductService } from 'src/modules/commons/services/product.service';
-import {
-  ICreateProductDTO,
-  IUpdateProductDTO,
+  CreateProductDTO,
+  UpdateProductDTO,
 } from 'src/modules/commons/dtos/product.dto';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { IControllerCrud } from 'src/utils/interfaces';
 
 @Controller('products')
-@UseGuards(AuthGuard)
-export class AdminProductsController {
-  private readonly logger = new Logger(AdminProductsController.name);
-  constructor(private readonly productService: ProductService) {}
-
+export class AdminProductController implements IControllerCrud<
+  string,
+  CreateProductDTO,
+  UpdateProductDTO
+> {
   @Get('/:id')
-  async findOne(@Param('id', CustomParseIntPipe) id: number) {
-    return new BaseResponse('product', await this.productService.findOne(id));
+  findOne(id: string): Promise<any> {
+    throw new Error('Method not implemented.');
   }
-
   @Get()
-  async findAll() {
-    return new BaseResponse('products', await this.productService.findAll());
+  findAll(): Promise<any> {
+    throw new Error('Method not implemented.');
   }
-
   @Post()
-  async create(@Body() payload: ICreateProductDTO) {
-    return new BaseResponse(
-      'product',
-      await this.productService.create(payload),
-    );
+  async create(@Body() payload: CreateProductDTO): Promise<any> {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    return payload;
   }
-
-  @Put('/:id')
-  async update(
-    @Param('id', CustomParseIntPipe) id: number,
-    @Body() payload: IUpdateProductDTO,
-  ) {
-    return new BaseResponse(
-      'product',
-      await this.productService.update(id, payload),
-    );
+  @Post('/:id')
+  update(id: string, payload: UpdateProductDTO): Promise<any> {
+    throw new Error('Method not implemented.');
   }
-
   @Delete('/:id')
-  async delete(@Param('id', CustomParseIntPipe) id: number) {
-    return new BaseResponse('product', await this.productService.delete(id));
+  delete(id: string): Promise<any> {
+    throw new Error('Method not implemented.');
   }
-
-  @Post('/uploads/:id')
-  @UseInterceptors(FileInterceptor('file'))
-  upload(
-    @Param('id', CustomParseIntPipe) id: number,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    return file;
-  }
-  @Post('/uploadss/:id')
-  @UseInterceptors(FilesInterceptor('files'))
-  uploads(
-    @Param('id', CustomParseIntPipe) id: number,
-    @UploadedFiles() files: Array<Express.Multer.File>,
-  ) {
-    return files;
-  }
+  private readonly logger = new Logger(AdminProductController.name);
 }

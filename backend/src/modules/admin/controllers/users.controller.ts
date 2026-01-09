@@ -5,15 +5,14 @@ import {
   Logger,
   Delete,
   Param,
-  Put,
   Get,
 } from '@nestjs/common';
 import { UserService } from '../../commons/services/user.service';
 import { BaseResponse } from 'src/responses/base.response';
 import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
 import {
-  ICreateUserDTO,
-  IUpdateUserDTO,
+  CreateUserDTO,
+  UpdateUserDTO,
 } from 'src/modules/commons/dtos/user.dto';
 
 @Controller('users')
@@ -32,14 +31,14 @@ export class AdminUsersController {
   }
 
   @Post()
-  async create(@Body() payload: ICreateUserDTO) {
+  async create(@Body() payload: CreateUserDTO) {
     return new BaseResponse('user', await this.usersService.create(payload));
   }
 
-  @Put('/:id')
+  @Post('/:id')
   async update(
     @Param('id', CustomParseIntPipe) id: number,
-    @Body() payload: IUpdateUserDTO,
+    @Body() payload: UpdateUserDTO,
   ) {
     return new BaseResponse(
       'user',

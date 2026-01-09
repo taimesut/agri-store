@@ -1,13 +1,13 @@
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
-export class IUserDTO {
+export class UserDTO {
   id: number;
   email: string;
   firstName: string;
   lastName: string;
 }
 
-export class IUpdateUserDTO {
+export class UpdateUserDTO {
   @IsNotEmpty()
   firstName: string;
 
@@ -15,7 +15,7 @@ export class IUpdateUserDTO {
   lastName: string;
 }
 
-export class ICreateUserDTO {
+export class CreateUserDTO {
   @IsEmail()
   email: string;
 

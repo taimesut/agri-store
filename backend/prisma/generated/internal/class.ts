@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.2.0",
   "engineVersion": "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3",
   "activeProvider": "mysql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider     = \"prisma-client\"\n  output       = \"./generated\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n}\n\nmodel User {\n  id        Int    @id @default(autoincrement())\n  email     String @unique\n  password  String\n  firstName String\n  lastName  String\n}\n\nmodel Category {\n  id          Int       @id @default(autoincrement())\n  name        String    @unique\n  description String    @default(\"\")\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n  products    Product[]\n\n  parentId Int?\n  parent   Category?  @relation(\"CategoryHierarchy\", fields: [parentId], references: [id], onDelete: Cascade)\n  children Category[] @relation(\"CategoryHierarchy\")\n}\n\nmodel Product {\n  id          Int      @id @default(autoincrement())\n  name        String\n  description String   @default(\"\")\n  price       Float\n  sku         String?  @unique\n  handle      String   @unique // url\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  categoryId Int?\n  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)\n\n  tags   Tag[]\n  images ImageProduct[]\n}\n\nmodel ImageProduct {\n  id Int @id @default(autoincrement())\n\n  url String\n\n  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)\n  productId Int?\n}\n\nmodel Tag {\n  id        Int       @id @default(autoincrement())\n  name      String    @unique\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  products  Product[]\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider     = \"prisma-client\"\n  output       = \"./generated\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n}\n\n//////////////////////\n// USER\n//////////////////////\nmodel User {\n  id        Int    @id @default(autoincrement())\n  email     String @unique\n  password  String\n  firstName String\n  lastName  String\n}\n\n//////////////////////\n// CUSTOMER\n//////////////////////\nmodel Customer {\n  id           String  @id @default(uuid())\n  email        String  @unique\n  passwordHash String  @map(\"password_hash\")\n  fullName     String  @map(\"full_name\")\n  phone        String?\n\n  orders Order[]\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  @@map(\"customer\")\n}\n\n//////////////////////\n// PRODUCT\n//////////////////////\nmodel Product {\n  id          String        @id @default(uuid())\n  title       String\n  handle      String        @unique\n  description String?\n  status      ProductStatus @default(DRAFT)\n\n  variants   ProductVariant[]\n  images     ProductImage[]\n  options    ProductOption[]\n  tags       ProductTagLink[]\n  categories ProductCategory[]\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  @@map(\"product\")\n}\n\nenum ProductStatus {\n  DRAFT\n  PUBLISHED\n}\n\n//////////////////////\n// PRODUCT IMAGE\n//////////////////////\nmodel ProductImage {\n  id        String @id @default(uuid())\n  productId String @map(\"product_id\") // FK -> product.id\n  url       String\n  position  Int\n\n  product Product @relation(fields: [productId], references: [id])\n\n  @@map(\"product_image\")\n}\n\n//////////////////////\n// TAG\n//////////////////////\nmodel ProductTag {\n  id    String @id @default(uuid())\n  value String @unique\n\n  products ProductTagLink[]\n\n  @@map(\"product_tag\")\n}\n\nmodel ProductTagLink {\n  productId String @map(\"product_id\") // FK -> product.id\n  tagId     String @map(\"tag_id\") // FK -> product_tag.id\n\n  product Product    @relation(fields: [productId], references: [id])\n  tag     ProductTag @relation(fields: [tagId], references: [id])\n\n  @@id([productId, tagId])\n  @@map(\"product_tag_link\")\n}\n\n//////////////////////\n// CATEGORY (TREE)\n//////////////////////\nmodel Category {\n  id       String  @id @default(uuid())\n  name     String\n  handle   String  @unique\n  parentId String? @map(\"parent_id\") // FK -> category.id (self)\n\n  parent   Category?  @relation(\"CategoryTree\", fields: [parentId], references: [id])\n  children Category[] @relation(\"CategoryTree\")\n\n  products ProductCategory[]\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n\n  @@map(\"category\")\n}\n\nmodel ProductCategory {\n  productId  String @map(\"product_id\") // FK -> product.id\n  categoryId String @map(\"category_id\") // FK -> category.id\n\n  product  Product  @relation(fields: [productId], references: [id])\n  category Category @relation(fields: [categoryId], references: [id])\n\n  @@id([productId, categoryId])\n  @@map(\"product_category\")\n}\n\n//////////////////////\n// PRODUCT OPTION\n//////////////////////\nmodel ProductOption {\n  id        String @id @default(uuid())\n  productId String @map(\"product_id\") // FK -> product.id\n  title     String\n\n  values ProductOptionValue[]\n\n  product Product @relation(fields: [productId], references: [id])\n\n  @@map(\"product_option\")\n}\n\nmodel ProductOptionValue {\n  id       String @id @default(uuid())\n  optionId String @map(\"option_id\") // FK -> product_option.id\n  value    String\n\n  variants VariantOptionValue[]\n\n  option ProductOption @relation(fields: [optionId], references: [id])\n\n  @@map(\"product_option_value\")\n}\n\n//////////////////////\n// VARIANT\n//////////////////////\nmodel ProductVariant {\n  id        String  @id @default(uuid())\n  productId String  @map(\"product_id\") // FK -> product.id\n  sku       String  @unique\n  title     String\n  price     Decimal @db.Decimal(12, 2)\n\n  product   Product              @relation(fields: [productId], references: [id])\n  options   VariantOptionValue[]\n  inventory Inventory?\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n\n  @@map(\"product_variant\")\n}\n\nmodel VariantOptionValue {\n  variantId     String @map(\"variant_id\") // FK -> product_variant.id\n  optionValueId String @map(\"option_value_id\") // FK -> product_option_value.id\n\n  variant     ProductVariant     @relation(fields: [variantId], references: [id])\n  optionValue ProductOptionValue @relation(fields: [optionValueId], references: [id])\n\n  @@id([variantId, optionValueId])\n  @@map(\"variant_option_value\")\n}\n\n//////////////////////\n// INVENTORY\n//////////////////////\nmodel Inventory {\n  id        String @id @default(uuid())\n  variantId String @unique @map(\"variant_id\") // FK -> product_variant.id\n  quantity  Int\n\n  variant ProductVariant @relation(fields: [variantId], references: [id])\n\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  @@map(\"inventory\")\n}\n\n//////////////////////\n// ORDER\n//////////////////////\nmodel Order {\n  id         String      @id @default(uuid())\n  customerId String?     @map(\"customer_id\") // FK -> customer.id\n  status     OrderStatus\n  total      Decimal     @db.Decimal(12, 2)\n\n  shippingAddress Json\n\n  items    OrderItem[]\n  payment  Payment?\n  shipping Shipping?\n\n  customer Customer? @relation(fields: [customerId], references: [id])\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n\n  @@map(\"order\")\n}\n\nenum OrderStatus {\n  PENDING\n  PAID\n  SHIPPING\n  COMPLETED\n  CANCELLED\n}\n\nmodel OrderItem {\n  id        String  @id @default(uuid())\n  orderId   String  @map(\"order_id\") // FK -> order.id\n  variantId String? @map(\"variant_id\")\n\n  productTitle String\n  variantTitle String\n  unitPrice    Decimal @db.Decimal(12, 2)\n  quantity     Int\n  total        Decimal @db.Decimal(12, 2)\n\n  order Order @relation(fields: [orderId], references: [id])\n\n  @@map(\"order_item\")\n}\n\n//////////////////////\n// PAYMENT\n//////////////////////\nmodel Payment {\n  id       String          @id @default(uuid())\n  orderId  String          @unique @map(\"order_id\") // FK -> order.id\n  provider PaymentProvider\n  status   PaymentStatus\n  amount   Decimal         @db.Decimal(12, 2)\n\n  paidAt DateTime? @map(\"paid_at\")\n\n  order Order @relation(fields: [orderId], references: [id])\n\n  @@map(\"payment\")\n}\n\nenum PaymentProvider {\n  COD\n  VNPAY\n  MOMO\n}\n\nenum PaymentStatus {\n  PENDING\n  PAID\n  FAILED\n}\n\n//////////////////////\n// SHIPPING\n//////////////////////\nmodel Shipping {\n  id      String         @id @default(uuid())\n  orderId String         @unique @map(\"order_id\") // FK -> order.id\n  method  String\n  fee     Decimal        @db.Decimal(12, 2)\n  status  ShippingStatus\n\n  order Order @relation(fields: [orderId], references: [id])\n\n  @@map(\"shipping\")\n}\n\nenum ShippingStatus {\n  WAITING\n  SHIPPING\n  DELIVERED\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"Category\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"products\",\"kind\":\"object\",\"type\":\"Product\",\"relationName\":\"CategoryToProduct\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"parent\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryHierarchy\"},{\"name\":\"children\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryHierarchy\"}],\"dbName\":null},\"Product\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"sku\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"handle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"categoryId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToProduct\"},{\"name\":\"tags\",\"kind\":\"object\",\"type\":\"Tag\",\"relationName\":\"ProductToTag\"},{\"name\":\"images\",\"kind\":\"object\",\"type\":\"ImageProduct\",\"relationName\":\"ImageProductToProduct\"}],\"dbName\":null},\"ImageProduct\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"product\",\"kind\":\"object\",\"type\":\"Product\",\"relationName\":\"ImageProductToProduct\"},{\"name\":\"productId\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"Tag\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"products\",\"kind\":\"object\",\"type\":\"Product\",\"relationName\":\"ProductToTag\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"Customer\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"password_hash\"},{\"name\":\"fullName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"full_name\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"orders\",\"kind\":\"object\",\"type\":\"Order\",\"relationName\":\"CustomerToOrder\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"}],\"dbName\":\"customer\"},\"Product\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"handle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"ProductStatus\"},{\"name\":\"variants\",\"kind\":\"object\",\"type\":\"ProductVariant\",\"relationName\":\"ProductToProductVariant\"},{\"name\":\"images\",\"kind\":\"object\",\"type\":\"ProductImage\",\"relationName\":\"ProductToProductImage\"},{\"name\":\"options\",\"kind\":\"object\",\"type\":\"ProductOption\",\"relationName\":\"ProductToProductOption\"},{\"name\":\"tags\",\"kind\":\"object\",\"type\":\"ProductTagLink\",\"relationName\":\"ProductToProductTagLink\"},{\"name\":\"categories\",\"kind\":\"object\",\"type\":\"ProductCategory\",\"relationName\":\"ProductToProductCategory\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"}],\"dbName\":\"product\"},\"ProductImage\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"productId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"product_id\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"position\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"product\",\"kind\":\"object\",\"type\":\"Product\",\"relationName\":\"ProductToProductImage\"}],\"dbName\":\"product_image\"},\"ProductTag\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"products\",\"kind\":\"object\",\"type\":\"ProductTagLink\",\"relationName\":\"ProductTagToProductTagLink\"}],\"dbName\":\"product_tag\"},\"ProductTagLink\":{\"fields\":[{\"name\":\"productId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"product_id\"},{\"name\":\"tagId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"tag_id\"},{\"name\":\"product\",\"kind\":\"object\",\"type\":\"Product\",\"relationName\":\"ProductToProductTagLink\"},{\"name\":\"tag\",\"kind\":\"object\",\"type\":\"ProductTag\",\"relationName\":\"ProductTagToProductTagLink\"}],\"dbName\":\"product_tag_link\"},\"Category\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"handle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"parent_id\"},{\"name\":\"parent\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryTree\"},{\"name\":\"children\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryTree\"},{\"name\":\"products\",\"kind\":\"object\",\"type\":\"ProductCategory\",\"relationName\":\"CategoryToProductCategory\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"}],\"dbName\":\"category\"},\"ProductCategory\":{\"fields\":[{\"name\":\"productId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"product_id\"},{\"name\":\"categoryId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"category_id\"},{\"name\":\"product\",\"kind\":\"object\",\"type\":\"Product\",\"relationName\":\"ProductToProductCategory\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToProductCategory\"}],\"dbName\":\"product_category\"},\"ProductOption\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"productId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"product_id\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"values\",\"kind\":\"object\",\"type\":\"ProductOptionValue\",\"relationName\":\"ProductOptionToProductOptionValue\"},{\"name\":\"product\",\"kind\":\"object\",\"type\":\"Product\",\"relationName\":\"ProductToProductOption\"}],\"dbName\":\"product_option\"},\"ProductOptionValue\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"optionId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"option_id\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"variants\",\"kind\":\"object\",\"type\":\"VariantOptionValue\",\"relationName\":\"ProductOptionValueToVariantOptionValue\"},{\"name\":\"option\",\"kind\":\"object\",\"type\":\"ProductOption\",\"relationName\":\"ProductOptionToProductOptionValue\"}],\"dbName\":\"product_option_value\"},\"ProductVariant\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"productId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"product_id\"},{\"name\":\"sku\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"product\",\"kind\":\"object\",\"type\":\"Product\",\"relationName\":\"ProductToProductVariant\"},{\"name\":\"options\",\"kind\":\"object\",\"type\":\"VariantOptionValue\",\"relationName\":\"ProductVariantToVariantOptionValue\"},{\"name\":\"inventory\",\"kind\":\"object\",\"type\":\"Inventory\",\"relationName\":\"InventoryToProductVariant\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"}],\"dbName\":\"product_variant\"},\"VariantOptionValue\":{\"fields\":[{\"name\":\"variantId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"variant_id\"},{\"name\":\"optionValueId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"option_value_id\"},{\"name\":\"variant\",\"kind\":\"object\",\"type\":\"ProductVariant\",\"relationName\":\"ProductVariantToVariantOptionValue\"},{\"name\":\"optionValue\",\"kind\":\"object\",\"type\":\"ProductOptionValue\",\"relationName\":\"ProductOptionValueToVariantOptionValue\"}],\"dbName\":\"variant_option_value\"},\"Inventory\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"variantId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"variant_id\"},{\"name\":\"quantity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"variant\",\"kind\":\"object\",\"type\":\"ProductVariant\",\"relationName\":\"InventoryToProductVariant\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"}],\"dbName\":\"inventory\"},\"Order\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"customerId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"customer_id\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"OrderStatus\"},{\"name\":\"total\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"shippingAddress\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"items\",\"kind\":\"object\",\"type\":\"OrderItem\",\"relationName\":\"OrderToOrderItem\"},{\"name\":\"payment\",\"kind\":\"object\",\"type\":\"Payment\",\"relationName\":\"OrderToPayment\"},{\"name\":\"shipping\",\"kind\":\"object\",\"type\":\"Shipping\",\"relationName\":\"OrderToShipping\"},{\"name\":\"customer\",\"kind\":\"object\",\"type\":\"Customer\",\"relationName\":\"CustomerToOrder\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"}],\"dbName\":\"order\"},\"OrderItem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"orderId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"order_id\"},{\"name\":\"variantId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"variant_id\"},{\"name\":\"productTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"variantTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"unitPrice\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"quantity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"total\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"order\",\"kind\":\"object\",\"type\":\"Order\",\"relationName\":\"OrderToOrderItem\"}],\"dbName\":\"order_item\"},\"Payment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"orderId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"order_id\"},{\"name\":\"provider\",\"kind\":\"enum\",\"type\":\"PaymentProvider\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"PaymentStatus\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"paidAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"paid_at\"},{\"name\":\"order\",\"kind\":\"object\",\"type\":\"Order\",\"relationName\":\"OrderToPayment\"}],\"dbName\":\"payment\"},\"Shipping\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"orderId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"order_id\"},{\"name\":\"method\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fee\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"ShippingStatus\"},{\"name\":\"order\",\"kind\":\"object\",\"type\":\"Order\",\"relationName\":\"OrderToShipping\"}],\"dbName\":\"shipping\"}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -185,14 +185,14 @@ export interface PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.category`: Exposes CRUD operations for the **Category** model.
+   * `prisma.customer`: Exposes CRUD operations for the **Customer** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Categories
-    * const categories = await prisma.category.findMany()
+    * // Fetch zero or more Customers
+    * const customers = await prisma.customer.findMany()
     * ```
     */
-  get category(): Prisma.CategoryDelegate<ExtArgs, { omit: OmitOpts }>;
+  get customer(): Prisma.CustomerDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
    * `prisma.product`: Exposes CRUD operations for the **Product** model.
@@ -205,24 +205,144 @@ export interface PrismaClient<
   get product(): Prisma.ProductDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.imageProduct`: Exposes CRUD operations for the **ImageProduct** model.
+   * `prisma.productImage`: Exposes CRUD operations for the **ProductImage** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more ImageProducts
-    * const imageProducts = await prisma.imageProduct.findMany()
+    * // Fetch zero or more ProductImages
+    * const productImages = await prisma.productImage.findMany()
     * ```
     */
-  get imageProduct(): Prisma.ImageProductDelegate<ExtArgs, { omit: OmitOpts }>;
+  get productImage(): Prisma.ProductImageDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.tag`: Exposes CRUD operations for the **Tag** model.
+   * `prisma.productTag`: Exposes CRUD operations for the **ProductTag** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Tags
-    * const tags = await prisma.tag.findMany()
+    * // Fetch zero or more ProductTags
+    * const productTags = await prisma.productTag.findMany()
     * ```
     */
-  get tag(): Prisma.TagDelegate<ExtArgs, { omit: OmitOpts }>;
+  get productTag(): Prisma.ProductTagDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.productTagLink`: Exposes CRUD operations for the **ProductTagLink** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProductTagLinks
+    * const productTagLinks = await prisma.productTagLink.findMany()
+    * ```
+    */
+  get productTagLink(): Prisma.ProductTagLinkDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.category`: Exposes CRUD operations for the **Category** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Categories
+    * const categories = await prisma.category.findMany()
+    * ```
+    */
+  get category(): Prisma.CategoryDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.productCategory`: Exposes CRUD operations for the **ProductCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProductCategories
+    * const productCategories = await prisma.productCategory.findMany()
+    * ```
+    */
+  get productCategory(): Prisma.ProductCategoryDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.productOption`: Exposes CRUD operations for the **ProductOption** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProductOptions
+    * const productOptions = await prisma.productOption.findMany()
+    * ```
+    */
+  get productOption(): Prisma.ProductOptionDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.productOptionValue`: Exposes CRUD operations for the **ProductOptionValue** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProductOptionValues
+    * const productOptionValues = await prisma.productOptionValue.findMany()
+    * ```
+    */
+  get productOptionValue(): Prisma.ProductOptionValueDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.productVariant`: Exposes CRUD operations for the **ProductVariant** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProductVariants
+    * const productVariants = await prisma.productVariant.findMany()
+    * ```
+    */
+  get productVariant(): Prisma.ProductVariantDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.variantOptionValue`: Exposes CRUD operations for the **VariantOptionValue** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VariantOptionValues
+    * const variantOptionValues = await prisma.variantOptionValue.findMany()
+    * ```
+    */
+  get variantOptionValue(): Prisma.VariantOptionValueDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.inventory`: Exposes CRUD operations for the **Inventory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Inventories
+    * const inventories = await prisma.inventory.findMany()
+    * ```
+    */
+  get inventory(): Prisma.InventoryDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.order`: Exposes CRUD operations for the **Order** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Orders
+    * const orders = await prisma.order.findMany()
+    * ```
+    */
+  get order(): Prisma.OrderDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.orderItem`: Exposes CRUD operations for the **OrderItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OrderItems
+    * const orderItems = await prisma.orderItem.findMany()
+    * ```
+    */
+  get orderItem(): Prisma.OrderItemDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.payment`: Exposes CRUD operations for the **Payment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Payments
+    * const payments = await prisma.payment.findMany()
+    * ```
+    */
+  get payment(): Prisma.PaymentDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.shipping`: Exposes CRUD operations for the **Shipping** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Shippings
+    * const shippings = await prisma.shipping.findMany()
+    * ```
+    */
+  get shipping(): Prisma.ShippingDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

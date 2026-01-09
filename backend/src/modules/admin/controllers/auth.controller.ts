@@ -7,13 +7,12 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
-import { ILoginDTO } from 'src/modules/commons/dtos/auth.dto';
+import { JwtPayload, LoginDTO } from 'src/modules/commons/dtos/auth.dto';
 import { AuthService } from 'src/modules/commons/services/auth.service';
 import { BaseResponse } from 'src/responses/base.response';
-import type { IJwtPayload } from 'src/utils/interfaces';
 
 @Controller('/auth')
 export class AdminAuthController {
@@ -23,7 +22,7 @@ export class AdminAuthController {
   @Post('/login')
   @HttpCode(200)
   async login(
-    @Body() payload: ILoginDTO,
+    @Body() payload: LoginDTO,
     @Res({ passthrough: true }) res: Response,
   ) {
     return await this.authService.login(payload, res);
@@ -31,7 +30,7 @@ export class AdminAuthController {
 
   @UseGuards(AuthGuard)
   @Post('/me')
-  me(@CurrentUser() user: IJwtPayload) {
+  me(@CurrentUser() user: JwtPayload) {
     return new BaseResponse('user', user);
   }
 

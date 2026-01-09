@@ -39,26 +39,98 @@ export { Prisma }
 
 /**
  * Model User
- * 
+ * ///////////////////
+ * ///////////////////
  */
 export type User = Prisma.UserModel
 /**
- * Model Category
- * 
+ * Model Customer
+ * ///////////////////
+ * ///////////////////
  */
-export type Category = Prisma.CategoryModel
+export type Customer = Prisma.CustomerModel
 /**
  * Model Product
- * 
+ * ///////////////////
+ * ///////////////////
  */
 export type Product = Prisma.ProductModel
 /**
- * Model ImageProduct
- * 
+ * Model ProductImage
+ * ///////////////////
+ * ///////////////////
  */
-export type ImageProduct = Prisma.ImageProductModel
+export type ProductImage = Prisma.ProductImageModel
 /**
- * Model Tag
+ * Model ProductTag
+ * ///////////////////
+ * ///////////////////
+ */
+export type ProductTag = Prisma.ProductTagModel
+/**
+ * Model ProductTagLink
  * 
  */
-export type Tag = Prisma.TagModel
+export type ProductTagLink = Prisma.ProductTagLinkModel
+/**
+ * Model Category
+ * ///////////////////
+ * ///////////////////
+ */
+export type Category = Prisma.CategoryModel
+/**
+ * Model ProductCategory
+ * 
+ */
+export type ProductCategory = Prisma.ProductCategoryModel
+/**
+ * Model ProductOption
+ * ///////////////////
+ * ///////////////////
+ */
+export type ProductOption = Prisma.ProductOptionModel
+/**
+ * Model ProductOptionValue
+ * 
+ */
+export type ProductOptionValue = Prisma.ProductOptionValueModel
+/**
+ * Model ProductVariant
+ * ///////////////////
+ * ///////////////////
+ */
+export type ProductVariant = Prisma.ProductVariantModel
+/**
+ * Model VariantOptionValue
+ * 
+ */
+export type VariantOptionValue = Prisma.VariantOptionValueModel
+/**
+ * Model Inventory
+ * ///////////////////
+ * ///////////////////
+ */
+export type Inventory = Prisma.InventoryModel
+/**
+ * Model Order
+ * ///////////////////
+ * ///////////////////
+ */
+export type Order = Prisma.OrderModel
+/**
+ * Model OrderItem
+ * 
+ */
+export type OrderItem = Prisma.OrderItemModel
+/**
+ * Model Payment
+ * ///////////////////
+ * ///////////////////
+ */
+export type Payment = Prisma.PaymentModel
+/**
+ * Model Shipping
+ * ///////////////////
+ * ///////////////////
+ */
+export type Shipping = Prisma.ShippingModel

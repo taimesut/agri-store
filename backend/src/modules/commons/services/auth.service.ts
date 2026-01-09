@@ -5,7 +5,7 @@ import { comparePassword } from 'src/utils/password';
 import { JwtService } from '@nestjs/jwt';
 import { RES_CODE, RES_MESSAGE } from 'src/utils/contants';
 import { Response } from 'express';
-import { ILoginDTO } from '../dtos/auth.dto';
+import { LoginDTO } from '../dtos/auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -28,7 +28,7 @@ export class AuthService {
     }
   }
 
-  async login(payload: ILoginDTO, res: Response): Promise<string> {
+  async login(payload: LoginDTO, res: Response): Promise<string> {
     const { email, password } = payload;
     const user = await this.getUserByEmail(email);
     if (!user) {
