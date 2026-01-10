@@ -38,7 +38,7 @@ export type ShippingSumAggregateOutputType = {
 export type ShippingMinAggregateOutputType = {
   id: string | null
   orderId: string | null
-  method: string | null
+  method: $Enums.ShippingMethod | null
   fee: runtime.Decimal | null
   status: $Enums.ShippingStatus | null
 }
@@ -46,7 +46,7 @@ export type ShippingMinAggregateOutputType = {
 export type ShippingMaxAggregateOutputType = {
   id: string | null
   orderId: string | null
-  method: string | null
+  method: $Enums.ShippingMethod | null
   fee: runtime.Decimal | null
   status: $Enums.ShippingStatus | null
 }
@@ -183,7 +183,7 @@ export type ShippingGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type ShippingGroupByOutputType = {
   id: string
   orderId: string
-  method: string
+  method: $Enums.ShippingMethod
   fee: runtime.Decimal
   status: $Enums.ShippingStatus
   _count: ShippingCountAggregateOutputType | null
@@ -214,7 +214,7 @@ export type ShippingWhereInput = {
   NOT?: Prisma.ShippingWhereInput | Prisma.ShippingWhereInput[]
   id?: Prisma.StringFilter<"Shipping"> | string
   orderId?: Prisma.StringFilter<"Shipping"> | string
-  method?: Prisma.StringFilter<"Shipping"> | string
+  method?: Prisma.EnumShippingMethodFilter<"Shipping"> | $Enums.ShippingMethod
   fee?: Prisma.DecimalFilter<"Shipping"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumShippingStatusFilter<"Shipping"> | $Enums.ShippingStatus
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
@@ -236,7 +236,7 @@ export type ShippingWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ShippingWhereInput | Prisma.ShippingWhereInput[]
   OR?: Prisma.ShippingWhereInput[]
   NOT?: Prisma.ShippingWhereInput | Prisma.ShippingWhereInput[]
-  method?: Prisma.StringFilter<"Shipping"> | string
+  method?: Prisma.EnumShippingMethodFilter<"Shipping"> | $Enums.ShippingMethod
   fee?: Prisma.DecimalFilter<"Shipping"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumShippingStatusFilter<"Shipping"> | $Enums.ShippingStatus
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
@@ -261,14 +261,14 @@ export type ShippingScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ShippingScalarWhereWithAggregatesInput | Prisma.ShippingScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Shipping"> | string
   orderId?: Prisma.StringWithAggregatesFilter<"Shipping"> | string
-  method?: Prisma.StringWithAggregatesFilter<"Shipping"> | string
+  method?: Prisma.EnumShippingMethodWithAggregatesFilter<"Shipping"> | $Enums.ShippingMethod
   fee?: Prisma.DecimalWithAggregatesFilter<"Shipping"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumShippingStatusWithAggregatesFilter<"Shipping"> | $Enums.ShippingStatus
 }
 
 export type ShippingCreateInput = {
   id?: string
-  method: string
+  method: $Enums.ShippingMethod
   fee: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ShippingStatus
   order: Prisma.OrderCreateNestedOneWithoutShippingInput
@@ -277,14 +277,14 @@ export type ShippingCreateInput = {
 export type ShippingUncheckedCreateInput = {
   id?: string
   orderId: string
-  method: string
+  method: $Enums.ShippingMethod
   fee: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ShippingStatus
 }
 
 export type ShippingUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  method?: Prisma.StringFieldUpdateOperationsInput | string
+  method?: Prisma.EnumShippingMethodFieldUpdateOperationsInput | $Enums.ShippingMethod
   fee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus
   order?: Prisma.OrderUpdateOneRequiredWithoutShippingNestedInput
@@ -293,7 +293,7 @@ export type ShippingUpdateInput = {
 export type ShippingUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
-  method?: Prisma.StringFieldUpdateOperationsInput | string
+  method?: Prisma.EnumShippingMethodFieldUpdateOperationsInput | $Enums.ShippingMethod
   fee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus
 }
@@ -301,14 +301,14 @@ export type ShippingUncheckedUpdateInput = {
 export type ShippingCreateManyInput = {
   id?: string
   orderId: string
-  method: string
+  method: $Enums.ShippingMethod
   fee: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ShippingStatus
 }
 
 export type ShippingUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  method?: Prisma.StringFieldUpdateOperationsInput | string
+  method?: Prisma.EnumShippingMethodFieldUpdateOperationsInput | $Enums.ShippingMethod
   fee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus
 }
@@ -316,7 +316,7 @@ export type ShippingUpdateManyMutationInput = {
 export type ShippingUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
-  method?: Prisma.StringFieldUpdateOperationsInput | string
+  method?: Prisma.EnumShippingMethodFieldUpdateOperationsInput | $Enums.ShippingMethod
   fee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus
 }
@@ -396,20 +396,24 @@ export type ShippingUncheckedUpdateOneWithoutOrderNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ShippingUpdateToOneWithWhereWithoutOrderInput, Prisma.ShippingUpdateWithoutOrderInput>, Prisma.ShippingUncheckedUpdateWithoutOrderInput>
 }
 
+export type EnumShippingMethodFieldUpdateOperationsInput = {
+  set?: $Enums.ShippingMethod
+}
+
 export type EnumShippingStatusFieldUpdateOperationsInput = {
   set?: $Enums.ShippingStatus
 }
 
 export type ShippingCreateWithoutOrderInput = {
   id?: string
-  method: string
+  method: $Enums.ShippingMethod
   fee: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ShippingStatus
 }
 
 export type ShippingUncheckedCreateWithoutOrderInput = {
   id?: string
-  method: string
+  method: $Enums.ShippingMethod
   fee: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ShippingStatus
 }
@@ -432,14 +436,14 @@ export type ShippingUpdateToOneWithWhereWithoutOrderInput = {
 
 export type ShippingUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  method?: Prisma.StringFieldUpdateOperationsInput | string
+  method?: Prisma.EnumShippingMethodFieldUpdateOperationsInput | $Enums.ShippingMethod
   fee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus
 }
 
 export type ShippingUncheckedUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  method?: Prisma.StringFieldUpdateOperationsInput | string
+  method?: Prisma.EnumShippingMethodFieldUpdateOperationsInput | $Enums.ShippingMethod
   fee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus
 }
@@ -478,7 +482,7 @@ export type $ShippingPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     orderId: string
-    method: string
+    method: $Enums.ShippingMethod
     fee: runtime.Decimal
     status: $Enums.ShippingStatus
   }, ExtArgs["result"]["shipping"]>
@@ -853,7 +857,7 @@ export interface Prisma__ShippingClient<T, Null = never, ExtArgs extends runtime
 export interface ShippingFieldRefs {
   readonly id: Prisma.FieldRef<"Shipping", 'String'>
   readonly orderId: Prisma.FieldRef<"Shipping", 'String'>
-  readonly method: Prisma.FieldRef<"Shipping", 'String'>
+  readonly method: Prisma.FieldRef<"Shipping", 'ShippingMethod'>
   readonly fee: Prisma.FieldRef<"Shipping", 'Decimal'>
   readonly status: Prisma.FieldRef<"Shipping", 'ShippingStatus'>
 }

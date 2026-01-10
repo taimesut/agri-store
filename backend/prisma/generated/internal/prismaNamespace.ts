@@ -1726,7 +1726,7 @@ export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof Or
 export const OrderItemScalarFieldEnum = {
   id: 'id',
   orderId: 'orderId',
-  variantId: 'variantId',
+  sku: 'sku',
   productTitle: 'productTitle',
   variantTitle: 'variantTitle',
   unitPrice: 'unitPrice',
@@ -1766,13 +1766,6 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const UserOrderByRelevanceFieldEnum = {
@@ -1902,26 +1895,10 @@ export const InventoryOrderByRelevanceFieldEnum = {
 export type InventoryOrderByRelevanceFieldEnum = (typeof InventoryOrderByRelevanceFieldEnum)[keyof typeof InventoryOrderByRelevanceFieldEnum]
 
 
-export const JsonNullValueFilter = {
-  DbNull: DbNull,
-  JsonNull: JsonNull,
-  AnyNull: AnyNull
-} as const
-
-export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-export const QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
-} as const
-
-export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
 export const OrderOrderByRelevanceFieldEnum = {
   id: 'id',
-  customerId: 'customerId'
+  customerId: 'customerId',
+  shippingAddress: 'shippingAddress'
 } as const
 
 export type OrderOrderByRelevanceFieldEnum = (typeof OrderOrderByRelevanceFieldEnum)[keyof typeof OrderOrderByRelevanceFieldEnum]
@@ -1930,7 +1907,7 @@ export type OrderOrderByRelevanceFieldEnum = (typeof OrderOrderByRelevanceFieldE
 export const OrderItemOrderByRelevanceFieldEnum = {
   id: 'id',
   orderId: 'orderId',
-  variantId: 'variantId',
+  sku: 'sku',
   productTitle: 'productTitle',
   variantTitle: 'variantTitle'
 } as const
@@ -1948,8 +1925,7 @@ export type PaymentOrderByRelevanceFieldEnum = (typeof PaymentOrderByRelevanceFi
 
 export const ShippingOrderByRelevanceFieldEnum = {
   id: 'id',
-  orderId: 'orderId',
-  method: 'method'
+  orderId: 'orderId'
 } as const
 
 export type ShippingOrderByRelevanceFieldEnum = (typeof ShippingOrderByRelevanceFieldEnum)[keyof typeof ShippingOrderByRelevanceFieldEnum]
@@ -2004,20 +1980,6 @@ export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
 
 
 /**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
  * Reference to a field of type 'PaymentProvider'
  */
 export type EnumPaymentProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentProvider'>
@@ -2028,6 +1990,13 @@ export type EnumPaymentProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'PaymentStatus'
  */
 export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ShippingMethod'
+ */
+export type EnumShippingMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShippingMethod'>
     
 
 

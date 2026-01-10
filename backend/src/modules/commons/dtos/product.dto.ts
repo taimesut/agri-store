@@ -12,24 +12,25 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateCategoryDTO } from './category.dto';
+import { CategoryDTO } from './category.dto';
+import { ProductOptionDTO } from './product-option.dto';
 
 enum ProductStatus {
   DRAFT = 'DRAFT',
   PUBLISHED = 'PUBLISHED',
 }
 
-export class ProductOptionDTO {
-  @IsString()
-  @IsNotEmpty()
-  title: string;
+// export class ProductOptionDTO {
+//   @IsString()
+//   @IsNotEmpty()
+//   title: string;
 
-  @IsArray()
-  @ArrayMinSize(1)
-  @IsString({ each: true })
-  @IsNotEmpty({ each: true })
-  values: string[];
-}
+//   @IsArray()
+//   @ArrayMinSize(1)
+//   @IsString({ each: true })
+//   @IsNotEmpty({ each: true })
+//   values: string[];
+// }
 
 export class ProductDTO {
   title: string;
@@ -48,7 +49,7 @@ export class ProductDTO {
 
   tags: ProductTagDTO[];
 
-  categories: CreateCategoryDTO[];
+  categories: CategoryDTO[];
 }
 
 export class CreateProductDTO {

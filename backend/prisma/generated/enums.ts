@@ -53,3 +53,12 @@ export const ShippingStatus = {
 } as const
 
 export type ShippingStatus = (typeof ShippingStatus)[keyof typeof ShippingStatus]
+
+
+export const ShippingMethod = {
+  GHTK: 'GHTK',
+  GHN: 'GHN',
+  SPX: 'SPX'
+} as const
+
+export type ShippingMethod = (typeof ShippingMethod)[keyof typeof ShippingMethod]

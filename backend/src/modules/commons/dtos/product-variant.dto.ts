@@ -7,17 +7,22 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-
-export class VariantOptionDTO {
-  @IsString()
-  @IsNotEmpty()
-  title: string;
-  @IsString()
-  @IsNotEmpty()
-  value: string;
-}
+import { ProductVariantOptionDTO } from './product-variant-option.dto';
+import { InventoryDTO } from './inventory.dto';
 
 export class ProductVariantDTO {
+  sku: string;
+
+  title: string;
+
+  price: string;
+
+  options: ProductVariantOptionDTO[];
+
+  inventory: InventoryDTO;
+}
+
+export class CreateProductVariantDTO {
   @IsString()
   sku: string;
 
@@ -30,6 +35,11 @@ export class ProductVariantDTO {
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => VariantOptionDTO)
-  options: VariantOptionDTO[];
+  @Type(() => ProductVariantOptionDTO)
+  options: ProductVariantOptionDTO[];
+
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => InventoryDTO)
+  inventory: InventoryDTO;
 }
