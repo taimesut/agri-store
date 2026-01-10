@@ -24,7 +24,7 @@ export class UserService implements IServiceCrud<
     return user !== null;
   }
 
-  private async hasId(id: number): Promise<boolean> {
+  private async hasId(id: string): Promise<boolean> {
     const user = await this.prisma.user.findUnique({
       where: { id },
       select: { id: true },
@@ -37,8 +37,8 @@ export class UserService implements IServiceCrud<
     // check email exist
     if (await this.hasEmail(payload.email)) {
       throw new CustomHttpException(
-        RES_MESSAGE.USERS_SERVICE.EMAIL_IS_EXISTING,
-        RES_CODE.USER_SERVICE.CREATE_USER_FAILED,
+        RES_MESSAGE.USER__EMAIL_IS_EXISTING,
+        RES_CODE.USER__CREATE_USER_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -58,7 +58,7 @@ export class UserService implements IServiceCrud<
     });
   }
 
-  async findOne(id: number): Promise<UserDTO | null> {
+  async findOne(id: string): Promise<UserDTO | null> {
     return await this.prisma.user.findUnique({
       where: { id },
       omit: {
@@ -67,12 +67,12 @@ export class UserService implements IServiceCrud<
     });
   }
 
-  async update(id: number, payload: UpdateUserDTO): Promise<UserDTO> {
+  async update(id: string, payload: UpdateUserDTO): Promise<UserDTO> {
     // check userId exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
-        RES_MESSAGE.USERS_SERVICE.NOT_FOUND_WITH_ID(id),
-        RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,
+        RES_MESSAGE.USER__NOT_FOUND_WITH_ID(id),
+        RES_CODE.USER__UPDATE_USER_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -84,17 +84,17 @@ export class UserService implements IServiceCrud<
     });
   }
 
-  async delete(id: number): Promise<UserDTO> {
+  async delete(id: string): Promise<UserDTO> {
     // check userId exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
-        RES_MESSAGE.USERS_SERVICE.NOT_FOUND_WITH_ID(id),
-        RES_CODE.USER_SERVICE.UPDATE_USER_FAILED,
+        RES_MESSAGE.USER__NOT_FOUND_WITH_ID(id),
+        RES_CODE.USER__UPDATE_USER_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
 
-    return this.prisma.user.delete({
+    return await this.prisma.user.delete({
       where: { id },
       omit: {
         password: true,

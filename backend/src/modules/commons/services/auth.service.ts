@@ -33,16 +33,16 @@ export class AuthService {
     const user = await this.getUserByEmail(email);
     if (!user) {
       throw new CustomHttpException(
-        RES_MESSAGE.AUTH_SERVICE.ACCOUNT_DOES_NOT_EXISTS,
-        RES_CODE.AUTH_SERIVCE.LOGIN_FAILED,
+        RES_MESSAGE.AUTH__ACCOUNT_DOES_NOT_EXISTS,
+        RES_CODE.AUTH__LOGIN_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
     const isMatch = await comparePassword(password, user.password);
     if (!isMatch) {
       throw new CustomHttpException(
-        RES_MESSAGE.AUTH_SERVICE.ACCOUNT_OR_PASSWORD_INVALID,
-        RES_CODE.AUTH_SERIVCE.LOGIN_FAILED,
+        RES_MESSAGE.AUTH__ACCOUNT_OR_PASSWORD_INVALID,
+        RES_CODE.AUTH__LOGIN_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -68,12 +68,12 @@ export class AuthService {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày
     });
 
-    return RES_MESSAGE.AUTH_SERVICE.LOGIN_SUCCESS;
+    return RES_MESSAGE.AUTH__LOGIN_SUCCESS;
   }
 
   logout(res: Response): string {
     res.clearCookie('jwt_access_token');
     res.clearCookie('jwt_refresh_token');
-    return RES_MESSAGE.AUTH_SERVICE.LOGOUT_SUCCESS;
+    return RES_MESSAGE.AUTH__LOGOUT_SUCCESS;
   }
 }

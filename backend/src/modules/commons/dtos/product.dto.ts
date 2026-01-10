@@ -1,6 +1,6 @@
 import { ProductVariantDTO } from './product-variant.dto';
 import { ProductImageDTO } from './product-image.dto';
-import { ProductTagLinkDTO } from './product-tag-link.dto';
+import { ProductTagDTO } from './product-tag.dto';
 import {
   ArrayMinSize,
   IsArray,
@@ -12,6 +12,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PartialType } from '@nestjs/mapped-types';
+import { CreateCategoryDTO } from './category.dto';
 
 enum ProductStatus {
   DRAFT = 'DRAFT',
@@ -45,9 +46,9 @@ export class ProductDTO {
 
   options: ProductOptionDTO[];
 
-  tags: ProductTagLinkDTO[];
+  tags: ProductTagDTO[];
 
-  categories: string[];
+  categories: CreateCategoryDTO[];
 }
 
 export class CreateProductDTO {
@@ -71,10 +72,11 @@ export class CreateProductDTO {
   @Type(() => ProductVariantDTO)
   variants: ProductVariantDTO[];
 
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => ProductImageDTO)
-  images: ProductImageDTO[];
+  images?: ProductImageDTO[];
 
   @IsArray()
   @ArrayMinSize(1)
@@ -82,13 +84,13 @@ export class CreateProductDTO {
   @Type(() => ProductOptionDTO)
   options: ProductOptionDTO[];
 
+  @IsOptional()
   @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => ProductTagLinkDTO)
-  tags: ProductTagLinkDTO[];
+  tags?: string[];
 
+  @IsOptional()
   @IsArray()
-  categories: string[];
+  categories?: string[];
 }
 
 export class UpdateProductDTO extends PartialType(CreateProductDTO) {}

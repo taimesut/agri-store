@@ -3,14 +3,16 @@ import {
   CreateProductDTO,
   UpdateProductDTO,
 } from 'src/modules/commons/dtos/product.dto';
+import { ProductService } from 'src/modules/commons/services/product.service';
+import { BaseResponse } from 'src/responses/base.response';
 import { IControllerCrud } from 'src/utils/interfaces';
 
 @Controller('products')
 export class AdminProductController implements IControllerCrud<
-  string,
   CreateProductDTO,
   UpdateProductDTO
 > {
+  constructor(private productService: ProductService) {}
   private readonly logger = new Logger(AdminProductController.name);
 
   @Get('/:id')
@@ -23,8 +25,10 @@ export class AdminProductController implements IControllerCrud<
   }
   @Post()
   async create(@Body() payload: CreateProductDTO): Promise<any> {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    return payload;
+    return new BaseResponse(
+      'product',
+      await this.productService.create(payload),
+    );
   }
   @Post('/:id')
   async update(id: string, @Body() payload: UpdateProductDTO): Promise<any> {

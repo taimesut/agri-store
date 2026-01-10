@@ -18,7 +18,7 @@ export class AppValidationPipe extends ValidationPipe {
 
         throw new CustomBadRequestException(
           messages[0],
-          RES_CODE.VALIDATION_FAILED,
+          RES_CODE.__VALIDATION_FAILED,
         );
       },
     });

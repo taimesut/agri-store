@@ -281,6 +281,7 @@ export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNu
 
 
 export const UserOrderByRelevanceFieldEnum = {
+  id: 'id',
   email: 'email',
   password: 'password',
   firstName: 'firstName',

@@ -10,19 +10,19 @@
 export interface IServiceCrud<T, CreateTDTO, UpdateTDTO> {
   create(payload: CreateTDTO): Promise<T>;
   findAll(): Promise<T[]>;
-  findOne(id: number): Promise<T | null>;
-  update(id: number, dto: UpdateTDTO): Promise<T>;
-  delete(id: number): Promise<T>;
+  findOne(id: string): Promise<T | null>;
+  update(id: string, payload: UpdateTDTO): Promise<T>;
+  delete(id: string): Promise<T>;
 }
 
-export interface IControllerCrud<TId = number, TCreate = any, TUpdate = any> {
-  findOne(id: TId): Promise<any>;
+export interface IControllerCrud<TCreate = any, TUpdate = any> {
+  findOne(id: string): Promise<any>;
 
   findAll(): Promise<any>;
 
   create(payload: TCreate): Promise<any>;
 
-  update(id: TId, payload: TUpdate): Promise<any>;
+  update(id: string, payload: TUpdate): Promise<any>;
 
-  delete(id: TId): Promise<any>;
+  delete(id: string): Promise<any>;
 }

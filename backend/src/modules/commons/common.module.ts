@@ -6,6 +6,8 @@ import { AuthService } from './services/auth.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { ProductService } from './services/product.service';
+import { CategoryService } from './services/category.service';
 
 @Module({
   imports: [
@@ -32,7 +34,20 @@ import { diskStorage } from 'multer';
       }),
     }),
   ],
-  providers: [UserService, PrismaService, AuthService],
-  exports: [UserService, PrismaService, AuthService, MulterModule],
+  providers: [
+    UserService,
+    PrismaService,
+    AuthService,
+    ProductService,
+    CategoryService,
+  ],
+  exports: [
+    UserService,
+    PrismaService,
+    AuthService,
+    ProductService,
+    MulterModule,
+    CategoryService,
+  ],
 })
 export class CommonModule {}

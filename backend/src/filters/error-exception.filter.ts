@@ -25,14 +25,14 @@ export class ErrorExceptionFilter implements ExceptionFilter {
     else if (exception instanceof NotFoundException) {
       const request = ctx.getRequest<Request>();
       response.status(exception.getStatus()).json({
-        code: RES_CODE.NOT_FOUND,
+        code: RES_CODE.__NOT_FOUND,
         message: request.url,
       });
     }
     // server error
     else {
       response.status(500).json({
-        code: RES_CODE.INTERNAL_SERVER_ERROR,
+        code: RES_CODE.__INTERNAL_SERVER_ERROR,
         message: exception.message,
       });
     }

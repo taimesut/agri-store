@@ -4,7 +4,6 @@ import {
   IsArray,
   IsNotEmpty,
   IsNumber,
-  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -19,9 +18,8 @@ export class VariantOptionDTO {
 }
 
 export class ProductVariantDTO {
-  @IsOptional()
   @IsString()
-  sku?: string;
+  sku: string;
 
   @IsString()
   title: string;

@@ -1776,6 +1776,7 @@ export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNu
 
 
 export const UserOrderByRelevanceFieldEnum = {
+  id: 'id',
   email: 'email',
   password: 'password',
   firstName: 'firstName',
@@ -1961,13 +1962,6 @@ export type ShippingOrderByRelevanceFieldEnum = (typeof ShippingOrderByRelevance
 
 
 /**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
  * Reference to a field of type 'String'
  */
 export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -1985,6 +1979,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'ProductStatus'
  */
 export type EnumProductStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 

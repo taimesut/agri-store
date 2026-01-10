@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../../commons/services/user.service';
 import { BaseResponse } from 'src/responses/base.response';
-import { CustomParseIntPipe } from 'src/pipes/parse-int.pipe';
 import {
   CreateUserDTO,
   UpdateUserDTO,
@@ -21,7 +20,7 @@ export class AdminUsersController {
   constructor(private readonly usersService: UserService) {}
 
   @Get('/:id')
-  async findOne(@Param('id', CustomParseIntPipe) id: number) {
+  async findOne(@Param('id') id: string) {
     return new BaseResponse('user', await this.usersService.findOne(id));
   }
 
@@ -36,10 +35,7 @@ export class AdminUsersController {
   }
 
   @Post('/:id')
-  async update(
-    @Param('id', CustomParseIntPipe) id: number,
-    @Body() payload: UpdateUserDTO,
-  ) {
+  async update(@Param('id') id: string, @Body() payload: UpdateUserDTO) {
     return new BaseResponse(
       'user',
       await this.usersService.update(id, payload),
@@ -47,7 +43,7 @@ export class AdminUsersController {
   }
 
   @Delete('/:id')
-  async delete(@Param('id', CustomParseIntPipe) id: number) {
+  async delete(@Param('id') id: string) {
     return new BaseResponse('user', await this.usersService.delete(id));
   }
 }

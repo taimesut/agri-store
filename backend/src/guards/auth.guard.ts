@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     if (!token) {
       throw new CustomHttpException(
         'Token not provider',
-        RES_CODE.UNAUTHORIZED,
+        RES_CODE.__UNAUTHORIZED,
         HttpStatus.UNAUTHORIZED,
       );
     }
@@ -35,13 +35,13 @@ export class AuthGuard implements CanActivate {
       if (error instanceof Error) {
         throw new CustomHttpException(
           error.message,
-          RES_CODE.UNAUTHORIZED,
+          RES_CODE.__UNAUTHORIZED,
           HttpStatus.UNAUTHORIZED,
         );
       }
       throw new CustomHttpException(
         'Token invalid',
-        RES_CODE.UNAUTHORIZED,
+        RES_CODE.__UNAUTHORIZED,
         HttpStatus.UNAUTHORIZED,
       );
     }
