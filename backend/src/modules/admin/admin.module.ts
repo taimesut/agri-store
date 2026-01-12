@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { MulterModule } from '@nestjs/platform-express';
 import { AdminProductController } from './controllers/product.controller';
 import { AdminCategoryController } from './controllers/category.controller';
+import { AdminTagController } from './controllers/tag.controller';
 
 @Module({
   imports: [CommonModule, JwtModule, MulterModule],
@@ -14,6 +15,7 @@ import { AdminCategoryController } from './controllers/category.controller';
     AdminAuthController,
     AdminProductController,
     AdminCategoryController,
+    AdminTagController,
   ],
 })
 export class AdminModule {}

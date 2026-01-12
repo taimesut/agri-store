@@ -27,6 +27,18 @@ export const RES_CODE = {
   CATEGORY__UPDATE_CATEGORY_FAILED: 'UPDATE_CATEGORY_FAILED',
   CATEGORY__DELETE_CATEGORY_FAILED: 'DELETE_CATEGORY_FAILED',
   CATEGORY__ASSERT_NO_CIRULAR_PARENT_FAILED: 'ASSERT_NO_CIRULAR_PARENT_FAILED',
+
+  TAG__GET_TAG_FAILED: 'GET_TAG_FAILED',
+  TAG__GET_TAGS_FAILED: 'GET_TAGS_FAILED',
+  TAG__CREATE_TAGS_FAILED: 'CREATE_TAG_FAILED',
+  TAG__UPDATE_TAG_FAILED: 'UPDATE_TAG_FAILED',
+  TAG__DELETE_TAG_FAILED: 'DELETE_TAG_FAILED',
+
+  INVENTORY__GET_INVENTORY_FAILED: 'GET_INVENTORY_FAILED',
+  INVENTORY__GET_INVENTORIES_FAILED: 'GET_INVENTORIES_FAILED',
+  INVENTORY__CREATE_INVENTORY_FAILED: 'CREATE_INVENTORY_FAILED',
+  INVENTORY__UPDATE_INVENTORY_FAILED: 'UPDATE_INVENTORY_FAILED',
+  INVENTORY__DELETE_INVENTORY_FAILED: 'DELETE_INVENTORY_FAILED',
 };
 
 export const RES_MESSAGE = {
@@ -45,18 +57,29 @@ export const RES_MESSAGE = {
 
   AUTH__LOGIN_SUCCESS: 'Đăng nhập thành công',
   AUTH__LOGOUT_SUCCESS: 'Đăng xuất thành công',
-  USER__NOT_FOUND_WITH_ID: (id) => `Không tìm thấy ${id}`,
+  USER__NOT_FOUND_ID: (id) => `user.id: ${id} không tồn tại`,
   USER__EMAIL_IS_EXISTING: 'Email đã tồn tại',
 
-  CATEGORY__HANDLE_IS_EXISTING: (handle) => `${handle} đã tồn tại`,
-  CATEGORY__NOT_FOUND_WITH_ID: (id) => `Không tìm thấy ${id}`,
+  CATEGORY__HANDLE_IS_EXISTING: (handle) =>
+    `category.handle: ${handle} đã tồn tại`,
+  CATEGORY__NOT_FOUND_ID: (id) => `category.id: ${id} không tồn tại`,
   CATEGORY__CIRULAR_PARENT_ERROR: 'vòng lặp',
 
-  TAG__NOT_FOUND_WITH_ID: (id) => `Không tìm thấy ${id}`,
+  VARIANT__SKU_IS_EXISTING: (sku) => `variant.sku: ${sku} đã tồn tại`,
 
-  VARIANT__SKU_IS_EXISTING: (sku) => `${sku} đã tồn tại`,
+  PRODUCT_HANDLE_IS_EXSTING: (handle) => `product.handle: ${handle} đã tồn tại`,
 
-  PRODUCT_OPTION__NOT_FOUND_TITLE: (title) => `${title} đã tồn tại`,
+  PRODUCT_OPTION__NOT_FOUND_TITLE: (title) =>
+    `product_option.title: ${title} không tồn tại`,
+  PRODUCT_OPTION_VALUE__NOT_FOUND_VALUE: (value) =>
+    `product_option.value: ${value} không tồn tại`,
 
-  PRODUCT_OPTION_VALUE__NOT_FOUND_VALUE: (title) => `${title} đã tồn tại`,
+  TAG__VALUE_IS_EXISTING: (value) => `tag.value: ${value} đã tồn tại`,
+  TAG__NOT_FOUND_ID: (id) => `tag.id: ${id} không tồn tại`,
+
+  PRODUCT__NOT_FOUND_ID: (id) => `product.id: ${id} không tồn tại`,
+
+  INVENTORY__VARIANT_ID_IS_EXISTING: (variantId) =>
+    `inventory.variant_id: ${variantId} đã tồn tại`,
+  INVENTORY__NOT_FOUND_ID: (id) => `inventory.id: ${id} không tồn tại`,
 };

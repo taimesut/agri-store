@@ -8,6 +8,7 @@ import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from './prisma.serivce';
 import { CustomHttpException } from 'src/exceptions/custom-http.exception';
 import { RES_CODE, RES_MESSAGE } from 'src/utils/contants';
+import { DeletedObject } from '../dtos/deleted-object.dto';
 
 @Injectable()
 export class CategoryService implements IServiceCrud<
@@ -70,7 +71,7 @@ export class CategoryService implements IServiceCrud<
     }
     if (payload.parentId && !(await this.hasId(payload.parentId))) {
       throw new CustomHttpException(
-        RES_MESSAGE.CATEGORY__NOT_FOUND_WITH_ID(payload.parentId),
+        RES_MESSAGE.CATEGORY__NOT_FOUND_ID(payload.parentId),
         RES_CODE.CATEGORY__CREATE_CATEGORY_FAILED,
         HttpStatus.BAD_REQUEST,
       );
@@ -93,7 +94,7 @@ export class CategoryService implements IServiceCrud<
   async update(id: string, payload: UpdateCategoryDTO): Promise<CategoryDTO> {
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
-        RES_MESSAGE.CATEGORY__NOT_FOUND_WITH_ID(id),
+        RES_MESSAGE.CATEGORY__NOT_FOUND_ID(id),
         RES_CODE.CATEGORY__UPDATE_CATEGORY_FAILED,
         HttpStatus.BAD_REQUEST,
       );
@@ -107,7 +108,7 @@ export class CategoryService implements IServiceCrud<
     }
     if (payload.parentId && !(await this.hasId(payload.parentId))) {
       throw new CustomHttpException(
-        RES_MESSAGE.CATEGORY__NOT_FOUND_WITH_ID(payload.parentId),
+        RES_MESSAGE.CATEGORY__NOT_FOUND_ID(payload.parentId),
         RES_CODE.CATEGORY__CREATE_CATEGORY_FAILED,
         HttpStatus.BAD_REQUEST,
       );
@@ -121,15 +122,16 @@ export class CategoryService implements IServiceCrud<
       data: payload,
     });
   }
-  async delete(id: string): Promise<CategoryDTO> {
+  async delete(id: string): Promise<DeletedObject> {
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
-        RES_MESSAGE.CATEGORY__NOT_FOUND_WITH_ID(id),
+        RES_MESSAGE.CATEGORY__NOT_FOUND_ID(id),
         RES_CODE.CATEGORY__DELETE_CATEGORY_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
 
-    return await this.prisma.category.delete({ where: { id } });
+    await this.prisma.category.delete({ where: { id } });
+    return new DeletedObject(id, 'category', true);
   }
 }

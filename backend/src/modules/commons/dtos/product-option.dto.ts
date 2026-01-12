@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/mapped-types';
 import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from 'class-validator';
 
 export class ProductOptionDTO {
@@ -16,3 +17,7 @@ export class CreateProductOptionDTO {
   @IsString({ each: true })
   values: string[];
 }
+
+export class UpdateProductOptionDTO extends PartialType(
+  CreateProductOptionDTO,
+) {}

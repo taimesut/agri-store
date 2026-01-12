@@ -7,12 +7,14 @@
 //   exp?: number;
 // }
 
+import { DeletedObject } from 'src/modules/commons/dtos/deleted-object.dto';
+
 export interface IServiceCrud<T, CreateTDTO, UpdateTDTO> {
   create(payload: CreateTDTO): Promise<T>;
   findAll(): Promise<T[]>;
   findOne(id: string): Promise<T | null>;
   update(id: string, payload: UpdateTDTO): Promise<T>;
-  delete(id: string): Promise<T>;
+  delete(id: string): Promise<DeletedObject>;
 }
 
 export interface IControllerCrud<TCreate = any, TUpdate = any> {

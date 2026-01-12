@@ -1,6 +1,4 @@
-import { ProductVariantDTO } from './product-variant.dto';
-import { ProductImageDTO } from './product-image.dto';
-import { ProductTagDTO } from './product-tag.dto';
+import { CreateProductImageDTO, ProductImageDTO } from './product-image.dto';
 import {
   ArrayMinSize,
   IsArray,
@@ -13,31 +11,20 @@ import {
 import { Type } from 'class-transformer';
 import { PartialType } from '@nestjs/mapped-types';
 import { CategoryDTO } from './category.dto';
-import { ProductOptionDTO } from './product-option.dto';
-
-enum ProductStatus {
-  DRAFT = 'DRAFT',
-  PUBLISHED = 'PUBLISHED',
-}
-
-// export class ProductOptionDTO {
-//   @IsString()
-//   @IsNotEmpty()
-//   title: string;
-
-//   @IsArray()
-//   @ArrayMinSize(1)
-//   @IsString({ each: true })
-//   @IsNotEmpty({ each: true })
-//   values: string[];
-// }
+import { CreateProductOptionDTO, ProductOptionDTO } from './product-option.dto';
+import {
+  CreateProductVariantDTO,
+  ProductVariantDTO,
+} from './product-variant.dto';
+import { ProductStatus } from 'prisma/generated/enums';
+import { TagDTO } from './tag.dto';
 
 export class ProductDTO {
   title: string;
 
   handle: string;
 
-  description?: string;
+  description: string | null;
 
   status: ProductStatus;
 
@@ -47,7 +34,7 @@ export class ProductDTO {
 
   options: ProductOptionDTO[];
 
-  tags: ProductTagDTO[];
+  tags: TagDTO[];
 
   categories: CategoryDTO[];
 }
@@ -58,6 +45,7 @@ export class CreateProductDTO {
   title: string;
 
   @IsString()
+  @IsNotEmpty()
   handle: string;
 
   @IsOptional()
@@ -70,20 +58,20 @@ export class CreateProductDTO {
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => ProductVariantDTO)
-  variants: ProductVariantDTO[];
+  @Type(() => CreateProductVariantDTO)
+  variants: CreateProductVariantDTO[];
 
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => ProductImageDTO)
-  images?: ProductImageDTO[];
+  @Type(() => CreateProductImageDTO)
+  images?: CreateProductImageDTO[];
 
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => ProductOptionDTO)
-  options: ProductOptionDTO[];
+  @Type(() => CreateProductOptionDTO)
+  options: CreateProductOptionDTO[];
 
   @IsOptional()
   @IsArray()

@@ -5,6 +5,7 @@ import { CustomHttpException } from 'src/exceptions/custom-http.exception';
 import { RES_CODE, RES_MESSAGE } from 'src/utils/contants';
 import { CreateUserDTO, UpdateUserDTO, UserDTO } from '../dtos/user.dto';
 import { IServiceCrud } from 'src/utils/interfaces';
+import { DeletedObject } from '../dtos/deleted-object.dto';
 
 @Injectable()
 export class UserService implements IServiceCrud<
@@ -71,7 +72,7 @@ export class UserService implements IServiceCrud<
     // check userId exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
-        RES_MESSAGE.USER__NOT_FOUND_WITH_ID(id),
+        RES_MESSAGE.USER__NOT_FOUND_ID(id),
         RES_CODE.USER__UPDATE_USER_FAILED,
         HttpStatus.BAD_REQUEST,
       );
@@ -84,21 +85,22 @@ export class UserService implements IServiceCrud<
     });
   }
 
-  async delete(id: string): Promise<UserDTO> {
+  async delete(id: string): Promise<DeletedObject> {
     // check userId exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
-        RES_MESSAGE.USER__NOT_FOUND_WITH_ID(id),
+        RES_MESSAGE.USER__NOT_FOUND_ID(id),
         RES_CODE.USER__UPDATE_USER_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
 
-    return await this.prisma.user.delete({
+    await this.prisma.user.delete({
       where: { id },
       omit: {
         password: true,
       },
     });
+    return new DeletedObject(id, 'user', true);
   }
 }

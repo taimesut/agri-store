@@ -7,7 +7,10 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { ProductVariantOptionDTO } from './product-variant-option.dto';
+import {
+  CreateProductVariantOptionDTO,
+  ProductVariantOptionDTO,
+} from './product-variant-option.dto';
 import { InventoryDTO } from './inventory.dto';
 
 export class ProductVariantDTO {
@@ -15,7 +18,7 @@ export class ProductVariantDTO {
 
   title: string;
 
-  price: string;
+  price: number;
 
   options: ProductVariantOptionDTO[];
 
@@ -24,22 +27,43 @@ export class ProductVariantDTO {
 
 export class CreateProductVariantDTO {
   @IsString()
+  @IsNotEmpty()
   sku: string;
 
   @IsString()
+  @IsNotEmpty()
   title: string;
 
   @IsNumber()
-  price: string;
+  price: number;
 
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => ProductVariantOptionDTO)
-  options: ProductVariantOptionDTO[];
+  @Type(() => CreateProductVariantOptionDTO)
+  options: CreateProductVariantOptionDTO[];
+}
 
+export class UpdateProductVariantDTO {
+  @IsString()
   @IsNotEmpty()
-  @ValidateNested()
-  @Type(() => InventoryDTO)
-  inventory: InventoryDTO;
+  sku: string;
+
+  @IsString()
+  @IsNotEmpty()
+  title: string;
+
+  @IsNumber()
+  price: number;
+
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => CreateProductVariantOptionDTO)
+  options: CreateProductVariantOptionDTO[];
+
+  // @IsNotEmpty()
+  // @ValidateNested()
+  // @Type(() => InventoryDTO)
+  // inventory: InventoryDTO;
 }

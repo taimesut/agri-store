@@ -16,12 +16,14 @@ export class AdminProductController implements IControllerCrud<
   private readonly logger = new Logger(AdminProductController.name);
 
   @Get('/:id')
-  findOne(id: string): Promise<any> {
-    throw new Error('Method not implemented.');
+  async findOne(id: string): Promise<any> {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    return id;
   }
   @Get()
-  findAll(): Promise<any> {
-    throw new Error('Method not implemented.');
+  async findAll(): Promise<any> {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    return null;
   }
   @Post()
   async create(@Body() payload: CreateProductDTO): Promise<any> {
@@ -32,11 +34,12 @@ export class AdminProductController implements IControllerCrud<
   }
   @Post('/:id')
   async update(id: string, @Body() payload: UpdateProductDTO): Promise<any> {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     return payload;
   }
   @Delete('/:id')
-  delete(id: string): Promise<any> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<any> {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    return id;
   }
 }

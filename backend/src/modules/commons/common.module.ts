@@ -8,6 +8,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { ProductService } from './services/product.service';
 import { CategoryService } from './services/category.service';
+import { TagService } from './services/tag.service';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { CategoryService } from './services/category.service';
     AuthService,
     ProductService,
     CategoryService,
+    TagService,
   ],
   exports: [
     UserService,
@@ -48,6 +50,7 @@ import { CategoryService } from './services/category.service';
     ProductService,
     MulterModule,
     CategoryService,
+    TagService,
   ],
 })
 export class CommonModule {}
