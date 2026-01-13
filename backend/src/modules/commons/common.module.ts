@@ -1,14 +1,11 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './services/user.service';
 import { PrismaService } from './services/prisma.serivce';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './services/auth.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { ProductService } from './services/product.service';
-import { CategoryService } from './services/category.service';
-import { TagService } from './services/tag.service';
+import { UserService } from './services/user.service';
 
 @Module({
   imports: [
@@ -35,22 +32,7 @@ import { TagService } from './services/tag.service';
       }),
     }),
   ],
-  providers: [
-    UserService,
-    PrismaService,
-    AuthService,
-    ProductService,
-    CategoryService,
-    TagService,
-  ],
-  exports: [
-    UserService,
-    PrismaService,
-    AuthService,
-    ProductService,
-    MulterModule,
-    CategoryService,
-    TagService,
-  ],
+  providers: [PrismaService, AuthService, UserService],
+  exports: [PrismaService, AuthService, MulterModule, UserService],
 })
 export class CommonModule {}

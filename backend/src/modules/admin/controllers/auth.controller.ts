@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   HttpCode,
-  Logger,
   Post,
   Res,
   UseGuards,
@@ -16,7 +15,6 @@ import { BaseResponse } from 'src/responses/base.response';
 
 @Controller('/auth')
 export class AdminAuthController {
-  private readonly logger = new Logger(AdminAuthController.name);
   constructor(private readonly authService: AuthService) {}
 
   @Post('/login')

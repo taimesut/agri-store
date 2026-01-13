@@ -4,18 +4,9 @@ import { CommonModule } from 'src/modules/commons/common.module';
 import { AdminAuthController } from './controllers/auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { MulterModule } from '@nestjs/platform-express';
-import { AdminProductController } from './controllers/product.controller';
-import { AdminCategoryController } from './controllers/category.controller';
-import { AdminTagController } from './controllers/tag.controller';
 
 @Module({
   imports: [CommonModule, JwtModule, MulterModule],
-  controllers: [
-    AdminUsersController,
-    AdminAuthController,
-    AdminProductController,
-    AdminCategoryController,
-    AdminTagController,
-  ],
+  controllers: [AdminUsersController, AdminAuthController],
 })
 export class AdminModule {}

@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/modules/commons/services/prisma.serivce';
 import { hashPassword } from 'src/utils/password';
 import { CustomHttpException } from 'src/exceptions/custom-http.exception';
@@ -13,7 +13,6 @@ export class UserService implements IServiceCrud<
   CreateUserDTO,
   UpdateUserDTO
 > {
-  private readonly logger = new Logger(UserService.name);
   constructor(private prisma: PrismaService) {}
 
   private async hasEmail(email: string): Promise<boolean> {
@@ -39,7 +38,7 @@ export class UserService implements IServiceCrud<
     if (await this.hasEmail(payload.email)) {
       throw new CustomHttpException(
         RES_MESSAGE.USER__EMAIL_IS_EXISTING,
-        RES_CODE.USER__CREATE_USER_FAILED,
+        RES_CODE.USER__CREATE_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -73,7 +72,7 @@ export class UserService implements IServiceCrud<
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
         RES_MESSAGE.USER__NOT_FOUND_ID(id),
-        RES_CODE.USER__UPDATE_USER_FAILED,
+        RES_CODE.USER__UPDATE_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -90,7 +89,7 @@ export class UserService implements IServiceCrud<
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
         RES_MESSAGE.USER__NOT_FOUND_ID(id),
-        RES_CODE.USER__UPDATE_USER_FAILED,
+        RES_CODE.USER__UPDATE_FAILED,
         HttpStatus.BAD_REQUEST,
       );
     }

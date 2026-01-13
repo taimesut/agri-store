@@ -14,8 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model Inventory
- * ///////////////////
- * ///////////////////
+ * ///////////////////////////////////////////////////
+ * ///////////////////////////////////////////////////
  */
 export type InventoryModel = runtime.Types.Result.DefaultSelection<Prisma.$InventoryPayload>
 

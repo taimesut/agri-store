@@ -14,8 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model Order
- * ///////////////////
- * ///////////////////
+ * ///////////////////////////////////////////////////
+ * ///////////////////////////////////////////////////
  */
 export type OrderModel = runtime.Types.Result.DefaultSelection<Prisma.$OrderPayload>
 

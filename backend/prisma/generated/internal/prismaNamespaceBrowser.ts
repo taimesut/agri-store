@@ -55,14 +55,13 @@ export const ModelName = {
   Customer: 'Customer',
   Product: 'Product',
   ProductImage: 'ProductImage',
-  ProductTag: 'ProductTag',
-  ProductTagLink: 'ProductTagLink',
   Category: 'Category',
   ProductCategory: 'ProductCategory',
+  ProductTag: 'ProductTag',
+  ProductTagLink: 'ProductTagLink',
   ProductOption: 'ProductOption',
   ProductOptionValue: 'ProductOptionValue',
   ProductVariant: 'ProductVariant',
-  VariantOptionValue: 'VariantOptionValue',
   Inventory: 'Inventory',
   Order: 'Order',
   OrderItem: 'OrderItem',
@@ -133,22 +132,6 @@ export const ProductImageScalarFieldEnum = {
 export type ProductImageScalarFieldEnum = (typeof ProductImageScalarFieldEnum)[keyof typeof ProductImageScalarFieldEnum]
 
 
-export const ProductTagScalarFieldEnum = {
-  id: 'id',
-  value: 'value'
-} as const
-
-export type ProductTagScalarFieldEnum = (typeof ProductTagScalarFieldEnum)[keyof typeof ProductTagScalarFieldEnum]
-
-
-export const ProductTagLinkScalarFieldEnum = {
-  productId: 'productId',
-  tagId: 'tagId'
-} as const
-
-export type ProductTagLinkScalarFieldEnum = (typeof ProductTagLinkScalarFieldEnum)[keyof typeof ProductTagLinkScalarFieldEnum]
-
-
 export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -168,10 +151,27 @@ export const ProductCategoryScalarFieldEnum = {
 export type ProductCategoryScalarFieldEnum = (typeof ProductCategoryScalarFieldEnum)[keyof typeof ProductCategoryScalarFieldEnum]
 
 
+export const ProductTagScalarFieldEnum = {
+  id: 'id',
+  value: 'value'
+} as const
+
+export type ProductTagScalarFieldEnum = (typeof ProductTagScalarFieldEnum)[keyof typeof ProductTagScalarFieldEnum]
+
+
+export const ProductTagLinkScalarFieldEnum = {
+  productId: 'productId',
+  tagId: 'tagId'
+} as const
+
+export type ProductTagLinkScalarFieldEnum = (typeof ProductTagLinkScalarFieldEnum)[keyof typeof ProductTagLinkScalarFieldEnum]
+
+
 export const ProductOptionScalarFieldEnum = {
   id: 'id',
   productId: 'productId',
-  title: 'title'
+  name: 'name',
+  position: 'position'
 } as const
 
 export type ProductOptionScalarFieldEnum = (typeof ProductOptionScalarFieldEnum)[keyof typeof ProductOptionScalarFieldEnum]
@@ -180,7 +180,8 @@ export type ProductOptionScalarFieldEnum = (typeof ProductOptionScalarFieldEnum)
 export const ProductOptionValueScalarFieldEnum = {
   id: 'id',
   optionId: 'optionId',
-  value: 'value'
+  value: 'value',
+  position: 'position'
 } as const
 
 export type ProductOptionValueScalarFieldEnum = (typeof ProductOptionValueScalarFieldEnum)[keyof typeof ProductOptionValueScalarFieldEnum]
@@ -192,18 +193,13 @@ export const ProductVariantScalarFieldEnum = {
   sku: 'sku',
   title: 'title',
   price: 'price',
+  optionValue1Id: 'optionValue1Id',
+  optionValue2Id: 'optionValue2Id',
+  optionValue3Id: 'optionValue3Id',
   createdAt: 'createdAt'
 } as const
 
 export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnum)[keyof typeof ProductVariantScalarFieldEnum]
-
-
-export const VariantOptionValueScalarFieldEnum = {
-  variantId: 'variantId',
-  optionValueId: 'optionValueId'
-} as const
-
-export type VariantOptionValueScalarFieldEnum = (typeof VariantOptionValueScalarFieldEnum)[keyof typeof VariantOptionValueScalarFieldEnum]
 
 
 export const InventoryScalarFieldEnum = {
@@ -322,22 +318,6 @@ export const ProductImageOrderByRelevanceFieldEnum = {
 export type ProductImageOrderByRelevanceFieldEnum = (typeof ProductImageOrderByRelevanceFieldEnum)[keyof typeof ProductImageOrderByRelevanceFieldEnum]
 
 
-export const ProductTagOrderByRelevanceFieldEnum = {
-  id: 'id',
-  value: 'value'
-} as const
-
-export type ProductTagOrderByRelevanceFieldEnum = (typeof ProductTagOrderByRelevanceFieldEnum)[keyof typeof ProductTagOrderByRelevanceFieldEnum]
-
-
-export const ProductTagLinkOrderByRelevanceFieldEnum = {
-  productId: 'productId',
-  tagId: 'tagId'
-} as const
-
-export type ProductTagLinkOrderByRelevanceFieldEnum = (typeof ProductTagLinkOrderByRelevanceFieldEnum)[keyof typeof ProductTagLinkOrderByRelevanceFieldEnum]
-
-
 export const CategoryOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -356,10 +336,26 @@ export const ProductCategoryOrderByRelevanceFieldEnum = {
 export type ProductCategoryOrderByRelevanceFieldEnum = (typeof ProductCategoryOrderByRelevanceFieldEnum)[keyof typeof ProductCategoryOrderByRelevanceFieldEnum]
 
 
+export const ProductTagOrderByRelevanceFieldEnum = {
+  id: 'id',
+  value: 'value'
+} as const
+
+export type ProductTagOrderByRelevanceFieldEnum = (typeof ProductTagOrderByRelevanceFieldEnum)[keyof typeof ProductTagOrderByRelevanceFieldEnum]
+
+
+export const ProductTagLinkOrderByRelevanceFieldEnum = {
+  productId: 'productId',
+  tagId: 'tagId'
+} as const
+
+export type ProductTagLinkOrderByRelevanceFieldEnum = (typeof ProductTagLinkOrderByRelevanceFieldEnum)[keyof typeof ProductTagLinkOrderByRelevanceFieldEnum]
+
+
 export const ProductOptionOrderByRelevanceFieldEnum = {
   id: 'id',
   productId: 'productId',
-  title: 'title'
+  name: 'name'
 } as const
 
 export type ProductOptionOrderByRelevanceFieldEnum = (typeof ProductOptionOrderByRelevanceFieldEnum)[keyof typeof ProductOptionOrderByRelevanceFieldEnum]
@@ -378,18 +374,13 @@ export const ProductVariantOrderByRelevanceFieldEnum = {
   id: 'id',
   productId: 'productId',
   sku: 'sku',
-  title: 'title'
+  title: 'title',
+  optionValue1Id: 'optionValue1Id',
+  optionValue2Id: 'optionValue2Id',
+  optionValue3Id: 'optionValue3Id'
 } as const
 
 export type ProductVariantOrderByRelevanceFieldEnum = (typeof ProductVariantOrderByRelevanceFieldEnum)[keyof typeof ProductVariantOrderByRelevanceFieldEnum]
-
-
-export const VariantOptionValueOrderByRelevanceFieldEnum = {
-  variantId: 'variantId',
-  optionValueId: 'optionValueId'
-} as const
-
-export type VariantOptionValueOrderByRelevanceFieldEnum = (typeof VariantOptionValueOrderByRelevanceFieldEnum)[keyof typeof VariantOptionValueOrderByRelevanceFieldEnum]
 
 
 export const InventoryOrderByRelevanceFieldEnum = {

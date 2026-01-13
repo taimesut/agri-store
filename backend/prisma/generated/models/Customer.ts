@@ -14,8 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model Customer
- * ///////////////////
- * ///////////////////
+ * ///////////////////////////////////////////////////
+ * ///////////////////////////////////////////////////
  */
 export type CustomerModel = runtime.Types.Result.DefaultSelection<Prisma.$CustomerPayload>
 

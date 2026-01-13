@@ -1,12 +1,3 @@
-// export interface IJwtPayload {
-//   sub: string;
-//   email: string;
-//   firstName: string;
-//   lastName: string;
-//   iat?: number;
-//   exp?: number;
-// }
-
 import { DeletedObject } from 'src/modules/commons/dtos/deleted-object.dto';
 
 export interface IServiceCrud<T, CreateTDTO, UpdateTDTO> {

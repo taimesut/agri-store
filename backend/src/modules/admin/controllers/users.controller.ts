@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Logger,
-  Delete,
-  Param,
-  Get,
-} from '@nestjs/common';
+import { Controller, Post, Body, Delete, Param, Get } from '@nestjs/common';
 import { UserService } from '../../commons/services/user.service';
 import { BaseResponse } from 'src/responses/base.response';
 import {
@@ -16,7 +8,6 @@ import {
 
 @Controller('users')
 export class AdminUsersController {
-  private readonly logger = new Logger(AdminUsersController.name);
   constructor(private readonly usersService: UserService) {}
 
   @Get('/:id')

@@ -14,8 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model Shipping
- * ///////////////////
- * ///////////////////
+ * ///////////////////////////////////////////////////
+ * ///////////////////////////////////////////////////
  */
 export type ShippingModel = runtime.Types.Result.DefaultSelection<Prisma.$ShippingPayload>
 
