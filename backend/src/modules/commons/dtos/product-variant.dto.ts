@@ -5,6 +5,7 @@ import {
 } from './product-variant-option.dto';
 
 export class CreateProductVariantDTO {
+  productId: string;
   sku: string;
   title: string;
   price: number;
@@ -18,4 +19,11 @@ export class ProductVariantDTO {
   price: number;
   inventory: InventoryDTO;
   options: ProductVariantOptionDTO[];
+}
+
+export class UpdateProductVariantDTO {
+  sku?: string;
+  price?: number;
+  inventory?: InventoryDTO;
+  options?: ProductVariantOptionDTO[];
 }

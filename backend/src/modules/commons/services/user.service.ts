@@ -5,7 +5,6 @@ import { CustomHttpException } from 'src/exceptions/custom-http.exception';
 import { RES_CODE, RES_MESSAGE } from 'src/utils/contants';
 import { CreateUserDTO, UpdateUserDTO, UserDTO } from '../dtos/user.dto';
 import { IServiceCrud } from 'src/utils/interfaces';
-import { DeletedObject } from '../dtos/deleted-object.dto';
 
 @Injectable()
 export class UserService implements IServiceCrud<
@@ -84,7 +83,7 @@ export class UserService implements IServiceCrud<
     });
   }
 
-  async delete(id: string): Promise<DeletedObject> {
+  async delete(id: string): Promise<boolean> {
     // check userId exist
     if (!(await this.hasId(id))) {
       throw new CustomHttpException(
@@ -100,6 +99,6 @@ export class UserService implements IServiceCrud<
         password: true,
       },
     });
-    return new DeletedObject(id, 'user', true);
+    return true;
   }
 }

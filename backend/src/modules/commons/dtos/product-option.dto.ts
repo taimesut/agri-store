@@ -3,10 +3,10 @@ export class CreateProductOptionDTO {
   values: string[];
 }
 
-type ProductOptionValueDTO = {
-  optionId: string;
+export class ProductOptionValueDTO {
+  productOptionId: string;
   value: string;
-};
+}
 
 export class ProductOptionDTO {
   productId: string;

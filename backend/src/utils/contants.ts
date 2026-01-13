@@ -101,8 +101,8 @@ export const RES_MESSAGE = {
   PRODUCT_OPTION_VALUE__NOT_FOUND_VALUE: (value) =>
     `product_option.value: ${value} không tồn tại`,
 
-  TAG__VALUE_IS_EXISTING: (value) => `tag.value: ${value} đã tồn tại`,
-  TAG__NOT_FOUND_ID: (id) => `tag.id: ${id} không tồn tại`,
+  PRODUCT_TAG__VALUE_IS_EXISTING: (value) => `tag.value: ${value} đã tồn tại`,
+  PRODUCT_TAG__NOT_FOUND_ID: (id) => `tag.id: ${id} không tồn tại`,
 
   PRODUCT__NOT_FOUND_ID: (id) => `product.id: ${id} không tồn tại`,
 
@@ -122,4 +122,7 @@ export const RES_MESSAGE = {
     `product_option.title: ${productId}.${title} đã tồn tại`,
 
   PRODUCT_IMAGE__NOT_FOUND_ID: (id) => `product_image.id: ${id} không tồn tại`,
+
+  PRODUCT_IMAGE__POSITION_EXISITING: (productId, position) =>
+    `product_image.position: ${productId}.${position} đã tồn tại`,
 };

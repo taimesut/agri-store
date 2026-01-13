@@ -14,8 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model ProductTag
- * ///////////////////////////////////////////////////
- * ///////////////////////////////////////////////////
+ * ///////////////////
+ * ///////////////////
  */
 export type ProductTagModel = runtime.Types.Result.DefaultSelection<Prisma.$ProductTagPayload>
 

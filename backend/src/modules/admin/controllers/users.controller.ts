@@ -35,6 +35,6 @@ export class AdminUsersController {
 
   @Delete('/:id')
   async delete(@Param('id') id: string) {
-    return new BaseResponse('user', await this.usersService.delete(id));
+    return await this.usersService.delete(id);
   }
 }

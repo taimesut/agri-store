@@ -5,3 +5,7 @@ export class CreateProductTagDTO {
 export class ProductTagDTO {
   value: string;
 }
+
+export class UpdateProductTagDTO {
+  value: string;
+}

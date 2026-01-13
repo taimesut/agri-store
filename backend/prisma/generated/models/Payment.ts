@@ -14,8 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model Payment
- * ///////////////////////////////////////////////////
- * ///////////////////////////////////////////////////
+ * ///////////////////
+ * ///////////////////
  */
 export type PaymentModel = runtime.Types.Result.DefaultSelection<Prisma.$PaymentPayload>
 

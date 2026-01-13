@@ -20,70 +20,46 @@ export type ProductOptionValueModel = runtime.Types.Result.DefaultSelection<Pris
 
 export type AggregateProductOptionValue = {
   _count: ProductOptionValueCountAggregateOutputType | null
-  _avg: ProductOptionValueAvgAggregateOutputType | null
-  _sum: ProductOptionValueSumAggregateOutputType | null
   _min: ProductOptionValueMinAggregateOutputType | null
   _max: ProductOptionValueMaxAggregateOutputType | null
 }
 
-export type ProductOptionValueAvgAggregateOutputType = {
-  position: number | null
-}
-
-export type ProductOptionValueSumAggregateOutputType = {
-  position: number | null
-}
-
 export type ProductOptionValueMinAggregateOutputType = {
   id: string | null
-  optionId: string | null
+  productOptionId: string | null
   value: string | null
-  position: number | null
 }
 
 export type ProductOptionValueMaxAggregateOutputType = {
   id: string | null
-  optionId: string | null
+  productOptionId: string | null
   value: string | null
-  position: number | null
 }
 
 export type ProductOptionValueCountAggregateOutputType = {
   id: number
-  optionId: number
+  productOptionId: number
   value: number
-  position: number
   _all: number
 }
 
 
-export type ProductOptionValueAvgAggregateInputType = {
-  position?: true
-}
-
-export type ProductOptionValueSumAggregateInputType = {
-  position?: true
-}
-
 export type ProductOptionValueMinAggregateInputType = {
   id?: true
-  optionId?: true
+  productOptionId?: true
   value?: true
-  position?: true
 }
 
 export type ProductOptionValueMaxAggregateInputType = {
   id?: true
-  optionId?: true
+  productOptionId?: true
   value?: true
-  position?: true
 }
 
 export type ProductOptionValueCountAggregateInputType = {
   id?: true
-  optionId?: true
+  productOptionId?: true
   value?: true
-  position?: true
   _all?: true
 }
 
@@ -125,18 +101,6 @@ export type ProductOptionValueAggregateArgs<ExtArgs extends runtime.Types.Extens
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: ProductOptionValueAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: ProductOptionValueSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProductOptionValueMinAggregateInputType
@@ -167,20 +131,15 @@ export type ProductOptionValueGroupByArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   _count?: ProductOptionValueCountAggregateInputType | true
-  _avg?: ProductOptionValueAvgAggregateInputType
-  _sum?: ProductOptionValueSumAggregateInputType
   _min?: ProductOptionValueMinAggregateInputType
   _max?: ProductOptionValueMaxAggregateInputType
 }
 
 export type ProductOptionValueGroupByOutputType = {
   id: string
-  optionId: string
+  productOptionId: string
   value: string
-  position: number
   _count: ProductOptionValueCountAggregateOutputType | null
-  _avg: ProductOptionValueAvgAggregateOutputType | null
-  _sum: ProductOptionValueSumAggregateOutputType | null
   _min: ProductOptionValueMinAggregateOutputType | null
   _max: ProductOptionValueMaxAggregateOutputType | null
 }
@@ -205,52 +164,40 @@ export type ProductOptionValueWhereInput = {
   OR?: Prisma.ProductOptionValueWhereInput[]
   NOT?: Prisma.ProductOptionValueWhereInput | Prisma.ProductOptionValueWhereInput[]
   id?: Prisma.StringFilter<"ProductOptionValue"> | string
-  optionId?: Prisma.StringFilter<"ProductOptionValue"> | string
+  productOptionId?: Prisma.StringFilter<"ProductOptionValue"> | string
   value?: Prisma.StringFilter<"ProductOptionValue"> | string
-  position?: Prisma.IntFilter<"ProductOptionValue"> | number
+  variants?: Prisma.VariantOptionValueListRelationFilter
   option?: Prisma.XOR<Prisma.ProductOptionScalarRelationFilter, Prisma.ProductOptionWhereInput>
-  variantsAsOption1?: Prisma.ProductVariantListRelationFilter
-  variantsAsOption2?: Prisma.ProductVariantListRelationFilter
-  variantsAsOption3?: Prisma.ProductVariantListRelationFilter
 }
 
 export type ProductOptionValueOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  optionId?: Prisma.SortOrder
+  productOptionId?: Prisma.SortOrder
   value?: Prisma.SortOrder
-  position?: Prisma.SortOrder
+  variants?: Prisma.VariantOptionValueOrderByRelationAggregateInput
   option?: Prisma.ProductOptionOrderByWithRelationInput
-  variantsAsOption1?: Prisma.ProductVariantOrderByRelationAggregateInput
-  variantsAsOption2?: Prisma.ProductVariantOrderByRelationAggregateInput
-  variantsAsOption3?: Prisma.ProductVariantOrderByRelationAggregateInput
   _relevance?: Prisma.ProductOptionValueOrderByRelevanceInput
 }
 
 export type ProductOptionValueWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  optionId_value?: Prisma.ProductOptionValueOptionIdValueCompoundUniqueInput
+  productOptionId_value?: Prisma.ProductOptionValueProductOptionIdValueCompoundUniqueInput
   AND?: Prisma.ProductOptionValueWhereInput | Prisma.ProductOptionValueWhereInput[]
   OR?: Prisma.ProductOptionValueWhereInput[]
   NOT?: Prisma.ProductOptionValueWhereInput | Prisma.ProductOptionValueWhereInput[]
-  optionId?: Prisma.StringFilter<"ProductOptionValue"> | string
+  productOptionId?: Prisma.StringFilter<"ProductOptionValue"> | string
   value?: Prisma.StringFilter<"ProductOptionValue"> | string
-  position?: Prisma.IntFilter<"ProductOptionValue"> | number
+  variants?: Prisma.VariantOptionValueListRelationFilter
   option?: Prisma.XOR<Prisma.ProductOptionScalarRelationFilter, Prisma.ProductOptionWhereInput>
-  variantsAsOption1?: Prisma.ProductVariantListRelationFilter
-  variantsAsOption2?: Prisma.ProductVariantListRelationFilter
-  variantsAsOption3?: Prisma.ProductVariantListRelationFilter
-}, "id" | "optionId_value">
+}, "id" | "productOptionId_value">
 
 export type ProductOptionValueOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  optionId?: Prisma.SortOrder
+  productOptionId?: Prisma.SortOrder
   value?: Prisma.SortOrder
-  position?: Prisma.SortOrder
   _count?: Prisma.ProductOptionValueCountOrderByAggregateInput
-  _avg?: Prisma.ProductOptionValueAvgOrderByAggregateInput
   _max?: Prisma.ProductOptionValueMaxOrderByAggregateInput
   _min?: Prisma.ProductOptionValueMinOrderByAggregateInput
-  _sum?: Prisma.ProductOptionValueSumOrderByAggregateInput
 }
 
 export type ProductOptionValueScalarWhereWithAggregatesInput = {
@@ -258,69 +205,53 @@ export type ProductOptionValueScalarWhereWithAggregatesInput = {
   OR?: Prisma.ProductOptionValueScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProductOptionValueScalarWhereWithAggregatesInput | Prisma.ProductOptionValueScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"ProductOptionValue"> | string
-  optionId?: Prisma.StringWithAggregatesFilter<"ProductOptionValue"> | string
+  productOptionId?: Prisma.StringWithAggregatesFilter<"ProductOptionValue"> | string
   value?: Prisma.StringWithAggregatesFilter<"ProductOptionValue"> | string
-  position?: Prisma.IntWithAggregatesFilter<"ProductOptionValue"> | number
 }
 
 export type ProductOptionValueCreateInput = {
   id?: string
   value: string
-  position: number
+  variants?: Prisma.VariantOptionValueCreateNestedManyWithoutOptionValueInput
   option: Prisma.ProductOptionCreateNestedOneWithoutValuesInput
-  variantsAsOption1?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue1Input
-  variantsAsOption2?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue2Input
-  variantsAsOption3?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue3Input
 }
 
 export type ProductOptionValueUncheckedCreateInput = {
   id?: string
-  optionId: string
+  productOptionId: string
   value: string
-  position: number
-  variantsAsOption1?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue1Input
-  variantsAsOption2?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue2Input
-  variantsAsOption3?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue3Input
+  variants?: Prisma.VariantOptionValueUncheckedCreateNestedManyWithoutOptionValueInput
 }
 
 export type ProductOptionValueUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
+  variants?: Prisma.VariantOptionValueUpdateManyWithoutOptionValueNestedInput
   option?: Prisma.ProductOptionUpdateOneRequiredWithoutValuesNestedInput
-  variantsAsOption1?: Prisma.ProductVariantUpdateManyWithoutOptionValue1NestedInput
-  variantsAsOption2?: Prisma.ProductVariantUpdateManyWithoutOptionValue2NestedInput
-  variantsAsOption3?: Prisma.ProductVariantUpdateManyWithoutOptionValue3NestedInput
 }
 
 export type ProductOptionValueUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  optionId?: Prisma.StringFieldUpdateOperationsInput | string
+  productOptionId?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
-  variantsAsOption1?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue1NestedInput
-  variantsAsOption2?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue2NestedInput
-  variantsAsOption3?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue3NestedInput
+  variants?: Prisma.VariantOptionValueUncheckedUpdateManyWithoutOptionValueNestedInput
 }
 
 export type ProductOptionValueCreateManyInput = {
   id?: string
-  optionId: string
+  productOptionId: string
   value: string
-  position: number
 }
 
 export type ProductOptionValueUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProductOptionValueUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  optionId?: Prisma.StringFieldUpdateOperationsInput | string
+  productOptionId?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProductOptionValueListRelationFilter = {
@@ -339,43 +270,32 @@ export type ProductOptionValueOrderByRelevanceInput = {
   search: string
 }
 
-export type ProductOptionValueOptionIdValueCompoundUniqueInput = {
-  optionId: string
+export type ProductOptionValueProductOptionIdValueCompoundUniqueInput = {
+  productOptionId: string
   value: string
 }
 
 export type ProductOptionValueCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  optionId?: Prisma.SortOrder
+  productOptionId?: Prisma.SortOrder
   value?: Prisma.SortOrder
-  position?: Prisma.SortOrder
-}
-
-export type ProductOptionValueAvgOrderByAggregateInput = {
-  position?: Prisma.SortOrder
 }
 
 export type ProductOptionValueMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  optionId?: Prisma.SortOrder
+  productOptionId?: Prisma.SortOrder
   value?: Prisma.SortOrder
-  position?: Prisma.SortOrder
 }
 
 export type ProductOptionValueMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  optionId?: Prisma.SortOrder
+  productOptionId?: Prisma.SortOrder
   value?: Prisma.SortOrder
-  position?: Prisma.SortOrder
 }
 
-export type ProductOptionValueSumOrderByAggregateInput = {
-  position?: Prisma.SortOrder
-}
-
-export type ProductOptionValueNullableScalarRelationFilter = {
-  is?: Prisma.ProductOptionValueWhereInput | null
-  isNot?: Prisma.ProductOptionValueWhereInput | null
+export type ProductOptionValueScalarRelationFilter = {
+  is?: Prisma.ProductOptionValueWhereInput
+  isNot?: Prisma.ProductOptionValueWhereInput
 }
 
 export type ProductOptionValueCreateNestedManyWithoutOptionInput = {
@@ -420,70 +340,30 @@ export type ProductOptionValueUncheckedUpdateManyWithoutOptionNestedInput = {
   deleteMany?: Prisma.ProductOptionValueScalarWhereInput | Prisma.ProductOptionValueScalarWhereInput[]
 }
 
-export type ProductOptionValueCreateNestedOneWithoutVariantsAsOption1Input = {
-  create?: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption1Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption1Input>
-  connectOrCreate?: Prisma.ProductOptionValueCreateOrConnectWithoutVariantsAsOption1Input
+export type ProductOptionValueCreateNestedOneWithoutVariantsInput = {
+  create?: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsInput, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsInput>
+  connectOrCreate?: Prisma.ProductOptionValueCreateOrConnectWithoutVariantsInput
   connect?: Prisma.ProductOptionValueWhereUniqueInput
 }
 
-export type ProductOptionValueCreateNestedOneWithoutVariantsAsOption2Input = {
-  create?: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption2Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption2Input>
-  connectOrCreate?: Prisma.ProductOptionValueCreateOrConnectWithoutVariantsAsOption2Input
+export type ProductOptionValueUpdateOneRequiredWithoutVariantsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsInput, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsInput>
+  connectOrCreate?: Prisma.ProductOptionValueCreateOrConnectWithoutVariantsInput
+  upsert?: Prisma.ProductOptionValueUpsertWithoutVariantsInput
   connect?: Prisma.ProductOptionValueWhereUniqueInput
-}
-
-export type ProductOptionValueCreateNestedOneWithoutVariantsAsOption3Input = {
-  create?: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption3Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption3Input>
-  connectOrCreate?: Prisma.ProductOptionValueCreateOrConnectWithoutVariantsAsOption3Input
-  connect?: Prisma.ProductOptionValueWhereUniqueInput
-}
-
-export type ProductOptionValueUpdateOneWithoutVariantsAsOption1NestedInput = {
-  create?: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption1Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption1Input>
-  connectOrCreate?: Prisma.ProductOptionValueCreateOrConnectWithoutVariantsAsOption1Input
-  upsert?: Prisma.ProductOptionValueUpsertWithoutVariantsAsOption1Input
-  disconnect?: Prisma.ProductOptionValueWhereInput | boolean
-  delete?: Prisma.ProductOptionValueWhereInput | boolean
-  connect?: Prisma.ProductOptionValueWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductOptionValueUpdateToOneWithWhereWithoutVariantsAsOption1Input, Prisma.ProductOptionValueUpdateWithoutVariantsAsOption1Input>, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsAsOption1Input>
-}
-
-export type ProductOptionValueUpdateOneWithoutVariantsAsOption2NestedInput = {
-  create?: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption2Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption2Input>
-  connectOrCreate?: Prisma.ProductOptionValueCreateOrConnectWithoutVariantsAsOption2Input
-  upsert?: Prisma.ProductOptionValueUpsertWithoutVariantsAsOption2Input
-  disconnect?: Prisma.ProductOptionValueWhereInput | boolean
-  delete?: Prisma.ProductOptionValueWhereInput | boolean
-  connect?: Prisma.ProductOptionValueWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductOptionValueUpdateToOneWithWhereWithoutVariantsAsOption2Input, Prisma.ProductOptionValueUpdateWithoutVariantsAsOption2Input>, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsAsOption2Input>
-}
-
-export type ProductOptionValueUpdateOneWithoutVariantsAsOption3NestedInput = {
-  create?: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption3Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption3Input>
-  connectOrCreate?: Prisma.ProductOptionValueCreateOrConnectWithoutVariantsAsOption3Input
-  upsert?: Prisma.ProductOptionValueUpsertWithoutVariantsAsOption3Input
-  disconnect?: Prisma.ProductOptionValueWhereInput | boolean
-  delete?: Prisma.ProductOptionValueWhereInput | boolean
-  connect?: Prisma.ProductOptionValueWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductOptionValueUpdateToOneWithWhereWithoutVariantsAsOption3Input, Prisma.ProductOptionValueUpdateWithoutVariantsAsOption3Input>, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsAsOption3Input>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductOptionValueUpdateToOneWithWhereWithoutVariantsInput, Prisma.ProductOptionValueUpdateWithoutVariantsInput>, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsInput>
 }
 
 export type ProductOptionValueCreateWithoutOptionInput = {
   id?: string
   value: string
-  position: number
-  variantsAsOption1?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue1Input
-  variantsAsOption2?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue2Input
-  variantsAsOption3?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue3Input
+  variants?: Prisma.VariantOptionValueCreateNestedManyWithoutOptionValueInput
 }
 
 export type ProductOptionValueUncheckedCreateWithoutOptionInput = {
   id?: string
   value: string
-  position: number
-  variantsAsOption1?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue1Input
-  variantsAsOption2?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue2Input
-  variantsAsOption3?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue3Input
+  variants?: Prisma.VariantOptionValueUncheckedCreateNestedManyWithoutOptionValueInput
 }
 
 export type ProductOptionValueCreateOrConnectWithoutOptionInput = {
@@ -517,195 +397,70 @@ export type ProductOptionValueScalarWhereInput = {
   OR?: Prisma.ProductOptionValueScalarWhereInput[]
   NOT?: Prisma.ProductOptionValueScalarWhereInput | Prisma.ProductOptionValueScalarWhereInput[]
   id?: Prisma.StringFilter<"ProductOptionValue"> | string
-  optionId?: Prisma.StringFilter<"ProductOptionValue"> | string
+  productOptionId?: Prisma.StringFilter<"ProductOptionValue"> | string
   value?: Prisma.StringFilter<"ProductOptionValue"> | string
-  position?: Prisma.IntFilter<"ProductOptionValue"> | number
 }
 
-export type ProductOptionValueCreateWithoutVariantsAsOption1Input = {
+export type ProductOptionValueCreateWithoutVariantsInput = {
   id?: string
   value: string
-  position: number
   option: Prisma.ProductOptionCreateNestedOneWithoutValuesInput
-  variantsAsOption2?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue2Input
-  variantsAsOption3?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue3Input
 }
 
-export type ProductOptionValueUncheckedCreateWithoutVariantsAsOption1Input = {
+export type ProductOptionValueUncheckedCreateWithoutVariantsInput = {
   id?: string
-  optionId: string
+  productOptionId: string
   value: string
-  position: number
-  variantsAsOption2?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue2Input
-  variantsAsOption3?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue3Input
 }
 
-export type ProductOptionValueCreateOrConnectWithoutVariantsAsOption1Input = {
+export type ProductOptionValueCreateOrConnectWithoutVariantsInput = {
   where: Prisma.ProductOptionValueWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption1Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption1Input>
+  create: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsInput, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsInput>
 }
 
-export type ProductOptionValueCreateWithoutVariantsAsOption2Input = {
-  id?: string
-  value: string
-  position: number
-  option: Prisma.ProductOptionCreateNestedOneWithoutValuesInput
-  variantsAsOption1?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue1Input
-  variantsAsOption3?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue3Input
-}
-
-export type ProductOptionValueUncheckedCreateWithoutVariantsAsOption2Input = {
-  id?: string
-  optionId: string
-  value: string
-  position: number
-  variantsAsOption1?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue1Input
-  variantsAsOption3?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue3Input
-}
-
-export type ProductOptionValueCreateOrConnectWithoutVariantsAsOption2Input = {
-  where: Prisma.ProductOptionValueWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption2Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption2Input>
-}
-
-export type ProductOptionValueCreateWithoutVariantsAsOption3Input = {
-  id?: string
-  value: string
-  position: number
-  option: Prisma.ProductOptionCreateNestedOneWithoutValuesInput
-  variantsAsOption1?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue1Input
-  variantsAsOption2?: Prisma.ProductVariantCreateNestedManyWithoutOptionValue2Input
-}
-
-export type ProductOptionValueUncheckedCreateWithoutVariantsAsOption3Input = {
-  id?: string
-  optionId: string
-  value: string
-  position: number
-  variantsAsOption1?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue1Input
-  variantsAsOption2?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutOptionValue2Input
-}
-
-export type ProductOptionValueCreateOrConnectWithoutVariantsAsOption3Input = {
-  where: Prisma.ProductOptionValueWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption3Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption3Input>
-}
-
-export type ProductOptionValueUpsertWithoutVariantsAsOption1Input = {
-  update: Prisma.XOR<Prisma.ProductOptionValueUpdateWithoutVariantsAsOption1Input, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsAsOption1Input>
-  create: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption1Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption1Input>
+export type ProductOptionValueUpsertWithoutVariantsInput = {
+  update: Prisma.XOR<Prisma.ProductOptionValueUpdateWithoutVariantsInput, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsInput>
+  create: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsInput, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsInput>
   where?: Prisma.ProductOptionValueWhereInput
 }
 
-export type ProductOptionValueUpdateToOneWithWhereWithoutVariantsAsOption1Input = {
+export type ProductOptionValueUpdateToOneWithWhereWithoutVariantsInput = {
   where?: Prisma.ProductOptionValueWhereInput
-  data: Prisma.XOR<Prisma.ProductOptionValueUpdateWithoutVariantsAsOption1Input, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsAsOption1Input>
+  data: Prisma.XOR<Prisma.ProductOptionValueUpdateWithoutVariantsInput, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsInput>
 }
 
-export type ProductOptionValueUpdateWithoutVariantsAsOption1Input = {
+export type ProductOptionValueUpdateWithoutVariantsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
   option?: Prisma.ProductOptionUpdateOneRequiredWithoutValuesNestedInput
-  variantsAsOption2?: Prisma.ProductVariantUpdateManyWithoutOptionValue2NestedInput
-  variantsAsOption3?: Prisma.ProductVariantUpdateManyWithoutOptionValue3NestedInput
 }
 
-export type ProductOptionValueUncheckedUpdateWithoutVariantsAsOption1Input = {
+export type ProductOptionValueUncheckedUpdateWithoutVariantsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  optionId?: Prisma.StringFieldUpdateOperationsInput | string
+  productOptionId?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
-  variantsAsOption2?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue2NestedInput
-  variantsAsOption3?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue3NestedInput
-}
-
-export type ProductOptionValueUpsertWithoutVariantsAsOption2Input = {
-  update: Prisma.XOR<Prisma.ProductOptionValueUpdateWithoutVariantsAsOption2Input, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsAsOption2Input>
-  create: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption2Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption2Input>
-  where?: Prisma.ProductOptionValueWhereInput
-}
-
-export type ProductOptionValueUpdateToOneWithWhereWithoutVariantsAsOption2Input = {
-  where?: Prisma.ProductOptionValueWhereInput
-  data: Prisma.XOR<Prisma.ProductOptionValueUpdateWithoutVariantsAsOption2Input, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsAsOption2Input>
-}
-
-export type ProductOptionValueUpdateWithoutVariantsAsOption2Input = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
-  option?: Prisma.ProductOptionUpdateOneRequiredWithoutValuesNestedInput
-  variantsAsOption1?: Prisma.ProductVariantUpdateManyWithoutOptionValue1NestedInput
-  variantsAsOption3?: Prisma.ProductVariantUpdateManyWithoutOptionValue3NestedInput
-}
-
-export type ProductOptionValueUncheckedUpdateWithoutVariantsAsOption2Input = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  optionId?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
-  variantsAsOption1?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue1NestedInput
-  variantsAsOption3?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue3NestedInput
-}
-
-export type ProductOptionValueUpsertWithoutVariantsAsOption3Input = {
-  update: Prisma.XOR<Prisma.ProductOptionValueUpdateWithoutVariantsAsOption3Input, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsAsOption3Input>
-  create: Prisma.XOR<Prisma.ProductOptionValueCreateWithoutVariantsAsOption3Input, Prisma.ProductOptionValueUncheckedCreateWithoutVariantsAsOption3Input>
-  where?: Prisma.ProductOptionValueWhereInput
-}
-
-export type ProductOptionValueUpdateToOneWithWhereWithoutVariantsAsOption3Input = {
-  where?: Prisma.ProductOptionValueWhereInput
-  data: Prisma.XOR<Prisma.ProductOptionValueUpdateWithoutVariantsAsOption3Input, Prisma.ProductOptionValueUncheckedUpdateWithoutVariantsAsOption3Input>
-}
-
-export type ProductOptionValueUpdateWithoutVariantsAsOption3Input = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
-  option?: Prisma.ProductOptionUpdateOneRequiredWithoutValuesNestedInput
-  variantsAsOption1?: Prisma.ProductVariantUpdateManyWithoutOptionValue1NestedInput
-  variantsAsOption2?: Prisma.ProductVariantUpdateManyWithoutOptionValue2NestedInput
-}
-
-export type ProductOptionValueUncheckedUpdateWithoutVariantsAsOption3Input = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  optionId?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
-  variantsAsOption1?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue1NestedInput
-  variantsAsOption2?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue2NestedInput
 }
 
 export type ProductOptionValueCreateManyOptionInput = {
   id?: string
   value: string
-  position: number
 }
 
 export type ProductOptionValueUpdateWithoutOptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
-  variantsAsOption1?: Prisma.ProductVariantUpdateManyWithoutOptionValue1NestedInput
-  variantsAsOption2?: Prisma.ProductVariantUpdateManyWithoutOptionValue2NestedInput
-  variantsAsOption3?: Prisma.ProductVariantUpdateManyWithoutOptionValue3NestedInput
+  variants?: Prisma.VariantOptionValueUpdateManyWithoutOptionValueNestedInput
 }
 
 export type ProductOptionValueUncheckedUpdateWithoutOptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
-  variantsAsOption1?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue1NestedInput
-  variantsAsOption2?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue2NestedInput
-  variantsAsOption3?: Prisma.ProductVariantUncheckedUpdateManyWithoutOptionValue3NestedInput
+  variants?: Prisma.VariantOptionValueUncheckedUpdateManyWithoutOptionValueNestedInput
 }
 
 export type ProductOptionValueUncheckedUpdateManyWithoutOptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -714,15 +469,11 @@ export type ProductOptionValueUncheckedUpdateManyWithoutOptionInput = {
  */
 
 export type ProductOptionValueCountOutputType = {
-  variantsAsOption1: number
-  variantsAsOption2: number
-  variantsAsOption3: number
+  variants: number
 }
 
 export type ProductOptionValueCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  variantsAsOption1?: boolean | ProductOptionValueCountOutputTypeCountVariantsAsOption1Args
-  variantsAsOption2?: boolean | ProductOptionValueCountOutputTypeCountVariantsAsOption2Args
-  variantsAsOption3?: boolean | ProductOptionValueCountOutputTypeCountVariantsAsOption3Args
+  variants?: boolean | ProductOptionValueCountOutputTypeCountVariantsArgs
 }
 
 /**
@@ -738,34 +489,17 @@ export type ProductOptionValueCountOutputTypeDefaultArgs<ExtArgs extends runtime
 /**
  * ProductOptionValueCountOutputType without action
  */
-export type ProductOptionValueCountOutputTypeCountVariantsAsOption1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProductVariantWhereInput
-}
-
-/**
- * ProductOptionValueCountOutputType without action
- */
-export type ProductOptionValueCountOutputTypeCountVariantsAsOption2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProductVariantWhereInput
-}
-
-/**
- * ProductOptionValueCountOutputType without action
- */
-export type ProductOptionValueCountOutputTypeCountVariantsAsOption3Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProductVariantWhereInput
+export type ProductOptionValueCountOutputTypeCountVariantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VariantOptionValueWhereInput
 }
 
 
 export type ProductOptionValueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  optionId?: boolean
+  productOptionId?: boolean
   value?: boolean
-  position?: boolean
+  variants?: boolean | Prisma.ProductOptionValue$variantsArgs<ExtArgs>
   option?: boolean | Prisma.ProductOptionDefaultArgs<ExtArgs>
-  variantsAsOption1?: boolean | Prisma.ProductOptionValue$variantsAsOption1Args<ExtArgs>
-  variantsAsOption2?: boolean | Prisma.ProductOptionValue$variantsAsOption2Args<ExtArgs>
-  variantsAsOption3?: boolean | Prisma.ProductOptionValue$variantsAsOption3Args<ExtArgs>
   _count?: boolean | Prisma.ProductOptionValueCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productOptionValue"]>
 
@@ -773,33 +507,27 @@ export type ProductOptionValueSelect<ExtArgs extends runtime.Types.Extensions.In
 
 export type ProductOptionValueSelectScalar = {
   id?: boolean
-  optionId?: boolean
+  productOptionId?: boolean
   value?: boolean
-  position?: boolean
 }
 
-export type ProductOptionValueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "optionId" | "value" | "position", ExtArgs["result"]["productOptionValue"]>
+export type ProductOptionValueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productOptionId" | "value", ExtArgs["result"]["productOptionValue"]>
 export type ProductOptionValueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  variants?: boolean | Prisma.ProductOptionValue$variantsArgs<ExtArgs>
   option?: boolean | Prisma.ProductOptionDefaultArgs<ExtArgs>
-  variantsAsOption1?: boolean | Prisma.ProductOptionValue$variantsAsOption1Args<ExtArgs>
-  variantsAsOption2?: boolean | Prisma.ProductOptionValue$variantsAsOption2Args<ExtArgs>
-  variantsAsOption3?: boolean | Prisma.ProductOptionValue$variantsAsOption3Args<ExtArgs>
   _count?: boolean | Prisma.ProductOptionValueCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $ProductOptionValuePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ProductOptionValue"
   objects: {
+    variants: Prisma.$VariantOptionValuePayload<ExtArgs>[]
     option: Prisma.$ProductOptionPayload<ExtArgs>
-    variantsAsOption1: Prisma.$ProductVariantPayload<ExtArgs>[]
-    variantsAsOption2: Prisma.$ProductVariantPayload<ExtArgs>[]
-    variantsAsOption3: Prisma.$ProductVariantPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    optionId: string
+    productOptionId: string
     value: string
-    position: number
   }, ExtArgs["result"]["productOptionValue"]>
   composites: {}
 }
@@ -1140,10 +868,8 @@ readonly fields: ProductOptionValueFieldRefs;
  */
 export interface Prisma__ProductOptionValueClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  variants<T extends Prisma.ProductOptionValue$variantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductOptionValue$variantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VariantOptionValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   option<T extends Prisma.ProductOptionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductOptionDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductOptionClient<runtime.Types.Result.GetResult<Prisma.$ProductOptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  variantsAsOption1<T extends Prisma.ProductOptionValue$variantsAsOption1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductOptionValue$variantsAsOption1Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductVariantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  variantsAsOption2<T extends Prisma.ProductOptionValue$variantsAsOption2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductOptionValue$variantsAsOption2Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductVariantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  variantsAsOption3<T extends Prisma.ProductOptionValue$variantsAsOption3Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductOptionValue$variantsAsOption3Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductVariantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1174,9 +900,8 @@ export interface Prisma__ProductOptionValueClient<T, Null = never, ExtArgs exten
  */
 export interface ProductOptionValueFieldRefs {
   readonly id: Prisma.FieldRef<"ProductOptionValue", 'String'>
-  readonly optionId: Prisma.FieldRef<"ProductOptionValue", 'String'>
+  readonly productOptionId: Prisma.FieldRef<"ProductOptionValue", 'String'>
   readonly value: Prisma.FieldRef<"ProductOptionValue", 'String'>
-  readonly position: Prisma.FieldRef<"ProductOptionValue", 'Int'>
 }
     
 
@@ -1520,75 +1245,27 @@ export type ProductOptionValueDeleteManyArgs<ExtArgs extends runtime.Types.Exten
 }
 
 /**
- * ProductOptionValue.variantsAsOption1
+ * ProductOptionValue.variants
  */
-export type ProductOptionValue$variantsAsOption1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ProductOptionValue$variantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ProductVariant
+   * Select specific fields to fetch from the VariantOptionValue
    */
-  select?: Prisma.ProductVariantSelect<ExtArgs> | null
+  select?: Prisma.VariantOptionValueSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ProductVariant
+   * Omit specific fields from the VariantOptionValue
    */
-  omit?: Prisma.ProductVariantOmit<ExtArgs> | null
+  omit?: Prisma.VariantOptionValueOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ProductVariantInclude<ExtArgs> | null
-  where?: Prisma.ProductVariantWhereInput
-  orderBy?: Prisma.ProductVariantOrderByWithRelationInput | Prisma.ProductVariantOrderByWithRelationInput[]
-  cursor?: Prisma.ProductVariantWhereUniqueInput
+  include?: Prisma.VariantOptionValueInclude<ExtArgs> | null
+  where?: Prisma.VariantOptionValueWhereInput
+  orderBy?: Prisma.VariantOptionValueOrderByWithRelationInput | Prisma.VariantOptionValueOrderByWithRelationInput[]
+  cursor?: Prisma.VariantOptionValueWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ProductVariantScalarFieldEnum | Prisma.ProductVariantScalarFieldEnum[]
-}
-
-/**
- * ProductOptionValue.variantsAsOption2
- */
-export type ProductOptionValue$variantsAsOption2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProductVariant
-   */
-  select?: Prisma.ProductVariantSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProductVariant
-   */
-  omit?: Prisma.ProductVariantOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductVariantInclude<ExtArgs> | null
-  where?: Prisma.ProductVariantWhereInput
-  orderBy?: Prisma.ProductVariantOrderByWithRelationInput | Prisma.ProductVariantOrderByWithRelationInput[]
-  cursor?: Prisma.ProductVariantWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProductVariantScalarFieldEnum | Prisma.ProductVariantScalarFieldEnum[]
-}
-
-/**
- * ProductOptionValue.variantsAsOption3
- */
-export type ProductOptionValue$variantsAsOption3Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProductVariant
-   */
-  select?: Prisma.ProductVariantSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProductVariant
-   */
-  omit?: Prisma.ProductVariantOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductVariantInclude<ExtArgs> | null
-  where?: Prisma.ProductVariantWhereInput
-  orderBy?: Prisma.ProductVariantOrderByWithRelationInput | Prisma.ProductVariantOrderByWithRelationInput[]
-  cursor?: Prisma.ProductVariantWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProductVariantScalarFieldEnum | Prisma.ProductVariantScalarFieldEnum[]
+  distinct?: Prisma.VariantOptionValueScalarFieldEnum | Prisma.VariantOptionValueScalarFieldEnum[]
 }
 
 /**
