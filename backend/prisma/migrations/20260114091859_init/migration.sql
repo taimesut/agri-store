@@ -3,8 +3,8 @@ CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
-    `firstName` VARCHAR(191) NOT NULL,
-    `lastName` VARCHAR(191) NOT NULL,
+    `full_name` VARCHAR(191) NOT NULL,
+    `phone` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `User_email_key`(`email`),
@@ -15,7 +15,7 @@ CREATE TABLE `User` (
 CREATE TABLE `customer` (
     `id` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
-    `password_hash` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NOT NULL,
     `full_name` VARCHAR(191) NOT NULL,
     `phone` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -64,16 +64,16 @@ CREATE TABLE `product_image` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `product_tag` (
+CREATE TABLE `Tag` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `product_tag_name_key`(`name`),
+    UNIQUE INDEX `Tag_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `product_tag_link` (
+CREATE TABLE `product_tag` (
     `product_id` VARCHAR(191) NOT NULL,
     `tag_id` VARCHAR(191) NOT NULL,
 
@@ -157,10 +157,10 @@ ALTER TABLE `product_variant` ADD CONSTRAINT `product_variant_product_id_fkey` F
 ALTER TABLE `product_image` ADD CONSTRAINT `product_image_product_id_fkey` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `product_tag_link` ADD CONSTRAINT `product_tag_link_product_id_fkey` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `product_tag` ADD CONSTRAINT `product_tag_product_id_fkey` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `product_tag_link` ADD CONSTRAINT `product_tag_link_tag_id_fkey` FOREIGN KEY (`tag_id`) REFERENCES `product_tag`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `product_tag` ADD CONSTRAINT `product_tag_tag_id_fkey` FOREIGN KEY (`tag_id`) REFERENCES `Tag`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `category` ADD CONSTRAINT `category_parent_id_fkey` FOREIGN KEY (`parent_id`) REFERENCES `category`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

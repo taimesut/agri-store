@@ -68,6 +68,6 @@ export class UserService {
     }
 
     await this.userRepo.deleteById(id);
-    return 'deleted';
+    return { message: 'Deleted' };
   }
 }

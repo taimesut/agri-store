@@ -107,8 +107,6 @@ model Tag {
   name String @unique
 
   products ProductTag[]
-
-  @@map("product_tag")
 }
 
 model ProductTag {
@@ -119,7 +117,7 @@ model ProductTag {
   tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@id([productId, tagId])
-  @@map("product_tag_link")
+  @@map("product_tag")
 }
 
 //////////////////////

@@ -7,6 +7,7 @@ import { PrismaModule } from './shared/prisma/prisma.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AppJwtModule } from './shared/jwt/jwt.module';
+import { TagModule } from './modules/tag/tag.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AppJwtModule } from './shared/jwt/jwt.module';
     PrismaModule,
     UserModule,
     AuthModule,
+    TagModule,
   ],
 })
 export class AppModule {}
