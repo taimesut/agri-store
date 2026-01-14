@@ -6,7 +6,7 @@ import {
 import { CreateUserDTO } from '../dto/create-user.dto';
 import { UserRepository } from '../repository/user.repository';
 import { hashPassword } from 'src/common/utils/password';
-import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
+import { PaginationQueryDTO } from 'src/common/dtos/pagination-query.dto';
 import { UpdateUserDTO } from '../dto/update-user.dto';
 
 @Injectable()
@@ -37,7 +37,7 @@ export class UserService {
   async findOne(id: string) {
     return await this.userRepo.findById(id);
   }
-  async findAll(query: PaginationQueryDto) {
+  async findAll(query: PaginationQueryDTO) {
     return await this.userRepo.findAll(query);
   }
   async update(id: string, payload: UpdateUserDTO) {

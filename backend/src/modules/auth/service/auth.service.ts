@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
-import { LoginDTO } from '../dtos/login.dto';
+import { LoginDTO } from '../dto/login.dto';
 import { AuthRepository } from '../repository/auth.repository';
 import { comparePassword } from 'src/common/utils/password';
 

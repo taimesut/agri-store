@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { TagRepository } from '../repository/tag.repository';
 import { CreateTagDTO } from '../dto/create-tag.dto';
-import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
+import { PaginationQueryDTO } from 'src/common/dtos/pagination-query.dto';
 import { UpdateTagDTO } from '../dto/update-tag.dto';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class TagService {
     return await this.tagRepo.findById(id);
   }
 
-  async findAll(query: PaginationQueryDto) {
+  async findAll(query: PaginationQueryDTO) {
     return await this.tagRepo.findAll(query);
   }
 

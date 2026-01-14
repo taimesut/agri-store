@@ -8,7 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { UserService } from '../service/user.service';
-import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
+import { PaginationQueryDTO } from 'src/common/dtos/pagination-query.dto';
 import { CreateUserDTO } from '../dto/create-user.dto';
 import { UpdateUserDTO } from '../dto/update-user.dto';
 
@@ -22,7 +22,7 @@ export class UserController {
   }
 
   @Get()
-  async findAll(@Query() query: PaginationQueryDto) {
+  async findAll(@Query() query: PaginationQueryDTO) {
     const { data, meta } = await this.userService.findAll(query);
 
     return { users: data, meta };

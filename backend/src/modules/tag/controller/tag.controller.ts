@@ -8,7 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { TagService } from '../service/tag.service';
-import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
+import { PaginationQueryDTO } from 'src/common/dtos/pagination-query.dto';
 import { CreateTagDTO } from '../dto/create-tag.dto';
 import { UpdateTagDTO } from '../dto/update-tag.dto';
 
@@ -21,7 +21,7 @@ export class TagController {
     return { tag: await this.tagService.findOne(id) };
   }
   @Get()
-  async findAll(@Query() query: PaginationQueryDto) {
+  async findAll(@Query() query: PaginationQueryDTO) {
     const { data, meta } = await this.tagService.findAll(query);
     return { tags: data, meta };
   }

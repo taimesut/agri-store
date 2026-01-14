@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Tag } from 'prisma/generated/client';
-import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
+import { PaginationQueryDTO } from 'src/common/dtos/pagination-query.dto';
 import { PrismaService } from 'src/shared/prisma/prisma.service';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class TagRepository {
       where: { id },
     });
   }
-  async findAll(query: PaginationQueryDto) {
+  async findAll(query: PaginationQueryDTO) {
     const page = Math.max(1, query.page ?? 1);
     const limit = Math.min(100, query.limit ?? 20);
     const skip = (page - 1) * limit;
