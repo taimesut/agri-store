@@ -14,8 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model ProductTag
- * ///////////////////
- * ///////////////////
+ * 
  */
 export type ProductTagModel = runtime.Types.Result.DefaultSelection<Prisma.$ProductTagPayload>
 
@@ -26,35 +25,35 @@ export type AggregateProductTag = {
 }
 
 export type ProductTagMinAggregateOutputType = {
-  id: string | null
-  value: string | null
+  productId: string | null
+  tagId: string | null
 }
 
 export type ProductTagMaxAggregateOutputType = {
-  id: string | null
-  value: string | null
+  productId: string | null
+  tagId: string | null
 }
 
 export type ProductTagCountAggregateOutputType = {
-  id: number
-  value: number
+  productId: number
+  tagId: number
   _all: number
 }
 
 
 export type ProductTagMinAggregateInputType = {
-  id?: true
-  value?: true
+  productId?: true
+  tagId?: true
 }
 
 export type ProductTagMaxAggregateInputType = {
-  id?: true
-  value?: true
+  productId?: true
+  tagId?: true
 }
 
 export type ProductTagCountAggregateInputType = {
-  id?: true
-  value?: true
+  productId?: true
+  tagId?: true
   _all?: true
 }
 
@@ -131,8 +130,8 @@ export type ProductTagGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 export type ProductTagGroupByOutputType = {
-  id: string
-  value: string
+  productId: string
+  tagId: string
   _count: ProductTagCountAggregateOutputType | null
   _min: ProductTagMinAggregateOutputType | null
   _max: ProductTagMaxAggregateOutputType | null
@@ -157,30 +156,34 @@ export type ProductTagWhereInput = {
   AND?: Prisma.ProductTagWhereInput | Prisma.ProductTagWhereInput[]
   OR?: Prisma.ProductTagWhereInput[]
   NOT?: Prisma.ProductTagWhereInput | Prisma.ProductTagWhereInput[]
-  id?: Prisma.StringFilter<"ProductTag"> | string
-  value?: Prisma.StringFilter<"ProductTag"> | string
-  products?: Prisma.ProductTagLinkListRelationFilter
+  productId?: Prisma.StringFilter<"ProductTag"> | string
+  tagId?: Prisma.StringFilter<"ProductTag"> | string
+  product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
+  tag?: Prisma.XOR<Prisma.TagScalarRelationFilter, Prisma.TagWhereInput>
 }
 
 export type ProductTagOrderByWithRelationInput = {
-  id?: Prisma.SortOrder
-  value?: Prisma.SortOrder
-  products?: Prisma.ProductTagLinkOrderByRelationAggregateInput
+  productId?: Prisma.SortOrder
+  tagId?: Prisma.SortOrder
+  product?: Prisma.ProductOrderByWithRelationInput
+  tag?: Prisma.TagOrderByWithRelationInput
   _relevance?: Prisma.ProductTagOrderByRelevanceInput
 }
 
 export type ProductTagWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
-  value?: string
+  productId_tagId?: Prisma.ProductTagProductIdTagIdCompoundUniqueInput
   AND?: Prisma.ProductTagWhereInput | Prisma.ProductTagWhereInput[]
   OR?: Prisma.ProductTagWhereInput[]
   NOT?: Prisma.ProductTagWhereInput | Prisma.ProductTagWhereInput[]
-  products?: Prisma.ProductTagLinkListRelationFilter
-}, "id" | "value">
+  productId?: Prisma.StringFilter<"ProductTag"> | string
+  tagId?: Prisma.StringFilter<"ProductTag"> | string
+  product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
+  tag?: Prisma.XOR<Prisma.TagScalarRelationFilter, Prisma.TagWhereInput>
+}, "productId_tagId">
 
 export type ProductTagOrderByWithAggregationInput = {
-  id?: Prisma.SortOrder
-  value?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
+  tagId?: Prisma.SortOrder
   _count?: Prisma.ProductTagCountOrderByAggregateInput
   _max?: Prisma.ProductTagMaxOrderByAggregateInput
   _min?: Prisma.ProductTagMinOrderByAggregateInput
@@ -190,47 +193,52 @@ export type ProductTagScalarWhereWithAggregatesInput = {
   AND?: Prisma.ProductTagScalarWhereWithAggregatesInput | Prisma.ProductTagScalarWhereWithAggregatesInput[]
   OR?: Prisma.ProductTagScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProductTagScalarWhereWithAggregatesInput | Prisma.ProductTagScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"ProductTag"> | string
-  value?: Prisma.StringWithAggregatesFilter<"ProductTag"> | string
+  productId?: Prisma.StringWithAggregatesFilter<"ProductTag"> | string
+  tagId?: Prisma.StringWithAggregatesFilter<"ProductTag"> | string
 }
 
 export type ProductTagCreateInput = {
-  id?: string
-  value: string
-  products?: Prisma.ProductTagLinkCreateNestedManyWithoutTagInput
+  product: Prisma.ProductCreateNestedOneWithoutTagsInput
+  tag: Prisma.TagCreateNestedOneWithoutProductsInput
 }
 
 export type ProductTagUncheckedCreateInput = {
-  id?: string
-  value: string
-  products?: Prisma.ProductTagLinkUncheckedCreateNestedManyWithoutTagInput
+  productId: string
+  tagId: string
 }
 
 export type ProductTagUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
-  products?: Prisma.ProductTagLinkUpdateManyWithoutTagNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutTagsNestedInput
+  tag?: Prisma.TagUpdateOneRequiredWithoutProductsNestedInput
 }
 
 export type ProductTagUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
-  products?: Prisma.ProductTagLinkUncheckedUpdateManyWithoutTagNestedInput
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  tagId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProductTagCreateManyInput = {
-  id?: string
-  value: string
+  productId: string
+  tagId: string
 }
 
 export type ProductTagUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+
 }
 
 export type ProductTagUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  tagId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ProductTagListRelationFilter = {
+  every?: Prisma.ProductTagWhereInput
+  some?: Prisma.ProductTagWhereInput
+  none?: Prisma.ProductTagWhereInput
+}
+
+export type ProductTagOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ProductTagOrderByRelevanceInput = {
@@ -239,135 +247,249 @@ export type ProductTagOrderByRelevanceInput = {
   search: string
 }
 
+export type ProductTagProductIdTagIdCompoundUniqueInput = {
+  productId: string
+  tagId: string
+}
+
 export type ProductTagCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  value?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
+  tagId?: Prisma.SortOrder
 }
 
 export type ProductTagMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  value?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
+  tagId?: Prisma.SortOrder
 }
 
 export type ProductTagMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  value?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
+  tagId?: Prisma.SortOrder
 }
 
-export type ProductTagScalarRelationFilter = {
-  is?: Prisma.ProductTagWhereInput
-  isNot?: Prisma.ProductTagWhereInput
+export type ProductTagCreateNestedManyWithoutProductInput = {
+  create?: Prisma.XOR<Prisma.ProductTagCreateWithoutProductInput, Prisma.ProductTagUncheckedCreateWithoutProductInput> | Prisma.ProductTagCreateWithoutProductInput[] | Prisma.ProductTagUncheckedCreateWithoutProductInput[]
+  connectOrCreate?: Prisma.ProductTagCreateOrConnectWithoutProductInput | Prisma.ProductTagCreateOrConnectWithoutProductInput[]
+  createMany?: Prisma.ProductTagCreateManyProductInputEnvelope
+  connect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
 }
 
-export type ProductTagCreateNestedOneWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.ProductTagCreateWithoutProductsInput, Prisma.ProductTagUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.ProductTagCreateOrConnectWithoutProductsInput
-  connect?: Prisma.ProductTagWhereUniqueInput
+export type ProductTagUncheckedCreateNestedManyWithoutProductInput = {
+  create?: Prisma.XOR<Prisma.ProductTagCreateWithoutProductInput, Prisma.ProductTagUncheckedCreateWithoutProductInput> | Prisma.ProductTagCreateWithoutProductInput[] | Prisma.ProductTagUncheckedCreateWithoutProductInput[]
+  connectOrCreate?: Prisma.ProductTagCreateOrConnectWithoutProductInput | Prisma.ProductTagCreateOrConnectWithoutProductInput[]
+  createMany?: Prisma.ProductTagCreateManyProductInputEnvelope
+  connect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
 }
 
-export type ProductTagUpdateOneRequiredWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.ProductTagCreateWithoutProductsInput, Prisma.ProductTagUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.ProductTagCreateOrConnectWithoutProductsInput
-  upsert?: Prisma.ProductTagUpsertWithoutProductsInput
-  connect?: Prisma.ProductTagWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductTagUpdateToOneWithWhereWithoutProductsInput, Prisma.ProductTagUpdateWithoutProductsInput>, Prisma.ProductTagUncheckedUpdateWithoutProductsInput>
+export type ProductTagUpdateManyWithoutProductNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductTagCreateWithoutProductInput, Prisma.ProductTagUncheckedCreateWithoutProductInput> | Prisma.ProductTagCreateWithoutProductInput[] | Prisma.ProductTagUncheckedCreateWithoutProductInput[]
+  connectOrCreate?: Prisma.ProductTagCreateOrConnectWithoutProductInput | Prisma.ProductTagCreateOrConnectWithoutProductInput[]
+  upsert?: Prisma.ProductTagUpsertWithWhereUniqueWithoutProductInput | Prisma.ProductTagUpsertWithWhereUniqueWithoutProductInput[]
+  createMany?: Prisma.ProductTagCreateManyProductInputEnvelope
+  set?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  disconnect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  delete?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  connect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  update?: Prisma.ProductTagUpdateWithWhereUniqueWithoutProductInput | Prisma.ProductTagUpdateWithWhereUniqueWithoutProductInput[]
+  updateMany?: Prisma.ProductTagUpdateManyWithWhereWithoutProductInput | Prisma.ProductTagUpdateManyWithWhereWithoutProductInput[]
+  deleteMany?: Prisma.ProductTagScalarWhereInput | Prisma.ProductTagScalarWhereInput[]
 }
 
-export type ProductTagCreateWithoutProductsInput = {
-  id?: string
-  value: string
+export type ProductTagUncheckedUpdateManyWithoutProductNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductTagCreateWithoutProductInput, Prisma.ProductTagUncheckedCreateWithoutProductInput> | Prisma.ProductTagCreateWithoutProductInput[] | Prisma.ProductTagUncheckedCreateWithoutProductInput[]
+  connectOrCreate?: Prisma.ProductTagCreateOrConnectWithoutProductInput | Prisma.ProductTagCreateOrConnectWithoutProductInput[]
+  upsert?: Prisma.ProductTagUpsertWithWhereUniqueWithoutProductInput | Prisma.ProductTagUpsertWithWhereUniqueWithoutProductInput[]
+  createMany?: Prisma.ProductTagCreateManyProductInputEnvelope
+  set?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  disconnect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  delete?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  connect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  update?: Prisma.ProductTagUpdateWithWhereUniqueWithoutProductInput | Prisma.ProductTagUpdateWithWhereUniqueWithoutProductInput[]
+  updateMany?: Prisma.ProductTagUpdateManyWithWhereWithoutProductInput | Prisma.ProductTagUpdateManyWithWhereWithoutProductInput[]
+  deleteMany?: Prisma.ProductTagScalarWhereInput | Prisma.ProductTagScalarWhereInput[]
 }
 
-export type ProductTagUncheckedCreateWithoutProductsInput = {
-  id?: string
-  value: string
+export type ProductTagCreateNestedManyWithoutTagInput = {
+  create?: Prisma.XOR<Prisma.ProductTagCreateWithoutTagInput, Prisma.ProductTagUncheckedCreateWithoutTagInput> | Prisma.ProductTagCreateWithoutTagInput[] | Prisma.ProductTagUncheckedCreateWithoutTagInput[]
+  connectOrCreate?: Prisma.ProductTagCreateOrConnectWithoutTagInput | Prisma.ProductTagCreateOrConnectWithoutTagInput[]
+  createMany?: Prisma.ProductTagCreateManyTagInputEnvelope
+  connect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
 }
 
-export type ProductTagCreateOrConnectWithoutProductsInput = {
+export type ProductTagUncheckedCreateNestedManyWithoutTagInput = {
+  create?: Prisma.XOR<Prisma.ProductTagCreateWithoutTagInput, Prisma.ProductTagUncheckedCreateWithoutTagInput> | Prisma.ProductTagCreateWithoutTagInput[] | Prisma.ProductTagUncheckedCreateWithoutTagInput[]
+  connectOrCreate?: Prisma.ProductTagCreateOrConnectWithoutTagInput | Prisma.ProductTagCreateOrConnectWithoutTagInput[]
+  createMany?: Prisma.ProductTagCreateManyTagInputEnvelope
+  connect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+}
+
+export type ProductTagUpdateManyWithoutTagNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductTagCreateWithoutTagInput, Prisma.ProductTagUncheckedCreateWithoutTagInput> | Prisma.ProductTagCreateWithoutTagInput[] | Prisma.ProductTagUncheckedCreateWithoutTagInput[]
+  connectOrCreate?: Prisma.ProductTagCreateOrConnectWithoutTagInput | Prisma.ProductTagCreateOrConnectWithoutTagInput[]
+  upsert?: Prisma.ProductTagUpsertWithWhereUniqueWithoutTagInput | Prisma.ProductTagUpsertWithWhereUniqueWithoutTagInput[]
+  createMany?: Prisma.ProductTagCreateManyTagInputEnvelope
+  set?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  disconnect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  delete?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  connect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  update?: Prisma.ProductTagUpdateWithWhereUniqueWithoutTagInput | Prisma.ProductTagUpdateWithWhereUniqueWithoutTagInput[]
+  updateMany?: Prisma.ProductTagUpdateManyWithWhereWithoutTagInput | Prisma.ProductTagUpdateManyWithWhereWithoutTagInput[]
+  deleteMany?: Prisma.ProductTagScalarWhereInput | Prisma.ProductTagScalarWhereInput[]
+}
+
+export type ProductTagUncheckedUpdateManyWithoutTagNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductTagCreateWithoutTagInput, Prisma.ProductTagUncheckedCreateWithoutTagInput> | Prisma.ProductTagCreateWithoutTagInput[] | Prisma.ProductTagUncheckedCreateWithoutTagInput[]
+  connectOrCreate?: Prisma.ProductTagCreateOrConnectWithoutTagInput | Prisma.ProductTagCreateOrConnectWithoutTagInput[]
+  upsert?: Prisma.ProductTagUpsertWithWhereUniqueWithoutTagInput | Prisma.ProductTagUpsertWithWhereUniqueWithoutTagInput[]
+  createMany?: Prisma.ProductTagCreateManyTagInputEnvelope
+  set?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  disconnect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  delete?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  connect?: Prisma.ProductTagWhereUniqueInput | Prisma.ProductTagWhereUniqueInput[]
+  update?: Prisma.ProductTagUpdateWithWhereUniqueWithoutTagInput | Prisma.ProductTagUpdateWithWhereUniqueWithoutTagInput[]
+  updateMany?: Prisma.ProductTagUpdateManyWithWhereWithoutTagInput | Prisma.ProductTagUpdateManyWithWhereWithoutTagInput[]
+  deleteMany?: Prisma.ProductTagScalarWhereInput | Prisma.ProductTagScalarWhereInput[]
+}
+
+export type ProductTagCreateWithoutProductInput = {
+  tag: Prisma.TagCreateNestedOneWithoutProductsInput
+}
+
+export type ProductTagUncheckedCreateWithoutProductInput = {
+  tagId: string
+}
+
+export type ProductTagCreateOrConnectWithoutProductInput = {
   where: Prisma.ProductTagWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProductTagCreateWithoutProductsInput, Prisma.ProductTagUncheckedCreateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.ProductTagCreateWithoutProductInput, Prisma.ProductTagUncheckedCreateWithoutProductInput>
 }
 
-export type ProductTagUpsertWithoutProductsInput = {
-  update: Prisma.XOR<Prisma.ProductTagUpdateWithoutProductsInput, Prisma.ProductTagUncheckedUpdateWithoutProductsInput>
-  create: Prisma.XOR<Prisma.ProductTagCreateWithoutProductsInput, Prisma.ProductTagUncheckedCreateWithoutProductsInput>
-  where?: Prisma.ProductTagWhereInput
+export type ProductTagCreateManyProductInputEnvelope = {
+  data: Prisma.ProductTagCreateManyProductInput | Prisma.ProductTagCreateManyProductInput[]
+  skipDuplicates?: boolean
 }
 
-export type ProductTagUpdateToOneWithWhereWithoutProductsInput = {
-  where?: Prisma.ProductTagWhereInput
-  data: Prisma.XOR<Prisma.ProductTagUpdateWithoutProductsInput, Prisma.ProductTagUncheckedUpdateWithoutProductsInput>
+export type ProductTagUpsertWithWhereUniqueWithoutProductInput = {
+  where: Prisma.ProductTagWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProductTagUpdateWithoutProductInput, Prisma.ProductTagUncheckedUpdateWithoutProductInput>
+  create: Prisma.XOR<Prisma.ProductTagCreateWithoutProductInput, Prisma.ProductTagUncheckedCreateWithoutProductInput>
 }
 
-export type ProductTagUpdateWithoutProductsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+export type ProductTagUpdateWithWhereUniqueWithoutProductInput = {
+  where: Prisma.ProductTagWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProductTagUpdateWithoutProductInput, Prisma.ProductTagUncheckedUpdateWithoutProductInput>
 }
 
-export type ProductTagUncheckedUpdateWithoutProductsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+export type ProductTagUpdateManyWithWhereWithoutProductInput = {
+  where: Prisma.ProductTagScalarWhereInput
+  data: Prisma.XOR<Prisma.ProductTagUpdateManyMutationInput, Prisma.ProductTagUncheckedUpdateManyWithoutProductInput>
 }
 
-
-/**
- * Count Type ProductTagCountOutputType
- */
-
-export type ProductTagCountOutputType = {
-  products: number
+export type ProductTagScalarWhereInput = {
+  AND?: Prisma.ProductTagScalarWhereInput | Prisma.ProductTagScalarWhereInput[]
+  OR?: Prisma.ProductTagScalarWhereInput[]
+  NOT?: Prisma.ProductTagScalarWhereInput | Prisma.ProductTagScalarWhereInput[]
+  productId?: Prisma.StringFilter<"ProductTag"> | string
+  tagId?: Prisma.StringFilter<"ProductTag"> | string
 }
 
-export type ProductTagCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | ProductTagCountOutputTypeCountProductsArgs
+export type ProductTagCreateWithoutTagInput = {
+  product: Prisma.ProductCreateNestedOneWithoutTagsInput
 }
 
-/**
- * ProductTagCountOutputType without action
- */
-export type ProductTagCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProductTagCountOutputType
-   */
-  select?: Prisma.ProductTagCountOutputTypeSelect<ExtArgs> | null
+export type ProductTagUncheckedCreateWithoutTagInput = {
+  productId: string
 }
 
-/**
- * ProductTagCountOutputType without action
- */
-export type ProductTagCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProductTagLinkWhereInput
+export type ProductTagCreateOrConnectWithoutTagInput = {
+  where: Prisma.ProductTagWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductTagCreateWithoutTagInput, Prisma.ProductTagUncheckedCreateWithoutTagInput>
 }
+
+export type ProductTagCreateManyTagInputEnvelope = {
+  data: Prisma.ProductTagCreateManyTagInput | Prisma.ProductTagCreateManyTagInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProductTagUpsertWithWhereUniqueWithoutTagInput = {
+  where: Prisma.ProductTagWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProductTagUpdateWithoutTagInput, Prisma.ProductTagUncheckedUpdateWithoutTagInput>
+  create: Prisma.XOR<Prisma.ProductTagCreateWithoutTagInput, Prisma.ProductTagUncheckedCreateWithoutTagInput>
+}
+
+export type ProductTagUpdateWithWhereUniqueWithoutTagInput = {
+  where: Prisma.ProductTagWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProductTagUpdateWithoutTagInput, Prisma.ProductTagUncheckedUpdateWithoutTagInput>
+}
+
+export type ProductTagUpdateManyWithWhereWithoutTagInput = {
+  where: Prisma.ProductTagScalarWhereInput
+  data: Prisma.XOR<Prisma.ProductTagUpdateManyMutationInput, Prisma.ProductTagUncheckedUpdateManyWithoutTagInput>
+}
+
+export type ProductTagCreateManyProductInput = {
+  tagId: string
+}
+
+export type ProductTagUpdateWithoutProductInput = {
+  tag?: Prisma.TagUpdateOneRequiredWithoutProductsNestedInput
+}
+
+export type ProductTagUncheckedUpdateWithoutProductInput = {
+  tagId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ProductTagUncheckedUpdateManyWithoutProductInput = {
+  tagId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ProductTagCreateManyTagInput = {
+  productId: string
+}
+
+export type ProductTagUpdateWithoutTagInput = {
+  product?: Prisma.ProductUpdateOneRequiredWithoutTagsNestedInput
+}
+
+export type ProductTagUncheckedUpdateWithoutTagInput = {
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ProductTagUncheckedUpdateManyWithoutTagInput = {
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 
 
 export type ProductTagSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  value?: boolean
-  products?: boolean | Prisma.ProductTag$productsArgs<ExtArgs>
-  _count?: boolean | Prisma.ProductTagCountOutputTypeDefaultArgs<ExtArgs>
+  productId?: boolean
+  tagId?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  tag?: boolean | Prisma.TagDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productTag"]>
 
 
 
 export type ProductTagSelectScalar = {
-  id?: boolean
-  value?: boolean
+  productId?: boolean
+  tagId?: boolean
 }
 
-export type ProductTagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "value", ExtArgs["result"]["productTag"]>
+export type ProductTagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"productId" | "tagId", ExtArgs["result"]["productTag"]>
 export type ProductTagInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | Prisma.ProductTag$productsArgs<ExtArgs>
-  _count?: boolean | Prisma.ProductTagCountOutputTypeDefaultArgs<ExtArgs>
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  tag?: boolean | Prisma.TagDefaultArgs<ExtArgs>
 }
 
 export type $ProductTagPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ProductTag"
   objects: {
-    products: Prisma.$ProductTagLinkPayload<ExtArgs>[]
+    product: Prisma.$ProductPayload<ExtArgs>
+    tag: Prisma.$TagPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    value: string
+    productId: string
+    tagId: string
   }, ExtArgs["result"]["productTag"]>
   composites: {}
 }
@@ -451,8 +573,8 @@ export interface ProductTagDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * // Get first 10 ProductTags
    * const productTags = await prisma.productTag.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const productTagWithIdOnly = await prisma.productTag.findMany({ select: { id: true } })
+   * // Only select the `productId`
+   * const productTagWithProductIdOnly = await prisma.productTag.findMany({ select: { productId: true } })
    * 
    */
   findMany<T extends ProductTagFindManyArgs>(args?: Prisma.SelectSubset<T, ProductTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -708,7 +830,8 @@ readonly fields: ProductTagFieldRefs;
  */
 export interface Prisma__ProductTagClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  products<T extends Prisma.ProductTag$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductTag$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductTagLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tag<T extends Prisma.TagDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TagDefaultArgs<ExtArgs>>): Prisma.Prisma__TagClient<runtime.Types.Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -738,8 +861,8 @@ export interface Prisma__ProductTagClient<T, Null = never, ExtArgs extends runti
  * Fields of the ProductTag model
  */
 export interface ProductTagFieldRefs {
-  readonly id: Prisma.FieldRef<"ProductTag", 'String'>
-  readonly value: Prisma.FieldRef<"ProductTag", 'String'>
+  readonly productId: Prisma.FieldRef<"ProductTag", 'String'>
+  readonly tagId: Prisma.FieldRef<"ProductTag", 'String'>
 }
     
 
@@ -1080,30 +1203,6 @@ export type ProductTagDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many ProductTags to delete.
    */
   limit?: number
-}
-
-/**
- * ProductTag.products
- */
-export type ProductTag$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProductTagLink
-   */
-  select?: Prisma.ProductTagLinkSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProductTagLink
-   */
-  omit?: Prisma.ProductTagLinkOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductTagLinkInclude<ExtArgs> | null
-  where?: Prisma.ProductTagLinkWhereInput
-  orderBy?: Prisma.ProductTagLinkOrderByWithRelationInput | Prisma.ProductTagLinkOrderByWithRelationInput[]
-  cursor?: Prisma.ProductTagLinkWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProductTagLinkScalarFieldEnum | Prisma.ProductTagLinkScalarFieldEnum[]
 }
 
 /**

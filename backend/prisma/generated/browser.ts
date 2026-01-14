@@ -36,22 +36,28 @@ export type Customer = Prisma.CustomerModel
  */
 export type Product = Prisma.ProductModel
 /**
+ * Model ProductVariant
+ * ///////////////////
+ * ///////////////////
+ */
+export type ProductVariant = Prisma.ProductVariantModel
+/**
  * Model ProductImage
  * ///////////////////
  * ///////////////////
  */
 export type ProductImage = Prisma.ProductImageModel
 /**
- * Model ProductTag
+ * Model Tag
  * ///////////////////
  * ///////////////////
  */
-export type ProductTag = Prisma.ProductTagModel
+export type Tag = Prisma.TagModel
 /**
- * Model ProductTagLink
+ * Model ProductTag
  * 
  */
-export type ProductTagLink = Prisma.ProductTagLinkModel
+export type ProductTag = Prisma.ProductTagModel
 /**
  * Model Category
  * ///////////////////
@@ -64,34 +70,6 @@ export type Category = Prisma.CategoryModel
  */
 export type ProductCategory = Prisma.ProductCategoryModel
 /**
- * Model ProductOption
- * ///////////////////
- * ///////////////////
- */
-export type ProductOption = Prisma.ProductOptionModel
-/**
- * Model ProductOptionValue
- * 
- */
-export type ProductOptionValue = Prisma.ProductOptionValueModel
-/**
- * Model ProductVariant
- * ///////////////////
- * ///////////////////
- */
-export type ProductVariant = Prisma.ProductVariantModel
-/**
- * Model VariantOptionValue
- * 
- */
-export type VariantOptionValue = Prisma.VariantOptionValueModel
-/**
- * Model Inventory
- * ///////////////////
- * ///////////////////
- */
-export type Inventory = Prisma.InventoryModel
-/**
  * Model Order
  * ///////////////////
  * ///////////////////
@@ -99,7 +77,8 @@ export type Inventory = Prisma.InventoryModel
 export type Order = Prisma.OrderModel
 /**
  * Model OrderItem
- * 
+ * ///////////////////
+ * ///////////////////
  */
 export type OrderItem = Prisma.OrderItemModel
 /**
