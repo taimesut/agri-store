@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
 import cookieParser from 'cookie-parser';
 import { validationPipe } from './configs/validation.pipe';
@@ -20,9 +19,6 @@ async function bootstrap() {
     origin: 'http://localhost:5173',
     credentials: true,
   });
-  // app.useStaticAssets(join(__dirname, '..', 'uploads'), {
-  //   prefix: '/uploads',
-  // });
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.useGlobalPipes(validationPipe);
   await app.listen(PORT);

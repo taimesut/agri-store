@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AppJwtModule } from './shared/jwt/jwt.module';
 import { TagModule } from './modules/tag/tag.module';
 import { CategoryModule } from './modules/category/category.module';
+import { UploadModule } from './shared/upload/upload.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { CategoryModule } from './modules/category/category.module';
     AuthModule,
     TagModule,
     CategoryModule,
+    UploadModule,
   ],
 })
 export class AppModule {}
