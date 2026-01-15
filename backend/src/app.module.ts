@@ -10,6 +10,7 @@ import { AppJwtModule } from './shared/jwt/jwt.module';
 import { TagModule } from './modules/tag/tag.module';
 import { CategoryModule } from './modules/category/category.module';
 import { UploadModule } from './shared/upload/upload.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UploadModule } from './shared/upload/upload.module';
     TagModule,
     CategoryModule,
     UploadModule,
+    ProductModule,
   ],
 })
 export class AppModule {}
