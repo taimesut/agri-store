@@ -11,13 +11,31 @@ import { UpdateTagDTO } from '../dto/update-tag.dto';
 @Injectable()
 export class TagService {
   constructor(private readonly tagRepo: TagRepository) {}
-  async create(payload: CreateTagDTO) {
-    if (await this.tagRepo.hasName(payload.name)) {
+
+  async throwTagNotFound(id: string) {
+    const hasId = await this.tagRepo.hasId(id);
+    if (!hasId) {
+      throw new NotFoundException({
+        code: 'NOT_FOUND_TAG',
+        message: `Tag not found with id:${id}`,
+      });
+    }
+  }
+
+  async throwNameExists(name: string) {
+    const hasName = await this.tagRepo.hasName(name);
+
+    if (hasName) {
       throw new ConflictException({
         code: 'NAME_IS_EXISTING',
         message: 'Name already exists',
       });
     }
+  }
+
+  async create(payload: CreateTagDTO) {
+    const { name } = payload;
+    await this.throwNameExists(name);
 
     return await this.tagRepo.create(payload);
   }
@@ -31,24 +49,17 @@ export class TagService {
   }
 
   async update(id: string, payload: UpdateTagDTO) {
-    if (!(await this.tagRepo.findById(id))) {
-      throw new NotFoundException({
-        code: 'NOT_FOUND_TAG',
-        message: `Tag not found with id:${id}`,
-      });
+    const { name } = payload;
+    await this.throwTagNotFound(id);
+    if (name) {
+      await this.throwNameExists(name);
     }
 
     return await this.tagRepo.updateById(id, payload);
   }
 
   async delete(id: string) {
-    if (!(await this.tagRepo.findById(id))) {
-      throw new NotFoundException({
-        code: 'NOT_FOUND_TAG',
-        message: `Tag not found with id:${id}`,
-      });
-    }
-
+    await this.throwTagNotFound(id);
     await this.tagRepo.deleteById(id);
     return { message: 'Deleted' };
   }

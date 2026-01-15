@@ -13,9 +13,18 @@ import { UpdateUserDTO } from '../dto/update-user.dto';
 export class UserService {
   constructor(private readonly userRepo: UserRepository) {}
 
-  async create(payload: CreateUserDTO) {
-    const { email, fullName, password } = payload;
+  async throwUserNotFound(id: string) {
+    const hasId = await this.userRepo.hasId(id);
 
+    if (!hasId) {
+      throw new NotFoundException({
+        code: 'NOT_FOUND_USER',
+        message: `User not found with id: ${id}`,
+      });
+    }
+  }
+
+  async throwEmailExists(email: string) {
     const hasEmail = await this.userRepo.hasEmail(email);
 
     if (hasEmail) {
@@ -24,6 +33,11 @@ export class UserService {
         message: 'Email already exists',
       });
     }
+  }
+
+  async create(payload: CreateUserDTO) {
+    const { email, fullName, password } = payload;
+    await this.throwEmailExists(email);
 
     const hashedPassword = await hashPassword(password);
 
@@ -41,31 +55,18 @@ export class UserService {
     return await this.userRepo.findAll(query);
   }
   async update(id: string, payload: UpdateUserDTO) {
-    const hasId = await this.userRepo.hasId(id);
-
-    if (!hasId) {
-      throw new NotFoundException({
-        code: 'NOT_FOUND_USER',
-        message: `User not found with id: ${id}`,
-      });
-    }
-
+    await this.throwUserNotFound(id);
     if (payload.password) {
       payload.password = await hashPassword(payload.password);
     }
-
+    if (payload.email) {
+      delete payload.email;
+    }
     return await this.userRepo.updateById(id, payload);
   }
 
   async delete(id: string) {
-    const hasId = await this.userRepo.hasId(id);
-
-    if (!hasId) {
-      throw new NotFoundException({
-        code: 'NOT_FOUND_USER',
-        message: `User not found with id: ${id}`,
-      });
-    }
+    await this.throwUserNotFound(id);
 
     await this.userRepo.deleteById(id);
     return { message: 'Deleted' };

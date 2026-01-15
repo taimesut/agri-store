@@ -74,4 +74,13 @@ export class TagRepository {
 
     return record !== null;
   }
+
+  async hasId(id: string) {
+    const record = await this.prisma.tag.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+
+    return record !== null;
+  }
 }

@@ -11,6 +11,9 @@ import { TagModule } from './modules/tag/tag.module';
 import { CategoryModule } from './modules/category/category.module';
 import { UploadModule } from './shared/upload/upload.module';
 import { ProductModule } from './modules/product/product.module';
+import { ProductVariantModule } from './modules/product/_variant/_variant.module';
+import { ProductImageModule } from './modules/product/_image/_image.module';
+import { ProductCategoryModule } from './modules/product/_category/_category.module';
 
 @Module({
   imports: [
@@ -26,6 +29,9 @@ import { ProductModule } from './modules/product/product.module';
     CategoryModule,
     UploadModule,
     ProductModule,
+    ProductVariantModule,
+    ProductImageModule,
+    ProductCategoryModule,
   ],
 })
 export class AppModule {}

@@ -12,8 +12,7 @@ import { UpdateCategoryDTO } from '../dto/update-category.dto';
 export class CategoryService {
   constructor(private readonly categoryRepo: CategoryRepository) {}
 
-  async create(payload: CreateCategoryDTO) {
-    const { handle, parentId } = payload;
+  async throwHandleExists(handle: string) {
     const hasHandle = await this.categoryRepo.hasHandle(handle);
     if (hasHandle) {
       throw new ConflictException({
@@ -21,14 +20,23 @@ export class CategoryService {
         message: 'Handle already exists',
       });
     }
+  }
+
+  async throwCategoryNotFound(id: string) {
+    const hasId = await this.categoryRepo.hasId(id);
+    if (!hasId) {
+      throw new NotFoundException({
+        code: 'NOT_FOUND_CATEGORY',
+        message: `Category not found with id: ${id}`,
+      });
+    }
+  }
+
+  async create(payload: CreateCategoryDTO) {
+    const { handle, parentId } = payload;
+    await this.throwHandleExists(handle);
     if (parentId) {
-      const hasParentId = await this.categoryRepo.hasId(parentId);
-      if (!hasParentId) {
-        throw new NotFoundException({
-          code: 'NOT_FOUND_CATEGORY',
-          message: `Category not found with id: ${parentId}`,
-        });
-      }
+      await this.throwCategoryNotFound(parentId);
     }
     return await this.categoryRepo.create(payload);
   }
@@ -41,12 +49,7 @@ export class CategoryService {
     return await this.categoryRepo.findAll(query);
   }
   async delete(id: string) {
-    if (!(await this.categoryRepo.hasId(id))) {
-      throw new NotFoundException({
-        code: 'NOT_FOUND_CATEGORY',
-        message: `Category not found with id: ${id}`,
-      });
-    }
+    await this.throwCategoryNotFound(id);
 
     await this.categoryRepo.deleteById(id);
 
@@ -56,23 +59,11 @@ export class CategoryService {
   async update(id: string, payload: UpdateCategoryDTO) {
     const { handle, parentId } = payload;
     if (handle) {
-      const hasHandle = await this.categoryRepo.hasHandle(handle);
-      if (hasHandle) {
-        throw new ConflictException({
-          code: 'HANDLE_IS_EXISTING',
-          message: 'Handle already exists',
-        });
-      }
+      await this.throwHandleExists(handle);
     }
 
     if (parentId) {
-      const hasParentId = await this.categoryRepo.hasId(parentId);
-      if (!hasParentId) {
-        throw new NotFoundException({
-          code: 'NOT_FOUND_CATEGORY',
-          message: `Category not found with id: ${parentId}`,
-        });
-      }
+      await this.throwCategoryNotFound(parentId);
     }
     return await this.categoryRepo.update(id, payload);
   }

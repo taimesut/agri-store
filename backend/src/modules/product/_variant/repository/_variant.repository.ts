@@ -23,23 +23,17 @@ export class ProductVariantRepository {
     return record !== null;
   }
 
-  async findById(productId: string, variantId: string) {
-    return await this.prisma.product.findUnique({
-      where: { id: productId },
-      include: {
-        variants: {
-          where: { id: variantId },
-        },
+  async findById(id: string) {
+    return await this.prisma.productVariant.findUnique({
+      where: {
+        id,
       },
     });
   }
 
   async findAll(productId: string) {
-    return await this.prisma.product.findUnique({
-      where: { id: productId },
-      include: {
-        variants: true,
-      },
+    return await this.prisma.productVariant.findMany({
+      where: { productId },
     });
   }
 
