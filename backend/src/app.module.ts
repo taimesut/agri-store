@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import jwtConfig from './configs/jwt.config';
 import appConfig from './configs/app.config';
-import prismaConfig from './configs/prisma.config';
 import { PrismaModule } from './shared/prisma/prisma.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -20,7 +18,7 @@ import { ProductTagModule } from './modules/product/_tag/_tag.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [jwtConfig, appConfig, prismaConfig],
+      load: [appConfig],
     }),
     AppJwtModule,
     PrismaModule,

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/shared/prisma/prisma.service';
+import { PrismaService } from 'src/shared/prisma/service/prisma.service';
 import { CreateProductVariantDTO } from '../dto/create-variant.dto';
 import { UpdateProductVariantDTO } from '../dto/update-variant.dto';
 

@@ -13,7 +13,7 @@ export class UploadController {
   @UseInterceptors(FileInterceptor('image'))
   image(@UploadedFile() file: Express.Multer.File) {
     return {
-      filename: file.filename,
+      filename: file?.filename,
       //   originalname: file.originalname,
       //   path: file.path,
       //   size: file.size,

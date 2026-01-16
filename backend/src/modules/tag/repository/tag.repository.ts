@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Tag } from 'prisma/generated/client';
 import { PaginationQueryDTO } from 'src/common/dtos/pagination-query.dto';
-import { PrismaService } from 'src/shared/prisma/prisma.service';
+import { PrismaService } from 'src/shared/prisma/service/prisma.service';
 
 @Injectable()
 export class TagRepository {
