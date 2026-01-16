@@ -46,6 +46,16 @@ export class ProductCategoryService {
     }
   }
 
+  async throwProductCategoryNotFound(pId: string, cId: string) {
+    const hasCategory = await this.productCategoryRepo.hasId(pId, cId);
+    if (!hasCategory) {
+      throw new ConflictException({
+        code: 'NOT_FOUND_PRODUCT_CATEGORY',
+        message: `Product_Category not found with id: ${pId} - ${cId}`,
+      });
+    }
+  }
+
   async findOne(pId: string, cId: string) {
     await this.throwProductNotFound(pId);
     const category = await this.productCategoryRepo.findOne(pId, cId);
@@ -67,13 +77,13 @@ export class ProductCategoryService {
         await this.throwCategoryNotFound(cId);
         await this.throwProductCategoryExists(pId, cId);
 
-        console.log(pId, '----', cId);
         await this.productCategoryRepo.add(pId, cId);
       }
     }
     if (remove) {
       for (const cId of remove) {
         await this.throwCategoryNotFound(cId);
+        await this.throwProductCategoryNotFound(pId, cId);
         await this.productCategoryRepo.remove(pId, cId);
       }
     }

@@ -14,6 +14,7 @@ import { ProductModule } from './modules/product/product.module';
 import { ProductVariantModule } from './modules/product/_variant/_variant.module';
 import { ProductImageModule } from './modules/product/_image/_image.module';
 import { ProductCategoryModule } from './modules/product/_category/_category.module';
+import { ProductTagModule } from './modules/product/_tag/_tag.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ProductCategoryModule } from './modules/product/_category/_category.mod
     ProductVariantModule,
     ProductImageModule,
     ProductCategoryModule,
+    ProductTagModule,
   ],
 })
 export class AppModule {}
