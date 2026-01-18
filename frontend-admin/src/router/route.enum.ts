@@ -1,0 +1,10 @@
+export const ROUTE_NAME = {
+  HOME: "HOME",
+  LOGIN: "LOGIN",
+  DASHBOARD: "DASHBOARD",
+  WORKSPACE_LIST: "WORKSPACE_LIST",
+  WORKSPACE_DETAIL: "WORKSPACE_DETAIL",
+  NOT_FOUND: "NOT_FOUND",
+} as const;
+
+export type RouteName = keyof typeof ROUTE_NAME;
