@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { ROUTES } from "./route.constant";
 import type { AppRouteConfig } from "./route.interface";
 
@@ -46,10 +46,5 @@ function renderRoute(route: AppRouteConfig) {
 }
 
 export function AppRouter() {
-  return (
-    <Routes>
-      {ROUTES.map(renderRoute)}
-      <Route path="*" element={<Navigate to="/login" />} />
-    </Routes>
-  );
+  return <Routes>{ROUTES.map(renderRoute)}</Routes>;
 }

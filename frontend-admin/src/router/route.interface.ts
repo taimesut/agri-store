@@ -1,4 +1,4 @@
-import type { RouteName } from "./route.enum";
+import type { RouteName } from "./route.type";
 
 export interface AppRouteConfig {
   /** Logical name (analytics, breadcrumb, permission) */

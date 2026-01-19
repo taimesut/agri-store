@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 
-export const DashboardLayout: React.FC = () => {
+export const MainLayout: React.FC = () => {
   return (
-    <div className="dashboard-layout">
+    <div className="main-layout">
       <main>
         <Outlet />
       </main>
