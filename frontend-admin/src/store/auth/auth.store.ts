@@ -1,7 +1,7 @@
 // stores/auth/auth.store.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { AuthStore } from "./auth.types";
+import type { AuthStore } from "./auth.type";
 import { AuthApi } from "@/apis/auth/auth.api";
 
 export const useAuthStore = create<AuthStore>()(
