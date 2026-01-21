@@ -1,4 +1,4 @@
-import { http } from "@/common/configs/http";
+import { http } from "@/common/config/http";
 import type { LoginDTO, PayloadAuth } from "./auth.interfaces";
 
 export const AuthApi = {

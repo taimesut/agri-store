@@ -1,5 +1,5 @@
 
-import { http } from "../../common/configs/http";
+import { http } from "../../common/config/http";
 import type { CreateWorkspaceDTO, WorkSpace } from "./workspace.interfaces";
 
 export const workspaceApi = {

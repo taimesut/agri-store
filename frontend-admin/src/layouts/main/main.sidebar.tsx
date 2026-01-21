@@ -1,6 +1,6 @@
 // layouts/dashboard/dashboard.sidebar.tsx
+import clsx from "clsx";
 import { NavLink } from "react-router-dom";
-import { cn } from "@/lib/utils";
 
 const menu = [
   { label: "Dashboard", to: "/dashboard" },
@@ -20,7 +20,7 @@ export function MainSidebar () {
             key={item.to}
             to={item.to}
             className={({ isActive }) =>
-              cn(
+              clsx(
                 "block rounded-md px-3 py-2 text-sm hover:bg-muted",
                 isActive && "bg-muted font-medium"
               )

@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/forms";
+import { LoginForm } from "@/form";
 import { LOGIN_PAGE_TITLE } from "./login.constant";
 import type React from "react";
 

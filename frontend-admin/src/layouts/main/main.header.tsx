@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { useAuthStore } from "@/stores/auth/auth.store";
+import { useAuthStore } from "@/store/auth/auth.store";
+import { Button } from "@/component/ui";
 
 export function MainHeader() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export function MainHeader() {
           {user?.fullName}
         </span>
 
-        <Button variant="outline" size="sm" onClick={handleLogout}>
+        <Button variant="primary" size="md" onClick={handleLogout}>
           Logout
         </Button>
       </div>
