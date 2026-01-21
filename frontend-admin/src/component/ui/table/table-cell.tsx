@@ -1,9 +1,5 @@
 import clsx from "clsx";
-import type { BaseProps } from "./table.type";
-
-interface TableCellProps extends BaseProps {
-  header?: boolean;
-}
+import type { TableCellProps } from "./table.interface";
 
 export function TableCell({
   children,

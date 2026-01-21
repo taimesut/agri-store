@@ -15,7 +15,7 @@ export function Button({
       {...rest}
       disabled={disabled || loading}
       className={clsx(
-        "inline-flex items-center justify-center rounded-lg font-medium transition",
+        "inline-flex items-center justify-center rounded-lg font-medium transition cursor-pointer",
         {
           "bg-blue-600 text-white hover:bg-blue-700": variant === "primary",
           "bg-gray-200 text-gray-900 hover:bg-gray-300":
@@ -29,7 +29,7 @@ export function Button({
         className,
       )}
     >
-      {loading ? "Loading..." : children}
+      {children}
     </button>
   );
 }

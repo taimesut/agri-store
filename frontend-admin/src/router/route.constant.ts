@@ -1,9 +1,10 @@
-import { AuthLayout, MainLayout } from "../layouts";
-import LoginScreen from "../pages/auth/login";
+import LoginScreen from "../page/auth/login";
 import { ROUTE_NAME } from "./route.type";
 import type { AppRouteConfig } from "./route.interface";
-import DashboardScreen from "@/pages/dashboard";
-import UserScreen from "@/pages/user";
+import { AuthLayout } from "@/layout";
+import DashboardScreen from "@/page/dashboard";
+import { MainLayout } from "@/layout/main/main.layout";
+import UserScreen from "@/page/user";
 
 export const ROUTES: AppRouteConfig[] = [
   {
@@ -17,7 +18,7 @@ export const ROUTES: AppRouteConfig[] = [
     path: "/dashboard",
     element: DashboardScreen,
     layout: MainLayout,
-    isPrivate: true,
+    isPrivate: true,  
   },
     {
     name: ROUTE_NAME.USER,

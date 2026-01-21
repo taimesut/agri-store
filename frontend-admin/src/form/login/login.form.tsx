@@ -5,12 +5,12 @@ import {
   loginSchema,
   type LoginFormValues,
 } from "@/form/login/login.schema";
-import { AuthApi } from "@/apis/auth/auth.api";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useAuthStore } from "@/store/auth/auth.store";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FormItem, FormRow, Input } from "@/component/ui";
+import { AuthApi } from "@/api/auth/auth.api";
 
 export function LoginForm() {
   const navigate = useNavigate();

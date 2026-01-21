@@ -11,4 +11,5 @@ export * from "./table/table-head";
 export * from "./table/table-body";
 export * from "./table/table-row";
 export * from "./table/table-cell";
-export * from "./table/table-empty";
+export * from "./table/table-cell-empty";
+export * from "./table/table-cell-loading";
