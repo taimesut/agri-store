@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import type { BaseProps } from "./table.type";
+import type { BaseProps } from "./table.interface";
 
 export function Table({ children, className }: BaseProps) {
   return (

@@ -1,1 +1,2 @@
-export * from "./pagination-query";
+export * from "./meta.interface";
+export * from "./search-params.interface";

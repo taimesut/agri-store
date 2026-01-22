@@ -2,32 +2,32 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  loginSchema,
-  type LoginFormValues,
-} from "@/form/login/login.schema";
+  LoginSchema,
+  type LoginInput,
+} from "@/schema/auth/auth.login.schema";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useAuthStore } from "@/store/auth/auth.store";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FormItem, FormRow, Input } from "@/component/ui";
 import { AuthApi } from "@/api/auth/auth.api";
+import { useAuthStore } from "@/store";
 
-export function LoginForm() {
+export function AuthLoginForm() {
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<LoginInput>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  async function onSubmit(values: LoginFormValues) {
+  async function onSubmit(values: LoginInput) {
     try {
       await AuthApi.login(values);
       toast.success("Đăng nhập thành công");

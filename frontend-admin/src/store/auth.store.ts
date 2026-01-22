@@ -1,8 +1,20 @@
 // stores/auth/auth.store.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { AuthStore } from "./auth.type";
 import { AuthApi } from "@/api/auth/auth.api";
+import type { User } from "@/schema/user/user.schema";
+
+interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+}
+
+interface AuthActions {
+  setAuth: (payload: User) => void;
+  logout: () => void;
+}
+
+type AuthStore = AuthState & AuthActions;
 
 export const useAuthStore = create<AuthStore>()(
   persist(

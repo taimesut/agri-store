@@ -13,3 +13,6 @@ export * from "./table/table-row";
 export * from "./table/table-cell";
 export * from "./table/table-cell-empty";
 export * from "./table/table-cell-loading";
+
+export * from "./card/card"
+

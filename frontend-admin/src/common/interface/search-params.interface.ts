@@ -1,4 +1,4 @@
-export interface PaginationQuery {
+export interface SearchParams {
   page: number;
   limit: number;
   search?: string;

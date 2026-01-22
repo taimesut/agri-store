@@ -1,1 +1,1 @@
-export * from "@/form/login/login.form";
+export * from "./auth/auth-login.form";
