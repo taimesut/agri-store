@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDTO } from '../dto/create-user.dto';
 import { UserRepository } from '../repository/user.repository';
-import { hashPassword } from 'src/common/utils/password';
+import { hashPassword } from 'src/common/utils/password.util';
 import { PaginationQueryDTO } from 'src/common/dtos/pagination-query.dto';
 import { UpdateUserDTO } from '../dto/update-user.dto';
 

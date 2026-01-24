@@ -7,10 +7,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FormItem, FormRow, Input } from "@/common/component/ui";
 import { useAuthStore } from "@/common/store";
-import { AuthLoginSchema, type LoginInput } from "../schema";
 import { AuthApi } from "../api";
+import type { LoginInput } from "../schema/input";
+import { LoginSchema } from "../schema/schema";
 
-export function AuthLoginForm() {
+export function LoginForm() {
   const navigate = useNavigate();
 
   const {
@@ -18,7 +19,7 @@ export function AuthLoginForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginInput>({
-    resolver: zodResolver(AuthLoginSchema),
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",

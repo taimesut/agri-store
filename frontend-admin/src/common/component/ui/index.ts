@@ -19,3 +19,5 @@ export * from "./card/card";
 export * from "./combobox/combobox";
 
 export * from "./pagination/pagination";
+
+export * from "./spinner/spinner";

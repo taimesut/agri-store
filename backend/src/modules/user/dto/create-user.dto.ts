@@ -1,4 +1,10 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
 import { Trim } from 'src/common/decorators/trim.decorator';
 
 export class CreateUserDTO {
@@ -13,4 +19,10 @@ export class CreateUserDTO {
   @IsNotEmpty()
   @Trim()
   fullName: string;
+  @IsOptional()
+  @IsString()
+  @MinLength(8)
+  @IsNotEmpty()
+  @Trim()
+  phone?: string;
 }

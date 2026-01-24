@@ -11,6 +11,14 @@ export const UserCreateShema = z.object({
   email: z.string().email("Email không hợp lệ"),
   password: z.string().min(8, "Ít nhất 8 ký tự"),
   fullName: z.string().min(8, "Ít nhất 8 ký tự"),
+  phone: z
+    .string()
+    .transform((v) => (v === "" ? undefined : v))
+    .optional()
+    .refine(
+      (v) => v === undefined || v.length >= 9,
+      "Số điện thoại không hợp lệ",
+    ),
 });
 
 export const UserUpdateShema = z.object({
@@ -20,5 +28,18 @@ export const UserUpdateShema = z.object({
     .optional()
     .refine((v) => v === undefined || v.length >= 8, "Ít nhất 8 ký tự"),
 
-  fullName: z.string().min(8, "Ít nhất 8 ký tự").optional(),
+  fullName: z
+    .string()
+    .transform((v) => (v === "" ? undefined : v))
+    .optional()
+    .refine((v) => v === undefined || v.length >= 8, "Ít nhất 8 ký tự"),
+
+  phone: z
+    .string()
+    .transform((v) => (v === "" ? undefined : v))
+    .optional()
+    .refine(
+      (v) => v === undefined || v.length >= 9,
+      "Số điện thoại không hợp lệ",
+    ),
 });

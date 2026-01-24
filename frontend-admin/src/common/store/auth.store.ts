@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { User } from "@/modules/user/schema";
-import { AuthApi } from "@/modules/auth/api";
+import { AuthApi } from "@/modules/login/api";
 
 interface AuthState {
   user: User | null;

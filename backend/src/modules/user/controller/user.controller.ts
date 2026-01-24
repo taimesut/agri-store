@@ -24,7 +24,6 @@ export class UserController {
   @Get()
   async findAll(@Query() query: PaginationQueryDTO) {
     const { data, meta } = await this.userService.findAll(query);
-
     return { users: data, meta };
   }
 

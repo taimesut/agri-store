@@ -46,6 +46,7 @@ export function UserFormCreate({ params }: Props) {
       },
     );
   }
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow columns={1}>
@@ -75,6 +76,16 @@ export function UserFormCreate({ params }: Props) {
             placeholder="Nguyễn Văn A"
             {...register("fullName")}
             error={!!errors.password}
+          />
+        </FormItem>
+      </FormRow>
+      <FormRow columns={1}>
+        <FormItem label="SĐT" error={errors.phone?.message}>
+          <Input
+            type="text"
+            placeholder="098xxxxxxx"
+            {...register("phone")}
+            error={!!errors.phone}
           />
         </FormItem>
       </FormRow>

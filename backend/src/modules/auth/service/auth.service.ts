@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
 import { LoginDTO } from '../dto/login.dto';
 import { AuthRepository } from '../repository/auth.repository';
-import { comparePassword } from 'src/common/utils/password';
+import { comparePassword } from 'src/common/utils/password.util';
 
 @Injectable()
 export class AuthService {

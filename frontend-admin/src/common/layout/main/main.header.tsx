@@ -21,7 +21,7 @@ export function MainHeader() {
           {user?.fullName}
         </span>
 
-        <Button variant="primary" size="md" onClick={handleLogout}>
+        <Button variant="danger" size="md" onClick={handleLogout}>
           Logout
         </Button>
       </div>

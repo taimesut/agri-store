@@ -3,6 +3,7 @@ import {
   ComboBox,
   Input,
   Pagination,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -35,7 +36,7 @@ export function UserPageList({ setState, state }: Props) {
   const [limit, setLimit] = useState<number>();
 
   if (!queryUser.isSuccess) {
-    return <>Không có dữ liệu</>;
+    return <Spinner />;
   }
 
   return (
@@ -45,6 +46,7 @@ export function UserPageList({ setState, state }: Props) {
       <div className="flex gap-4 mb-4 justify-between">
         <div>
           <Button
+          variant={"secondary"}
             onClick={() => {
               setState({
                 view: "CREATE",
@@ -169,9 +171,10 @@ export function UserPageList({ setState, state }: Props) {
                         });
                       }}
                     >
-                      Edit
+                      Sửa
                     </Button>
                     <Button
+                      variant={"danger"}
                       onClick={() => {
                         setState({
                           view: "DELETE",
@@ -180,7 +183,7 @@ export function UserPageList({ setState, state }: Props) {
                         });
                       }}
                     >
-                      Delete
+                      Xóa
                     </Button>
                   </div>
                 </TableCell>

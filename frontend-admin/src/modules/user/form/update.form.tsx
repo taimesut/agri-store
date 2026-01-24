@@ -1,6 +1,13 @@
 import { queryClient } from "@/common/config/query-client";
 import type { SearchParams } from "@/common/interface";
-import { Button, Form, FormItem, FormRow, Input } from "@/common/component/ui";
+import {
+  Button,
+  Form,
+  FormItem,
+  FormRow,
+  Input,
+  Spinner,
+} from "@/common/component/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useEffect } from "react";
@@ -18,7 +25,7 @@ interface Props {
 export function UserFormUpdate({ id, params }: Props) {
   const mutationUpdate = UserMutationUpdate({ params });
 
-  const queryUserDetail = UserQueryDetail({ id });
+  const queryDetail = UserQueryDetail({ id });
 
   const {
     register,
@@ -28,17 +35,17 @@ export function UserFormUpdate({ id, params }: Props) {
   } = useForm<UserUpdateInput>({
     resolver: zodResolver(UserUpdateShema),
     defaultValues: {
-      fullName: queryUserDetail.data?.user.fullName,
+      fullName: queryDetail.data?.user.fullName,
     },
   });
 
   useEffect(() => {
-    if (queryUserDetail.data?.user) {
+    if (queryDetail.data?.user) {
       reset({
-        fullName: queryUserDetail.data?.user.fullName,
+        fullName: queryDetail.data?.user.fullName,
       });
     }
-  }, [queryUserDetail.data, reset]);
+  }, [queryDetail.data, reset]);
 
   function onSubmit(values: UserUpdateInput) {
     mutationUpdate.mutate(
@@ -62,13 +69,17 @@ export function UserFormUpdate({ id, params }: Props) {
     );
   }
 
+  if (!queryDetail.isSuccess) {
+    return <Spinner />;
+  }
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow columns={1}>
-        <FormItem label="Email" error={errors.password?.message}>
+        <FormItem label="Email">
           <Input
             type="text"
-            placeholder={queryUserDetail.data?.user.email}
+            placeholder={queryDetail.data?.user.email}
             disabled={true}
           />
         </FormItem>
@@ -84,12 +95,22 @@ export function UserFormUpdate({ id, params }: Props) {
         </FormItem>
       </FormRow>
       <FormRow columns={1}>
-        <FormItem label="Họ và Tên" required error={errors.password?.message}>
+        <FormItem label="Họ và Tên" error={errors.fullName?.message}>
           <Input
             type="text"
             placeholder="Nguyễn Văn A"
             {...register("fullName")}
-            error={!!errors.password}
+            error={!!errors.fullName}
+          />
+        </FormItem>
+      </FormRow>
+      <FormRow columns={1}>
+        <FormItem label="SĐT" error={errors.phone?.message}>
+          <Input
+            type="text"
+            placeholder="098xxxxxxx"
+            {...register("phone")}
+            error={!!errors.phone}
           />
         </FormItem>
       </FormRow>
