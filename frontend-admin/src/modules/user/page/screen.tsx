@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { UserPageState } from "./types";
+import type { UserPageState } from "./type";
 import {
   UserPageCreate,
   UserPageDelete,

@@ -1,5 +1,5 @@
 import { UserMutationDelete } from "../../query";
-import type { UserPageState } from "../types";
+import type { UserPageState } from "../type";
 import { Button, Card } from "@/common/component/ui";
 
 interface Props {

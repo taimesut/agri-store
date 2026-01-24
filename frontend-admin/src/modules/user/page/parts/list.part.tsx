@@ -10,7 +10,7 @@ import {
   TableHead,
   TableRow,
 } from "@/common/component/ui";
-import type { UserPageState } from "../types";
+import type { UserPageState } from "../type";
 import { useState } from "react";
 import { UserQueryList } from "../../query";
 

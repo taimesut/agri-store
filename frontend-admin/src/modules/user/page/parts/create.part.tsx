@@ -1,7 +1,7 @@
 // product/parts/create/product-create.part.tsx
 
 import { Button } from "@/common/component/ui";
-import type { UserPageState } from "../types";
+import type { UserPageState } from "../type";
 import { UserFormCreate } from "../../form";
 
 interface Props {
