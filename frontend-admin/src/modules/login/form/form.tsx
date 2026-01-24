@@ -31,9 +31,8 @@ export function LoginForm() {
       await AuthApi.login(values);
       toast.success("Đăng nhập thành công");
       const user = (await AuthApi.me()).data;
-
       useAuthStore.getState().setAuth(user);
-      navigate("/dashboard", { replace: true });
+      navigate("/", { replace: true });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message ?? "Xảy ra lỗi");

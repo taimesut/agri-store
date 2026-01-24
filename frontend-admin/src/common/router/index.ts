@@ -1,1 +1,1 @@
-export * from "./render.route";
+export * from "./route.render";

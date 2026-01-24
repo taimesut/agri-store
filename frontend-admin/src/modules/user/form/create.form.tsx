@@ -33,7 +33,7 @@ export function UserFormCreate({ params }: Props) {
       { payload: values },
       {
         onSuccess: () => {
-          toast.success("Tạo user thành công");
+          toast.success("Tạo mới thành công");
           reset();
         },
         onError: (error) => {

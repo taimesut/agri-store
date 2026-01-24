@@ -2,6 +2,7 @@ import { queryClient } from "@/common/config/query-client";
 import type { SearchParams } from "@/common/interface";
 import {
   Button,
+  ComboBox,
   Form,
   FormItem,
   FormRow,
@@ -13,9 +14,13 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { UserMutationUpdate, UserQueryDetail } from "../query";
-import { UserUpdateShema, type UserUpdateInput } from "../schema";
-import { UserQueryKey } from "../query";
+import {
+  CategoryMutationUpdate,
+  CategoryQueryDetail,
+  CategoryQueryList,
+} from "../query";
+import { CategoryUpdateShema, type CategoryUpdateInput } from "../schema";
+import { CategoryQueryKey } from "../query";
 
 interface Props {
   id: string;
@@ -23,38 +28,39 @@ interface Props {
 }
 
 export function UserFormUpdate({ id, params }: Props) {
-  const mutationUpdate = UserMutationUpdate({ params });
+  const mutationUpdate = CategoryMutationUpdate({ params });
 
-  const queryDetail = UserQueryDetail({ id });
+  const queryDetail = CategoryQueryDetail({ id });
+  const queryList = CategoryQueryList({ params });
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<UserUpdateInput>({
-    resolver: zodResolver(UserUpdateShema),
+  } = useForm<CategoryUpdateInput>({
+    resolver: zodResolver(CategoryUpdateShema),
     defaultValues: {
-      fullName: queryDetail.data?.user.fullName,
+      ...queryDetail.data?.category,
     },
   });
 
   useEffect(() => {
-    if (queryDetail.data?.user) {
+    if (queryDetail.data?.category) {
       reset({
-        fullName: queryDetail.data?.user.fullName,
+        ...queryDetail.data?.category,
       });
     }
   }, [queryDetail.data, reset]);
 
-  function onSubmit(values: UserUpdateInput) {
+  function onSubmit(values: CategoryUpdateInput) {
     mutationUpdate.mutate(
       { userId: id, payload: values },
       {
         onSuccess: () => {
           toast.success("Cập nhật thành công");
           queryClient.invalidateQueries({
-            queryKey: UserQueryKey.detail(id),
+            queryKey: CategoryQueryKey.detail(id),
           });
           reset();
         },
@@ -73,44 +79,45 @@ export function UserFormUpdate({ id, params }: Props) {
     return <Spinner />;
   }
 
+  if (!queryList.isSuccess) {
+    return <Spinner />;
+  }
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow columns={1}>
-        <FormItem label="Email">
+        <FormItem label="Name" error={errors.name?.message}>
           <Input
             type="text"
-            placeholder={queryDetail.data?.user.email}
-            disabled={true}
+            placeholder="Áo thun"
+            {...register("name")}
+            error={!!errors.name}
           />
         </FormItem>
       </FormRow>
       <FormRow columns={1}>
-        <FormItem label="Mật khẩu" error={errors.password?.message}>
+        <FormItem label="Handle" error={errors.handle?.message}>
           <Input
-            type="password"
-            placeholder="••••••••"
-            {...register("password")}
-            error={!!errors.password}
+            type="text"
+            placeholder="ao-thun"
+            {...register("name")}
+            error={!!errors.handle}
           />
         </FormItem>
       </FormRow>
       <FormRow columns={1}>
-        <FormItem label="Họ và Tên" error={errors.fullName?.message}>
-          <Input
-            type="text"
-            placeholder="Nguyễn Văn A"
-            {...register("fullName")}
-            error={!!errors.fullName}
+        <FormItem label="Parent" error={errors.parentId?.message}>
+          <ComboBox
+            options={queryList.data.categories.map((e) => ({
+              label: e.name,
+              value: e.id,
+            }))}
           />
-        </FormItem>
-      </FormRow>
-      <FormRow columns={1}>
-        <FormItem label="SĐT" error={errors.phone?.message}>
           <Input
             type="text"
-            placeholder="098xxxxxxx"
-            {...register("phone")}
-            error={!!errors.phone}
+            placeholder="Áo thun"
+            {...register("parentId")}
+            error={!!errors.parentId}
           />
         </FormItem>
       </FormRow>

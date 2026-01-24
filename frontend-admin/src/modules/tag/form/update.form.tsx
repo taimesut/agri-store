@@ -13,9 +13,9 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { UserMutationUpdate, UserQueryDetail } from "../query";
-import { UserUpdateShema, type UserUpdateInput } from "../schema";
-import { UserQueryKey } from "../query";
+import { TagMutationUpdate, TagQueryDetail } from "../query";
+import { TagUpdateShema, type TagUpdateInput } from "../schema";
+import { TagQueryKey } from "../query";
 
 interface Props {
   id: string;
@@ -23,38 +23,38 @@ interface Props {
 }
 
 export function UserFormUpdate({ id, params }: Props) {
-  const mutationUpdate = UserMutationUpdate({ params });
+  const mutationUpdate = TagMutationUpdate({ params });
 
-  const queryDetail = UserQueryDetail({ id });
+  const queryDetail = TagQueryDetail({ id });
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<UserUpdateInput>({
-    resolver: zodResolver(UserUpdateShema),
+  } = useForm<TagUpdateInput>({
+    resolver: zodResolver(TagUpdateShema),
     defaultValues: {
-      fullName: queryDetail.data?.user.fullName,
+      name: queryDetail.data?.tag.name,
     },
   });
 
   useEffect(() => {
-    if (queryDetail.data?.user) {
+    if (queryDetail.data?.tag) {
       reset({
-        fullName: queryDetail.data?.user.fullName,
+        name: queryDetail.data?.tag.name,
       });
     }
   }, [queryDetail.data, reset]);
 
-  function onSubmit(values: UserUpdateInput) {
+  function onSubmit(values: TagUpdateInput) {
     mutationUpdate.mutate(
       { userId: id, payload: values },
       {
         onSuccess: () => {
           toast.success("Cập nhật thành công");
           queryClient.invalidateQueries({
-            queryKey: UserQueryKey.detail(id),
+            queryKey: TagQueryKey.detail(id),
           });
           reset();
         },
@@ -76,41 +76,16 @@ export function UserFormUpdate({ id, params }: Props) {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow columns={1}>
-        <FormItem label="Email">
+        <FormItem
+          label="
+        Tên"
+          error={errors.name?.message}
+        >
           <Input
             type="text"
-            placeholder={queryDetail.data?.user.email}
-            disabled={true}
-          />
-        </FormItem>
-      </FormRow>
-      <FormRow columns={1}>
-        <FormItem label="Mật khẩu" error={errors.password?.message}>
-          <Input
-            type="password"
-            placeholder="••••••••"
-            {...register("password")}
-            error={!!errors.password}
-          />
-        </FormItem>
-      </FormRow>
-      <FormRow columns={1}>
-        <FormItem label="Họ và Tên" error={errors.fullName?.message}>
-          <Input
-            type="text"
-            placeholder="Nguyễn Văn A"
-            {...register("fullName")}
-            error={!!errors.fullName}
-          />
-        </FormItem>
-      </FormRow>
-      <FormRow columns={1}>
-        <FormItem label="SĐT" error={errors.phone?.message}>
-          <Input
-            type="text"
-            placeholder="098xxxxxxx"
-            {...register("phone")}
-            error={!!errors.phone}
+            placeholder="new"
+            {...register("name")}
+            error={!!errors.name}
           />
         </FormItem>
       </FormRow>

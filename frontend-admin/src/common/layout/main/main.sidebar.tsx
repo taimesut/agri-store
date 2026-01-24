@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 const menu = [
   { label: "Users", to: "/users" },
   { label: "Tags", to: "/tags" },
+  { label: "Categories", to: "/categories" },
 ];
 
 export function MainSidebar () {
