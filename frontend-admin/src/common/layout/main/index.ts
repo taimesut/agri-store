@@ -1,0 +1,1 @@
+export * from '@/common/layout/main/main.layout'
