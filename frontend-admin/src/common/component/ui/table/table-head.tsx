@@ -1,4 +1,4 @@
-import type { BaseProps } from "./table.interface";
+import type { BaseProps } from "./table.type";
 
 export function TableHead({ children }: BaseProps) {
   return (

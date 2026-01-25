@@ -1,5 +1,15 @@
-import type { CardProps, CardSectionProps } from "./card.interface";
+import type { ReactNode } from "react";
 import clsx from "clsx";
+
+export interface CardProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export interface CardSectionProps {
+  children: ReactNode;
+  className?: string;
+}
 
 function CardRoot({ children, className }: CardProps) {
   return (

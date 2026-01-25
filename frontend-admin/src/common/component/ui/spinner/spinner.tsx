@@ -1,5 +1,12 @@
 import clsx from "clsx";
-import type { SpinnerProps } from "./spinner.interface";
+
+export type SpinnerSize = "sm" | "md" | "lg";
+
+export interface SpinnerProps {
+  size?: SpinnerSize;
+  color?: string;
+  className?: string;
+}
 
 const SIZE_MAP = {
   sm: "h-4 w-4 border-2",

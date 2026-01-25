@@ -1,5 +1,11 @@
-import type { FormItemProps } from "./form.interface";
-
+import type { ReactNode } from "react";
+export interface FormItemProps {
+  label?: ReactNode;
+  error?: ReactNode;
+  hint?: ReactNode;
+  required?: boolean;
+  children: ReactNode;
+}
 export function FormItem({
   label,
   error,

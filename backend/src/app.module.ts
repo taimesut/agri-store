@@ -9,10 +9,10 @@ import { TagModule } from './modules/tag/tag.module';
 import { CategoryModule } from './modules/category/category.module';
 import { UploadModule } from './shared/upload/upload.module';
 import { ProductModule } from './modules/product/product.module';
-import { ProductVariantModule } from './modules/product/_variant/_variant.module';
-import { ProductImageModule } from './modules/product/_image/_image.module';
-import { ProductCategoryModule } from './modules/product/_category/_category.module';
-import { ProductTagModule } from './modules/product/_tag/_tag.module';
+import { ProductVariantModule } from './modules/product/part/_variant/_variant.module';
+import { ProductImageModule } from './modules/product/part/_image/_image.module';
+import { ProductCategoryModule } from './modules/product/part/_category/_category.module';
+import { ProductTagModule } from './modules/product/part/_tag/_tag.module';
 
 @Module({
   imports: [

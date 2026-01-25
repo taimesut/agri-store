@@ -1,8 +1,8 @@
 // stores/auth/auth.store.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { User } from "@/modules/user/schema";
-import { AuthApi } from "@/modules/login/api";
+import type { User } from "@/module/user/schema";
+import { AuthApi } from "@/module/login/api";
 
 interface AuthState {
   user: User | null;

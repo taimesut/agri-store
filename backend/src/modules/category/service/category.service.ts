@@ -58,8 +58,13 @@ export class CategoryService {
 
   async update(id: string, payload: UpdateCategoryDTO) {
     const { handle, parentId } = payload;
+    await this.throwCategoryNotFound(id);
+
     if (handle) {
-      await this.throwHandleExists(handle);
+      const categoryExist = await this.categoryRepo.findById(id);
+      if (handle !== categoryExist?.handle) {
+        await this.throwHandleExists(handle);
+      }
     }
 
     if (parentId) {

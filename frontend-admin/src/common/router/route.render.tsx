@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ROUTES } from "./route.constant";
-import type { AppRouteConfig } from "./route.interface";
+import type { AppRouteConfig } from "./route.type";
 import { RouteGuest, RoutePrivate } from "./guard";
 
 function renderRoute(route: AppRouteConfig) {

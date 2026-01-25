@@ -46,7 +46,6 @@ export class CategoryRepository {
   async findById(id: string) {
     return await this.prisma.category.findUnique({
       where: { id },
-      select: { id: true },
     });
   }
 

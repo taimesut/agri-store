@@ -1,5 +1,9 @@
 import clsx from "clsx";
-import type { TableCellProps } from "./table.interface";
+import type { BaseProps } from "./table.type";
+
+export interface TableCellProps extends BaseProps {
+  header?: boolean;
+}
 
 export function TableCell({
   children,
@@ -13,7 +17,7 @@ export function TableCell({
       className={clsx(
         "px-4 py-3",
         header && "font-medium text-gray-700",
-        className
+        className,
       )}
     >
       {children}

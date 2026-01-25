@@ -36,7 +36,7 @@ export class UserService {
   }
 
   async create(payload: CreateUserDTO) {
-    const { email, fullName, password } = payload;
+    const { email, fullName, password, phone } = payload;
     await this.throwEmailExists(email);
 
     const hashedPassword = await hashPassword(password);
@@ -45,6 +45,7 @@ export class UserService {
       password: hashedPassword,
       email,
       fullName,
+      phone,
     });
   }
 

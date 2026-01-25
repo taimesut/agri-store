@@ -1,6 +1,9 @@
-import { forwardRef } from "react";
+import { forwardRef, type InputHTMLAttributes } from "react";
 import clsx from "clsx";
-import type { InputProps } from "./input.interface";
+
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  error?: boolean;
+}
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ error, className, ...props }, ref) => {
@@ -14,11 +17,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           error
             ? "border-red-500 focus:ring-red-500"
             : "border-gray-300 focus:ring-blue-500",
-          className
+          className,
         )}
       />
     );
-  }
+  },
 );
 
 Input.displayName = "Input";

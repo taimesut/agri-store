@@ -1,5 +1,10 @@
 import clsx from "clsx";
-import type { FormRowProps } from "./form.interface";
+import type { ReactNode } from "react";
+
+export interface FormRowProps {
+  columns?: 1 | 2 | 3 | 4;
+  children: ReactNode;
+}
 
 export function FormRow({ columns = 2, children }: FormRowProps) {
   return (

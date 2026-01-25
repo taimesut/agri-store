@@ -1,13 +1,25 @@
 import clsx from "clsx";
-import type { BaseProps } from "./table.interface";
+import type { BaseProps } from "./table.type";
 
-export function TableRow({ children, className }: BaseProps) {
+import type { ComponentPropsWithoutRef } from "react";
+
+type TableRowProps = ComponentPropsWithoutRef<"tr"> & BaseProps;
+
+export function TableRow({
+  children,
+  className,
+  onClick,
+  ...rest
+}: TableRowProps) {
   return (
     <tr
+      onClick={onClick}
       className={clsx(
         "hover:bg-gray-50 transition",
-        className
+        onClick && "cursor-pointer",
+        className,
       )}
+      {...rest}
     >
       {children}
     </tr>

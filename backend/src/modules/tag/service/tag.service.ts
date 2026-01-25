@@ -52,7 +52,10 @@ export class TagService {
     const { name } = payload;
     await this.throwTagNotFound(id);
     if (name) {
-      await this.throwNameExists(name);
+      const tagExist = await this.tagRepo.findById(id);
+      if (name !== tagExist?.name) {
+        await this.throwNameExists(name);
+      }
     }
 
     return await this.tagRepo.updateById(id, payload);
