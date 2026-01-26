@@ -24,24 +24,32 @@ export function UserDetailPage({ setPageState, pageState, id }: Props) {
 
   return (
     <>
-      <Button
-        onClick={() =>
-          setPageState({
-            view: "LIST",
-            params: {
-              page: 1,
-              limit: 20,
-              order: "desc",
-              orderBy: "",
-            },
-          })
-        }
-      >
-        Quay lại
-      </Button>
+      <div className="flex justify-between items-center px-4">
+        <Button
+          onClick={() =>
+            setPageState({
+              view: "LIST",
+              params: {
+                ...pageState.params,
+              },
+            })
+          }
+        >
+          Quay lại
+        </Button>
+        <Button variant="danger" onClick={() => setOpenDeleteDialog(true)}>
+          Xóa
+        </Button>
+      </div>
+
       <div className="md:flex md:gap-x-8">
         <Card className="w-full mt-4">
-          <Card.Header>Thông tin</Card.Header>
+          <Card.Header>
+            <div className="flex justify-between items-center">
+              <span>Thông tin</span>
+              <Button onClick={() => setOpenUpdateDialog(true)}>Sửa</Button>
+            </div>
+          </Card.Header>
           <Card.Body className="space-y-3">
             <div>
               <span className="text-sm text-gray-500">Email</span>
@@ -66,29 +74,20 @@ export function UserDetailPage({ setPageState, pageState, id }: Props) {
             </div>
           </Card.Body>
         </Card>
-        <Card className="mt-4 h-fit">
-          <Card.Header>Thao tác</Card.Header>
-          <Card.Body className="">
-            <div className="flex gap-x-4">
-              <Button onClick={() => setOpenDeleteDialog(true)}>Xóa</Button>
-              <Button onClick={() => setOpenUpdateDialog(true)}>Sửa</Button>
-            </div>
-            <UserDialogDelete
-              openDialog={openDeleteDialog}
-              setOpenDialog={setOpenDeleteDialog}
-              pageState={pageState}
-              id={id}
-              setPageState={setPageState}
-            />
+        <UserDialogDelete
+          openDialog={openDeleteDialog}
+          setOpenDialog={setOpenDeleteDialog}
+          pageState={pageState}
+          id={id}
+          setPageState={setPageState}
+        />
 
-            <UserDialogUpdate
-              openDialog={openUpdateDialog}
-              setOpenDialog={setOpenUpdateDialog}
-              pageState={pageState}
-              id={id}
-            />
-          </Card.Body>
-        </Card>
+        <UserDialogUpdate
+          openDialog={openUpdateDialog}
+          setOpenDialog={setOpenUpdateDialog}
+          pageState={pageState}
+          id={id}
+        />
       </div>
     </>
   );

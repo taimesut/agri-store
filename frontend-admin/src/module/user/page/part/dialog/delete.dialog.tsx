@@ -23,7 +23,7 @@ export function UserDialogDelete({
   setPageState,
 }: Props) {
   const { params } = pageState;
-  const mutationUserDelete = UserMutationDelete({ params });
+  const mutationUserDelete = UserMutationDelete();
 
   function closeDialog() {
     setOpenDialog(false);
@@ -34,17 +34,12 @@ export function UserDialogDelete({
       <DialogBody>
         <p>Bạn có chắc chắn thực hiện thao tác này không?</p>
         <Button
-        className="mt-4"
+          className="mt-4"
           onClick={() => {
             mutationUserDelete.mutate({ id });
             setPageState({
               view: "LIST",
-              params: {
-                page: 1,
-                limit: 10,
-                order: "desc",
-                orderBy: "",
-              },
+              params: params,
             });
           }}
         >

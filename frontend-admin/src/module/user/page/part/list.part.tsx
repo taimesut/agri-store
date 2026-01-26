@@ -20,21 +20,48 @@ interface Props {
   setPageState: React.Dispatch<React.SetStateAction<UserPageState>>;
 }
 
-const sortableFields = [
+const orderByOptions = [
   { label: "Email", value: "email" },
   { label: "Full Name", value: "fullName" },
   { label: "Phone", value: "phone" },
-  { label: "Thời gian tạo", value: "createAt" },
+  { label: "Thời gian tạo", value: "createdAt" },
+];
+
+const limitOptions = [
+  {
+    label: "5",
+    value: 5,
+  },
+  {
+    label: "10",
+    value: 10,
+  },
+  {
+    label: "20",
+    value: 20,
+  },
+];
+
+const orderOptions = [
+  {
+    label: "Giảm dần",
+    value: "desc",
+  },
+  {
+    label: "Tăng dần",
+    value: "asc",
+  },
 ];
 
 export function UserPageList({ setPageState, pageState }: Props) {
   const { params } = pageState;
   const queryList = UserQueryList({ params });
 
-  const [search, setSearch] = useState<string>("");
-  const [sortField, setSortField] = useState<string>();
-  const [order, setOrder] = useState<"desc" | "asc">();
-  const [limit, setLimit] = useState<number>();
+  const [search, setSearch] = useState<string>(params.search || "");
+  const [orderBy, setOrderBy] = useState<string>(params.orderBy);
+  const [order, setOrder] = useState<"desc" | "asc">(params.order);
+  const [limit, setLimit] = useState<number>(params.limit);
+
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
 
   if (!queryList.isSuccess) {
@@ -58,53 +85,28 @@ export function UserPageList({ setPageState, pageState }: Props) {
           <div>
             <ComboBox
               className="w-full"
-              options={[
-                {
-                  label: "5",
-                  value: 5,
-                },
-                {
-                  label: "10",
-                  value: 10,
-                },
-                {
-                  label: "20",
-                  value: 20,
-                },
-              ]}
+              options={limitOptions}
               value={limit}
-              onChange={setLimit}
-              defaultValue={20}
+              onChange={(v) => setLimit(v ?? 20)}
               searchable={false}
             />
           </div>
           <div>
             <ComboBox
               className="w-full"
-              options={[
-                {
-                  label: "Giảm dần",
-                  value: "desc",
-                },
-                {
-                  label: "Tăng dần",
-                  value: "asc",
-                },
-              ]}
+              options={orderOptions}
               value={order}
-              onChange={setOrder}
-              defaultValue={"desc"}
+              onChange={(v) => setOrder((v ?? "desc") as "asc" | "desc")}
               searchable={false}
             />
           </div>
           <div>
             <ComboBox
               className="w-full"
-              options={sortableFields}
-              value={sortField}
-              onChange={setSortField}
-              defaultValue={"createAt"}
+              options={orderByOptions}
+              onChange={(v) => setOrderBy(v ?? "createdAt")}
               searchable={false}
+              value={orderBy}
             />
           </div>
           <div>
@@ -113,6 +115,7 @@ export function UserPageList({ setPageState, pageState }: Props) {
               className="w-full"
               placeholder="Nhập keyword ..."
               onChange={(e) => setSearch(e.target.value)}
+              value={search}
             />
           </div>
           <div>
@@ -124,9 +127,9 @@ export function UserPageList({ setPageState, pageState }: Props) {
                   params: {
                     ...params,
                     search,
-                    orderBy: sortField || "createAt",
-                    order: order || "desc",
-                    limit: limit || 20,
+                    orderBy,
+                    order,
+                    limit,
                     page: 1,
                   },
                 });

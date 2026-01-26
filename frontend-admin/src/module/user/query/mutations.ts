@@ -1,49 +1,39 @@
 import { useMutation } from "@tanstack/react-query";
 import { UserQueryKey } from "./keys";
-import type { SearchParams } from "@/common/type";
 import { queryClient } from "@/common/config/query-client";
 import { UserApi } from "../api";
 import type { UserCreateInput, UserUpdateInput } from "../schema";
 
-interface DeleteOptions {
-  params: SearchParams;
-}
-interface UpdateOptions {
-  params: SearchParams;
-}
-interface CreateOptions {
-  params: SearchParams;
-}
-
-export function UserMutationDelete({ params }: DeleteOptions) {
+export function UserMutationDelete() {
   return useMutation({
     mutationFn: (data: { id: string }) => UserApi.delete(data.id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: UserQueryKey.list(params),
+        queryKey: UserQueryKey.all,
       });
     },
   });
 }
 
-export function UserMutationCreate({ params }: CreateOptions) {
+export function UserMutationCreate() {
   return useMutation({
-    mutationFn: (data: { payload: UserCreateInput }) => UserApi.create(data.payload),
+    mutationFn: (data: { payload: UserCreateInput }) =>
+      UserApi.create(data.payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: UserQueryKey.list(params),
+        queryKey: UserQueryKey.all,
       });
     },
   });
 }
 
-export function UserMutationUpdate({ params }: UpdateOptions) {
+export function UserMutationUpdate() {
   return useMutation({
     mutationFn: (data: { userId: string; payload: UserUpdateInput }) =>
       UserApi.update(data.userId, data.payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: UserQueryKey.list(params),
+        queryKey: UserQueryKey.all,
       });
     },
   });

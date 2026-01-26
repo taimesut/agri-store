@@ -11,6 +11,7 @@ export default function UserScreen() {
       order: "desc",
       orderBy: "createdAt",
       page: 1,
+      search: "",
     },
   });
   switch (pageState.view) {
@@ -25,7 +26,10 @@ export default function UserScreen() {
     case "LIST":
     default:
       return (
-        <UserPageList pageState={pageState} setPageState={setPageState}></UserPageList>
+        <UserPageList
+          pageState={pageState}
+          setPageState={setPageState}
+        ></UserPageList>
       );
   }
 }

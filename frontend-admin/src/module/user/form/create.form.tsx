@@ -1,18 +1,13 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import type { SearchParams } from "@/common/type";
 import axios from "axios";
 import { Button, Form, FormItem, FormRow, Input } from "@/common/component/ui";
 import { UserMutationCreate } from "../query";
 import { UserCreateShema, type UserCreateInput } from "../schema";
 
-interface Props {
-  params: SearchParams;
-}
-
-export function UserFormCreate({ params }: Props) {
-  const mutationCreate = UserMutationCreate({ params });
+export function UserFormCreate() {
+  const mutationCreate = UserMutationCreate();
 
   const {
     register,
@@ -24,7 +19,7 @@ export function UserFormCreate({ params }: Props) {
   });
 
   function onSubmit(values: UserCreateInput) {
-    console.log(values)
+    console.log(values);
     mutationCreate.mutate(
       { payload: values },
       {

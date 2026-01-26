@@ -7,11 +7,7 @@ interface Props {
   openDialog: boolean;
   setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export function UserDialogCreate({
-  pageState,
-  openDialog,
-  setOpenDialog,
-}: Props) {
+export function UserDialogCreate({ openDialog, setOpenDialog }: Props) {
   return (
     <>
       <Dialog
@@ -21,7 +17,7 @@ export function UserDialogCreate({
         }}
       >
         <DialogHeader title="Tạo Mới" onClose={() => setOpenDialog(false)} />
-        <UserFormCreate params={pageState.params} />
+        <UserFormCreate />
       </Dialog>
     </>
   );

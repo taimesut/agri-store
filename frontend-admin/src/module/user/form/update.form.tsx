@@ -1,5 +1,4 @@
 import { queryClient } from "@/common/config/query-client";
-import type { SearchParams } from "@/common/type";
 import {
   Button,
   Form,
@@ -19,11 +18,10 @@ import { UserQueryKey } from "../query";
 
 interface Props {
   id: string;
-  params: SearchParams;
 }
 
-export function UserFormUpdate({ id, params }: Props) {
-  const mutationUpdate = UserMutationUpdate({ params });
+export function UserFormUpdate({ id }: Props) {
+  const mutationUpdate = UserMutationUpdate();
 
   const queryDetail = UserQueryDetail({ id });
 
