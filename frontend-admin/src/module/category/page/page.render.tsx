@@ -2,15 +2,13 @@ import { useState } from "react";
 import type { CategoryPageState } from "./type";
 import { CategoryPageList } from "./part";
 import { CategoryDetailPage } from "./part/detail.part";
-import { DEFAULT_PARAMS } from "./constant";
-
-
+import { FIND_ALL_PARAMS } from "./constant";
 
 export default function CategoryPageRender() {
   const [pageState, setPageState] = useState<CategoryPageState>({
     view: "LIST",
     params: {
-      ...DEFAULT_PARAMS,
+      ...FIND_ALL_PARAMS,
     },
   });
   switch (pageState.view) {

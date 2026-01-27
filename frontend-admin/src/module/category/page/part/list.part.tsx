@@ -4,27 +4,20 @@ import {
   Input,
   Pagination,
   Spinner,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
 } from "@/common/component/ui";
 import { type CategoryPageState } from "../type";
 import { useState } from "react";
 import { CategoryQueryList } from "../../query";
 import { CategoryDialogCreate } from "./dialog";
+import { RenderCategoryTree } from "./helper/render-category-tree";
+import { buildCategoryTree } from "./helper/build-category-tree";
 
 interface Props {
   pageState: Extract<CategoryPageState, { view: "LIST" }>;
   setPageState: React.Dispatch<React.SetStateAction<CategoryPageState>>;
 }
 
-const orderByOptions = [
-  { label: "Name", value: "name" },
-  { label: "Handle", value: "handle" },
-  { label: "Thời gian tạo", value: "createdAt" },
-];
+const orderByOptions = [{ label: "Thời gian tạo", value: "createdAt" }];
 
 const limitOptions = [
   {
@@ -66,6 +59,7 @@ export function CategoryPageList({ setPageState, pageState }: Props) {
   if (!queryList.isSuccess) {
     return <Spinner />;
   }
+  const categoriesRender = buildCategoryTree(queryList.data.categories);
 
   return (
     <>
@@ -141,40 +135,19 @@ export function CategoryPageList({ setPageState, pageState }: Props) {
       </div>
 
       <div>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell header={true}>STT</TableCell>
-              <TableCell header={true}>Name</TableCell>
-              <TableCell header={true}>Handle</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {queryList.data?.categories.map((e, idx) => (
-              <TableRow
-                key={e.id}
-                onClick={() => {
-                  setPageState({
-                    view: "DETAIL",
-                    id: e.id,
-                    params,
-                  });
-                }}
-              >
-                <TableCell>{idx + 1}</TableCell>
-                <TableCell>{e.name}</TableCell>
-                <TableCell>{e.handle}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        {RenderCategoryTree({
+          categories: categoriesRender,
+          level: 0,
+          pageState,
+          setPageState,
+        })}
       </div>
 
       <div className="mt-4 flex justify-center">
         <Pagination
           page={params.page}
           limit={params.limit}
-          total={queryList.data.meta.total}
+          total={categoriesRender.length}
           onChange={(page) =>
             setPageState((prev) => ({
               ...prev,

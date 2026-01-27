@@ -24,3 +24,5 @@ export * from "./dialog/dialog";
 export * from "./dialog/dialog-body";
 export * from "./dialog/dialog-footer";
 export * from "./dialog/dialog-header";
+
+export * from "./collapsible";

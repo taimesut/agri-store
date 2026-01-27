@@ -6,7 +6,7 @@ import { DEFAULT_PARAMS } from "./constant";
 
 
 
-export default function UserScreen() {
+export default function UserPageRender() {
   const [pageState, setPageState] = useState<UserPageState>({
     view: "LIST",
     params: {
