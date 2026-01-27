@@ -1,2 +1,2 @@
-export * from "./route.guest";
-export * from "./route.private";
+export * from "./guest";
+export * from "./private";

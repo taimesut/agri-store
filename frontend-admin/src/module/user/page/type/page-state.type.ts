@@ -1,5 +1,5 @@
 import type { SearchParams } from "@/common/type";
-import type { USER_PAGE_VIEW } from "./view.type";
+import type { USER_PAGE_VIEW } from "./page-view.type";
 
 export type UserPageState =
   | {

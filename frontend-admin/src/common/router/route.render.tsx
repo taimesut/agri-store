@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { ROUTES } from "./route.constant";
-import type { AppRouteConfig } from "./route.type";
 import { RouteGuest, RoutePrivate } from "./guard";
+import type { AppRouteConfig } from "./type";
+import { APP_ROUTES } from "./constant/app-routes.constant";
 
 function renderRoute(route: AppRouteConfig) {
   const Element = route.element;
@@ -49,5 +49,5 @@ function renderRoute(route: AppRouteConfig) {
 }
 
 export function AppRouter() {
-  return <Routes>{ROUTES.map(renderRoute)}</Routes>;
+  return <Routes>{APP_ROUTES.map(renderRoute)}</Routes>;
 }

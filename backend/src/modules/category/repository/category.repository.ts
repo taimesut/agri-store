@@ -112,13 +112,13 @@ export class CategoryRepository {
     const limit = Math.min(100, query.limit ?? 20);
     const skip = (page - 1) * limit;
 
-    const sortableFields: (keyof Category)[] = ['name', 'handle'];
+    const sortableFields: (keyof Category)[] = ['name', 'handle', 'createdAt'];
 
     const orderByField: keyof Category = sortableFields.includes(
       query.orderBy as keyof Category,
     )
       ? (query.orderBy as keyof Category)
-      : 'name';
+      : 'createdAt';
 
     const order: 'asc' | 'desc' = query.order ?? 'desc';
 

@@ -4,7 +4,7 @@ import {
   DialogBody,
   DialogHeader,
 } from "@/common/component/ui";
-import { UserMutationDelete } from "@/module/user/query";
+import { UserMutationDelete } from "../../../query/mutations";
 import type { UserPageState } from "../../type";
 
 interface Props {

@@ -1,27 +1,26 @@
 import { useState } from "react";
-import type { UserPageState } from "./type";
+import type { TagPageState } from "./type";
 import { UserPageList } from "./part";
-import { UserDetailPage } from "./part/detail.part";
+import { TagDetailPage } from "./part/detail.part";
+import { DEFAULT_PARAMS } from "./constant";
 
-export default function UserScreen() {
-  const [pageState, setPageState] = useState<UserPageState>({
+
+
+export default function TagPageRender() {
+  const [pageState, setPageState] = useState<TagPageState>({
     view: "LIST",
     params: {
-      limit: 20,
-      order: "desc",
-      orderBy: "createdAt",
-      page: 1,
-      search: "",
+      ...DEFAULT_PARAMS,
     },
   });
   switch (pageState.view) {
     case "DETAIL":
       return (
-        <UserDetailPage
+        <TagDetailPage
           pageState={pageState}
           id={pageState.id}
           setPageState={setPageState}
-        ></UserDetailPage>
+        ></TagDetailPage>
       );
     case "LIST":
     default:

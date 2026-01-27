@@ -1,6 +1,6 @@
 import { LoginForm } from "../form";
 
-export default function AuthLoginScreen() {
+export default function AuthLoginPageRender() {
   return (
     <>
       <div className="login-screen border-2 p-8 rounded-2xl min-w-md">

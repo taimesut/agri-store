@@ -9,4 +9,5 @@ export const JwtPayloadSchema = z.object({
   id: z.string(),
   email: z.string(),
   fullName: z.string(),
+  createdAt: z.string(),
 });

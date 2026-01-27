@@ -1,1 +1,1 @@
-export * from '@/common/layout/main/main.layout'
+export * from './layout'
